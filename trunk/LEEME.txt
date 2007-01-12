@@ -8,8 +8,8 @@ Unidad
 TipoFicha
 Ficha
 Sector
+Cuartel
 
 TODO:
 
-Cuartel (depende de sector)
 Producto

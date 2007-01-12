@@ -70,14 +70,12 @@ class wnSector (GladeConnect):
         if model is None or it is None:
             return
         
-        #revisar ESMW
-        #rut = model.get_value(it, CODIGO_SECTOR)
+        codigo_sector = model.get_value(it, CODIGO_SECTOR)
         descripcion = model.get_value(it, DESCRIPCION)
         
         if dialogos.yesno("¿Desea eliminar el Sector <b>%s</b>?\nEsta acción no se puede deshacer\n" % descripcion, self.frm_padre) == gtk.RESPONSE_YES:
             try:
-                #revisar ESMW
-                #llaves = {'rut':rut}
+                llaves = {'codigo_sector':codigo_sector}
                 sql = ifd.deleteFromDict(config.schema + '.' + table, llaves)
                 self.cursor.execute(sql, llaves)
                 model.remove(it)
@@ -90,11 +88,11 @@ class wnSector (GladeConnect):
         if model is None or it is None:
             return
         dlg = dlgSector(self.cnx, self.frm_padre, False)
-        dlg.entTipoSector.set_text(model.get_value(it, DESCRIPCION_CULTIVO))
+        dlg.entCultivo.set_text(model.get_value(it, DESCRIPCION_CULTIVO))
         dlg.codigo_cultivo = model.get_value(it, CODIGO_CULTIVO)
         dlg.pecCultivo.set_selected(True)
         dlg.entDescripcion.set_text(model.get_value(it, DESCRIPCION))
-        dlg.entRUT.set_text(model.get_value(it, CODIGO_SECTOR))
+        dlg.entCodigo.set_text(model.get_value(it, CODIGO_SECTOR))
         dlg.editando = (True)
         response = dlg.dlgSector.run()
         if response == gtk.RESPONSE_OK:

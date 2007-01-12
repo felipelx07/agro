@@ -1,0 +1,1 @@
+# init para cadenas sql

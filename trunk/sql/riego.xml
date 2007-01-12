@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Db flnm="riego" nm="riego" ver="1.3.4">
+  <VerLbl/>
+  <VerNotes/>
+  <DefTblOpts/>
+  <DocFolder>C:\Documents and Settings\enrique\Mis documentos</DocFolder>
+  <Sch Cm="" nm="riego">
+    <Tbl UsSo="1" nm="aplicacion">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Cl au="1" df="nextval('riego.aplicacion_codigo_aplicacion_seq'::regclass)" nm="codigo_aplicacion" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_hilera" nu="1">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_producto" nu="1">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="dosis" nu="0">
+        <DT ds="Double" en="" id="8" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="fecha" nu="0">
+        <DT ds="Date" en="" id="91" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="rut" nu="1">
+        <DT ds="VarChar" en="" id="12" ln="12" sc="null" sg="1"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_aplicacion_ficha" prLkCl="rut">
+        <PrTb mn="0" nm="ficha" oe="1" sch="riego" zr="1"/>
+        <CdTb mn="1" nm="aplicacion" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="rut" prCl="rut"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_aplicacion_hilera" prLkCl="codigo_hilera">
+        <PrTb mn="0" nm="hilera" oe="1" sch="riego" zr="1"/>
+        <CdTb mn="1" nm="aplicacion" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="codigo_hilera" prCl="codigo_hilera"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_aplicacion_producto" prLkCl="codigo_producto">
+        <PrTb mn="0" nm="producto" oe="1" sch="riego" zr="1"/>
+        <CdTb mn="1" nm="aplicacion" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="codigo_producto" prCl="codigo_producto"/>
+      </Fk>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="cuartel">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="codigo_cuartel" nm="pkcuartel"/>
+      <Cl au="1" df="nextval('riego.cuartel_codigo_cuartel_seq'::regclass)" nm="codigo_cuartel" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_sector" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_cuartel" nu="0">
+        <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_cuartel_sector" prLkCl="codigo_sector">
+        <PrTb mn="0" nm="sector" oe="1" sch="riego" zr="0"/>
+        <CdTb mn="1" nm="cuartel" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="codigo_sector" prCl="codigo_sector"/>
+      </Fk>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="cultivo">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="codigo_cultivo" nm="pkcultivo"/>
+      <Cl au="1" df="nextval('riego.cultivo_codigo_cultivo_seq'::regclass)" nm="codigo_cultivo" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_cultivo" nu="0">
+        <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="ficha">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="rut" nm="pkficha"/>
+      <Cl au="0" df="" nm="codigo_tipo_ficha" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_ficha" nu="0">
+        <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="rut" nu="0">
+        <DT ds="VarChar" en="" id="12" ln="12" sc="null" sg="1"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_ficha_tipo_ficha" prLkCl="codigo_tipo_ficha">
+        <PrTb mn="0" nm="tipo_ficha" oe="1" sch="riego" zr="0"/>
+        <CdTb mn="1" nm="ficha" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="codigo_tipo_ficha" prCl="codigo_tipo_ficha"/>
+      </Fk>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="hilera">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="codigo_hilera" nm="pkhilera"/>
+      <Cl au="0" df="" nm="codigo_cuartel" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="1" df="nextval('riego.hilera_codigo_hilera_seq'::regclass)" nm="codigo_hilera" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_variedad" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_hilera" nu="0">
+        <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="superficie" nu="0">
+        <DT ds="Double" en="" id="8" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_hilera_cuartel" prLkCl="codigo_cuartel">
+        <PrTb mn="0" nm="cuartel" oe="1" sch="riego" zr="0"/>
+        <CdTb mn="1" nm="hilera" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="codigo_cuartel" prCl="codigo_cuartel"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_hilera_variedad" prLkCl="codigo_variedad">
+        <PrTb mn="0" nm="variedad" oe="1" sch="riego" zr="0"/>
+        <CdTb mn="1" nm="hilera" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="codigo_variedad" prCl="codigo_variedad"/>
+      </Fk>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="labor">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="codigo_labor" nm="pklabor"/>
+      <Cl au="1" df="nextval('riego.labor_codigo_labor_seq'::regclass)" nm="codigo_labor" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_labor" nu="0">
+        <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="labor_hilera">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="codigo_labor, codigo_hilera" nm="pklabor_hilera"/>
+      <Cl au="0" df="" nm="codigo_hilera" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_labor" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_maquinaria" nu="1">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="fecha" nu="0">
+        <DT ds="Date" en="" id="91" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="rut" nu="0">
+        <DT ds="VarChar" en="" id="12" ln="12" sc="null" sg="1"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_labor_hilera_ficha" prLkCl="rut">
+        <PrTb mn="0" nm="ficha" oe="1" sch="riego" zr="0"/>
+        <CdTb mn="1" nm="labor_hilera" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="rut" prCl="rut"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_labor_hilera_hilera" prLkCl="codigo_hilera">
+        <PrTb mn="0" nm="hilera" oe="1" sch="riego" zr="0"/>
+        <CdTb mn="1" nm="labor_hilera" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="codigo_hilera" prCl="codigo_hilera"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_labor_hilera_labor" prLkCl="codigo_labor">
+        <PrTb mn="0" nm="labor" oe="1" sch="riego" zr="0"/>
+        <CdTb mn="1" nm="labor_hilera" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="codigo_labor" prCl="codigo_labor"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_labor_hilera_maquinaria" prLkCl="codigo_maquinaria">
+        <PrTb mn="0" nm="maquinaria" oe="1" sch="riego" zr="1"/>
+        <CdTb mn="1" nm="labor_hilera" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="codigo_maquinaria" prCl="codigo_maquinaria"/>
+      </Fk>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="maquinaria">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="codigo_maquinaria" nm="pkmaquinaria"/>
+      <Cl au="1" df="nextval('riego.maquinaria_codigo_maquinaria_seq'::regclass)" nm="codigo_maquinaria" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_maquinaria" nu="0">
+        <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="producto">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="codigo_producto" nm="pkproducto"/>
+      <Cl au="1" df="nextval('riego.producto_codigo_producto_seq'::regclass)" nm="codigo_producto" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="codigo_unidad" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_producto" nu="0">
+        <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="dosis_propuesta" nu="0">
+        <DT ds="Double" en="" id="8" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_producto_unidad" prLkCl="codigo_unidad">
+        <PrTb mn="0" nm="unidad" oe="1" sch="riego" zr="0"/>
+        <CdTb mn="1" nm="producto" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="codigo_unidad" prCl="codigo_unidad"/>
+      </Fk>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="sector">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="codigo_sector" nm="pksector"/>
+      <Cl au="0" df="" nm="codigo_cultivo" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="1" df="nextval('riego.sector_codigo_sector_seq'::regclass)" nm="codigo_sector" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_sector" nu="0">
+        <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_sector_cultivo" prLkCl="codigo_cultivo">
+        <PrTb mn="0" nm="cultivo" oe="1" sch="riego" zr="0"/>
+        <CdTb mn="1" nm="sector" oe="1" sch="riego" zr="1"/>
+        <ClPr cdCl="codigo_cultivo" prCl="codigo_cultivo"/>
+      </Fk>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="tipo_ficha">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="codigo_tipo_ficha" nm="pktipo_ficha"/>
+      <Cl au="1" df="nextval('riego.tipo_ficha_codigo_tipo_ficha_seq'::regclass)" nm="codigo_tipo_ficha" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_tipo_ficha" nu="0">
+        <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="unidad">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="codigo_unidad" nm="pkunidad"/>
+      <Cl au="1" df="nextval('riego.unidad_codigo_unidad_seq'::regclass)" nm="codigo_unidad" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_unidad" nu="0">
+        <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="variedad">
+      <TblOpts>WITHOUT OIDS</TblOpts>
+      <Pk ClNs="codigo_variedad" nm="pkvariedad"/>
+      <Cl au="1" df="nextval('riego.variedad_codigo_variedad_seq'::regclass)" nm="codigo_variedad" nu="0">
+        <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <Cl au="0" df="" nm="descripcion_variedad" nu="0">
+        <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+      </Cl>
+      <SchTrHis/>
+    </Tbl>
+    <Seq incr="1" nm="aplicacion_codigo_aplicacion_seq"/>
+    <Seq incr="1" nm="cuartel_codigo_cuartel_seq"/>
+    <Seq incr="1" nm="cultivo_codigo_cultivo_seq"/>
+    <Seq incr="1" nm="hilera_codigo_hilera_seq"/>
+    <Seq incr="1" nm="labor_codigo_labor_seq"/>
+    <Seq incr="1" nm="maquinaria_codigo_maquinaria_seq"/>
+    <Seq incr="1" nm="producto_codigo_producto_seq"/>
+    <Seq incr="1" nm="sector_codigo_sector_seq"/>
+    <Seq incr="1" nm="tipo_ficha_codigo_tipo_ficha_seq"/>
+    <Seq incr="1" nm="unidad_codigo_unidad_seq"/>
+    <Seq incr="1" nm="variedad_codigo_variedad_seq"/>
+  </Sch>
+  <Dgm nm="riego">
+    <RnCf FtSz="9" lkStgy="KeyToKeyStrategy" zm="1.0">
+      <VbCfg>
+        <Fg ky="Auto Number" vl="0"/>
+        <Fg ky="Check" vl="0"/>
+        <Fg ky="Comment" vl="0"/>
+        <Fg ky="Data Type" vl="1"/>
+        <Fg ky="Default" vl="0"/>
+        <Fg ky="ENUM Values" vl="0"/>
+        <Fg ky="Length" vl="1"/>
+        <Fg ky="Name" vl="1"/>
+        <Fg ky="Nullable" vl="0"/>
+        <Fg ky="Schema Name" vl="0"/>
+        <Fg ky="Signed" vl="0"/>
+      </VbCfg>
+    </RnCf>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="aplicacion" x="625" y="215"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="cuartel" x="615" y="134"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="cultivo" x="1110" y="134"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="ficha" x="912" y="286"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="hilera" x="363" y="134"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="labor" x="916" y="367"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="labor_hilera" x="615" y="367"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="maquinaria" x="916" y="418"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="producto" x="912" y="215"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="sector" x="864" y="134"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="tipo_ficha" x="1176" y="286"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="unidad" x="1171" y="215"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="variedad" x="115" y="134"/>
+    <FkGl bkCl="ff000000" nm="riego.aplicacion.fk_aplicacion_ficha"/>
+    <FkGl bkCl="ff000000" nm="riego.aplicacion.fk_aplicacion_hilera"/>
+    <FkGl bkCl="ff000000" nm="riego.aplicacion.fk_aplicacion_producto"/>
+    <FkGl bkCl="ff000000" nm="riego.cuartel.fk_cuartel_sector"/>
+    <FkGl bkCl="ff000000" nm="riego.ficha.fk_ficha_tipo_ficha"/>
+    <FkGl bkCl="ff000000" nm="riego.hilera.fk_hilera_cuartel"/>
+    <FkGl bkCl="ff000000" nm="riego.hilera.fk_hilera_variedad"/>
+    <FkGl bkCl="ff000000" nm="riego.labor_hilera.fk_labor_hilera_ficha"/>
+    <FkGl bkCl="ff000000" nm="riego.labor_hilera.fk_labor_hilera_hilera"/>
+    <FkGl bkCl="ff000000" nm="riego.labor_hilera.fk_labor_hilera_labor"/>
+    <FkGl bkCl="ff000000" nm="riego.labor_hilera.fk_labor_hilera_maquinaria"/>
+    <FkGl bkCl="ff000000" nm="riego.producto.fk_producto_unidad"/>
+    <FkGl bkCl="ff000000" nm="riego.sector.fk_sector_cultivo"/>
+  </Dgm>
+  <RnmMgr NxRnmId="1"/>
+  <DbDocOptionMgr>
+    <BasicOptionMgr>
+      <Name>db.doc.option.mgr</Name>
+      <BooleanOption>
+        <Name>doc.diagrams</Name>
+        <Label>Diagrams</Label>
+        <Value>true</Value>
+      </BooleanOption>
+      <BooleanOption>
+        <Name>doc.fks</Name>
+        <Label>Foreign Keys</Label>
+        <Value>true</Value>
+      </BooleanOption>
+      <BooleanOption>
+        <Name>doc.indexes</Name>
+        <Label>Indexes</Label>
+        <Value>true</Value>
+      </BooleanOption>
+      <BooleanOption>
+        <Name>doc.overwrite.css</Name>
+        <Label>Overwrite CSS File</Label>
+        <Value>true</Value>
+      </BooleanOption>
+      <BooleanOption>
+        <Name>doc.procs</Name>
+        <Label>Procedures</Label>
+        <Value>true</Value>
+      </BooleanOption>
+      <BooleanOption>
+        <Name>doc.schemas</Name>
+        <Label>Schemas</Label>
+        <Value>true</Value>
+      </BooleanOption>
+      <BooleanOption>
+        <Name>doc.sequences</Name>
+        <Label>Sequences</Label>
+        <Value>true</Value>
+      </BooleanOption>
+      <BooleanOption>
+        <Name>doc.tables</Name>
+        <Label>Tables</Label>
+        <Value>true</Value>
+      </BooleanOption>
+      <BooleanOption>
+        <Name>doc.triggers</Name>
+        <Label>Triggers</Label>
+        <Value>true</Value>
+      </BooleanOption>
+      <BooleanOption>
+        <Name>doc.views</Name>
+        <Label>Views</Label>
+        <Value>true</Value>
+      </BooleanOption>
+    </BasicOptionMgr>
+  </DbDocOptionMgr>
+</Db>

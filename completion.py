@@ -142,7 +142,12 @@ class CompletionTipoFicha(CompletionCodigoDescripcion):
 class CompletionSector(CompletionCodigoDescripcion):
 
     def __init__(self, entry = gtk.Entry(), f = None, c = None):
-        CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='sector')        
+        CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='sector')
+    
+class CompletionCultivo(CompletionCodigoDescripcion):
+
+    def __init__(self, entry = gtk.Entry(), f = None, c = None):
+        CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='cultivo') 
 
 class CompletionTipoDocumento(GenericCompletion):
 

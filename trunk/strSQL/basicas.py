@@ -31,6 +31,16 @@ strSelectFicha = """SELECT
                         INNER JOIN """ + config.schema + """.tipo_ficha t
                         ON f.codigo_tipo_ficha = t.codigo_tipo_ficha
                         ORDER BY f.descripcion_ficha"""
+                        
+strSelectSector = """SELECT
+                            f.codigo_cultivo,
+                            t.descripcion_cultivo,
+                            f.descripcion_sector,
+                            f.codigo_sector
+                        FROM """ + config.schema + """.sector f
+                        INNER JOIN """ + config.schema + """.cultivo t
+                        ON f.codigo_cultivo = t.codigo_cultivo
+                        ORDER BY f.descripcion_sector"""
 
 strSelectCuartel = """SELECT c.codigo_cuartel,
                              c.descripcion_cuartel,
@@ -45,11 +55,11 @@ strSelectCuartel = """SELECT c.codigo_cuartel,
                       ON v.codigo_variedad = c.codigo_variedad
                       ORDER BY c.descripcion_cuartel"""
 
-strSelectSector = """SELECT s.*, f.descripcion_ficha
-                    FROM """ + config.schema + """.sector s
-                    INNER JOIN """ + config.schema + """.ficha f
-                    ON s.rut_propietario = f.rut_ficha
-                    ORDER BY s.descripcion_sector"""
+#strSelectSector = """SELECT s.*, f.descripcion_ficha
+#                    FROM """ + config.schema + """.sector s
+#                    INNER JOIN """ + config.schema + """.ficha f
+#                    ON s.rut_propietario = f.rut_ficha
+#                    ORDER BY s.descripcion_sector"""
                     
 strSelectCosecha = """SELECT c.*,
                             f.descripcion_ficha,

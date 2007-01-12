@@ -1,0 +1,15 @@
+ECHO:
+
+Variedad
+Cultivo
+Labor
+Maquinaria
+Unidad
+TipoFicha
+Ficha
+Sector
+
+TODO:
+
+Cuartel (depende de sector)
+Producto

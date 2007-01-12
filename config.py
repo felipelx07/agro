@@ -1,0 +1,5 @@
+DB = "dbname=riego"
+user = "user=postgres"
+password = "password=postgres"
+host = "host=localhost"
+schema = "riego"

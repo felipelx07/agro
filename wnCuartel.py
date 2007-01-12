@@ -15,7 +15,7 @@ import comunes
 import treetohtml
 import config
 
-(CODIGO_CUARTEL,
+(CODIGO_SECTOR,
  DESCRIPCION_SECTOR,
  DESCRIPCION,
  CODIGO_CUARTEL) = range(4)
@@ -70,14 +70,13 @@ class wnCuartel (GladeConnect):
         if model is None or it is None:
             return
         
-        #revisar ESMW
-        #rut = model.get_value(it, CODIGO_CUARTEL)
+        codigo_cuartel = model.get_value(it, CODIGO_CUARTEL)
         descripcion = model.get_value(it, DESCRIPCION)
         
         if dialogos.yesno("¿Desea eliminar el Cuartel <b>%s</b>?\nEsta acción no se puede deshacer\n" % descripcion, self.frm_padre) == gtk.RESPONSE_YES:
             try:
-                #revisar ESMW
-                #llaves = {'rut':rut}
+                
+                llaves = {'codigo_cuartel':codigo_cuartel}
                 sql = ifd.deleteFromDict(config.schema + '.' + table, llaves)
                 self.cursor.execute(sql, llaves)
                 model.remove(it)
@@ -90,11 +89,11 @@ class wnCuartel (GladeConnect):
         if model is None or it is None:
             return
         dlg = dlgCuartel(self.cnx, self.frm_padre, False)
-        dlg.entTipoCuartel.set_text(model.get_value(it, DESCRIPCION_SECTOR))
-        dlg.codigo_sector = model.get_value(it, CODIGO_CUARTEL)
+        dlg.entSector.set_text(model.get_value(it, DESCRIPCION_SECTOR))
+        dlg.codigo_sector = model.get_value(it, CODIGO_SECTOR)
         dlg.pecSector.set_selected(True)
         dlg.entDescripcion.set_text(model.get_value(it, DESCRIPCION))
-        dlg.entRUT.set_text(model.get_value(it, CODIGO_CUARTEL))
+        dlg.entCodigo.set_text(model.get_value(it, CODIGO_CUARTEL))
         dlg.editando = (True)
         response = dlg.dlgCuartel.run()
         if response == gtk.RESPONSE_OK:
@@ -153,7 +152,7 @@ class dlgCuartel(GladeConnect):
         if not self.editando:
             sql = ifd.insertFromDict(schema + "." + table, campos)        
         else:
-            llaves['codigo_sector'] = self.entCodigo.get_text()
+            llaves['codigo_cuartel'] = self.entCodigo.get_text()
             sql, campos=ifd.updateFromDict(schema + "." + table, campos, llaves)
         
         try:   
@@ -161,6 +160,7 @@ class dlgCuartel(GladeConnect):
             self.dlgCuartel.hide()
         except:
             print sys.exc_info()[1]
+            print sql
             
         
     def on_btnCancelar_clicked(self, btn=None):

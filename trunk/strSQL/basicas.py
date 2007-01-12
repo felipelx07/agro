@@ -51,8 +51,17 @@ strSelectCuartel = """SELECT
                         INNER JOIN """ + config.schema + """.sector t
                         ON f.codigo_sector = t.codigo_sector
                         ORDER BY f.descripcion_cuartel"""
-
-
+                        
+strSelectProducto = """SELECT
+                            f.codigo_producto,
+                            f.descripcion_producto,
+                            f.codigo_unidad,
+                            t.descripcion_unidad,                            
+                            f.dosis_propuesta
+                        FROM """ + config.schema + """.producto f
+                        INNER JOIN """ + config.schema + """.unidad t
+                        ON f.codigo_unidad = t.codigo_unidad
+                        ORDER BY f.descripcion_producto"""
                     
 strSelectCosecha = """SELECT c.*,
                             f.descripcion_ficha,
@@ -79,7 +88,7 @@ strSelectDetalleRelacion = """SELECT %s FROM %s WHERE %s = %s"""
 
 strSelectUnidad = """SELECT * FROM """ + config.schema + """.unidad ORDER BY descripcion_unidad"""
 
-strSelectProducto = """SELECT * FROM """ + config.schema + """.producto ORDER BY descripcion_producto"""
+#strSelectProducto = """SELECT * FROM """ + config.schema + """.producto ORDER BY descripcion_producto"""
 
 strSelectTipoDocumento = """SELECT * FROM """ + config.schema + """.tipo_documento ORDER BY codigo_tipo_documento"""
 

@@ -120,7 +120,7 @@ class dlgCuartel(GladeConnect):
         self.editando=editando
         self.codigo_sector = None
         if self.editando:
-            self.entRUT.set_sensitive(False)
+            self.entCodigo.set_sensitive(False)
         
         self.pecSector = completion.CompletionSector(self.entSector,
                 self.sel_sector,

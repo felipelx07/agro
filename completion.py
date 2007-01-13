@@ -59,15 +59,17 @@ class CompletionCuartel(GenericCompletion):
 
     def __init__(self, entry = gtk.Entry(), f = None, c = None, tabla=None):
         s = """SELECT c.descripcion_cuartel,
-                             c.codigo_cuartel,
-                             s.descripcion_sector,
-                             v.descripcion_variedad
-                      FROM """ + schema + """.cuartel c
-                      INNER JOIN """ + schema + """.sector s
-                      ON c.codigo_sector = s.codigo_sector
-                      INNER JOIN """ + schema + """.variedad v
-                      ON v.codigo_variedad = c.codigo_variedad
-                      ORDER BY c.descripcion_cuartel""" 
+                        c.codigo_cuartel
+                        FROM riego.cuartel c                            
+                        ORDER BY c.descripcion_cuartel""" 
+#                             s.descripcion_sector,
+#                             v.descripcion_variedad
+#                      FROM """ + schema + """.cuartel c
+#                      INNER JOIN """ + schema + """.sector s
+#                      ON c.codigo_sector = s.codigo_sector
+#                      INNER JOIN """ + schema + """.variedad v
+#                      ON v.codigo_variedad = c.codigo_variedad
+#                      ORDER BY c.descripcion_cuartel""" 
         GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
         
 class CompletionTipoControl(GenericCompletion):

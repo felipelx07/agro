@@ -62,6 +62,21 @@ strSelectProducto = """SELECT
                         INNER JOIN """ + config.schema + """.unidad t
                         ON f.codigo_unidad = t.codigo_unidad
                         ORDER BY f.descripcion_producto"""
+                        
+strSelectHilera = """SELECT
+                            f.codigo_hilera,
+                            f.descripcion_hilera,
+                            f.codigo_cuartel,
+                            f.codigo_variedad,
+                            t.descripcion_cuartel,
+                            v.descripcion_variedad,                            
+                            f.superficie 
+                        FROM """ + config.schema + """.hilera f 
+                        INNER JOIN """ + config.schema + """.cuartel t 
+                        ON f.codigo_cuartel = t.codigo_cuartel 
+                        INNER JOIN """ + config.schema + """.variedad v 
+                        ON f.codigo_variedad = v.codigo_variedad  
+                        ORDER BY f.descripcion_hilera"""
                     
 strSelectCosecha = """SELECT c.*,
                             f.descripcion_ficha,

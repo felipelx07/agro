@@ -108,7 +108,7 @@ class Agro(GladeConnect):
         return
     
     def on_mnuLabor_activate(self, widget, *args):
-        Labor = wnLabor(self.cnx, self, "vboxLabor")
+        labor = wnLabor(self.cnx, self, "vboxLabor")
         self.add_tab(labor.vboxLabor, "Labor")
         return
     

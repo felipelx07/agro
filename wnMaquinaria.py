@@ -15,8 +15,7 @@ import comunes
 import treetohtml
 import config
 
-(CODIGO,
- DESCRIPCION) = range(2)
+(CODIGO, DESCRIPCION) = range(2)
 
 schema = config.schema
 table = "maquinaria"
@@ -36,7 +35,6 @@ class wnMaquinaria (GladeConnect):
             
         self.crea_columnas()
         self.carga_datos()
-        
     
     def crea_columnas(self):
         columnas = []
@@ -49,8 +47,7 @@ class wnMaquinaria (GladeConnect):
         
     def on_btnImprimir_clicked(self, btn=None):
         t = treetohtml.TreeToHTML(self.treeMaquinaria,"Maquinaria", self.col_data)
-        t.show()        
-
+        t.show()
         
     def carga_datos(self):
         self.modelo = ifd.ListStoreFromSQL(self.cnx, strSelectMaquinaria)

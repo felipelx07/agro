@@ -2,15 +2,12 @@
 # -*- coding: UTF8 	-*-
 import config
 
-strSelectEstanque = """SELECT * FROM """ + config.schema + """.estanque ORDER BY codigo_estanque"""
+strSelectTipoFicha = """SELECT * FROM """ + config.schema + """.tipo_ficha 
+                        ORDER BY codigo_tipo_ficha"""
 
-strSelectTipoFicha = """SELECT * FROM """ + config.schema + """.tipo_ficha ORDER BY codigo_tipo_ficha"""
+strSelectAplicacion = """SELECT * FROM """ + config.schema + """.aplicacion 
+                            ORDER BY codigo_aplicacion"""
 
-strSelectInsumo = """SELECT * FROM """ + config.schema + """.insumo ORDER BY codigo_insumo"""
-
-strSelectTipoAplicacion = """SELECT * FROM """ + config.schema + """.tipo_aplicacion ORDER BY codigo_tipo_aplicacion"""
-
-#strSelectTipoControl = """SELECT * FROM """ + config.schema + """.tipo_control ORDER BY codigo_tipo_control"""
 strSelectTipoControl = """ SELECT
                             s.codigo_tipo_control,
                             s.descripcion_tipo_control,
@@ -103,47 +100,4 @@ strSelectDetalleRelacion = """SELECT %s FROM %s WHERE %s = %s"""
 
 strSelectUnidad = """SELECT * FROM """ + config.schema + """.unidad ORDER BY descripcion_unidad"""
 
-#strSelectProducto = """SELECT * FROM """ + config.schema + """.producto ORDER BY descripcion_producto"""
-
 strSelectTipoDocumento = """SELECT * FROM """ + config.schema + """.tipo_documento ORDER BY codigo_tipo_documento"""
-
-strNextValCodigo = """SELECT nextval('""" + config.schema + """.%s_codigo_%s_seq'::regclass)"""
-
-strSelectDespacho = """SELECT
-                        d.codigo_despacho,
-                        d.codigo_tipo_documento,
-                        t.descripcion_tipo_documento,
-                        d.numero_documento,
-                        d.fecha_despacho,
-                        d.hora_despacho,
-                        d.rut_cliente,
-                        c.descripcion_ficha,
-                        d.rut_transportista,
-                        cc.descripcion_ficha,
-                        d.destino,
-                        d.observaciones,
-                        d.sello_seguridad
-                        FROM """ + config.schema + """.despacho d
-                        INNER JOIN """ + config.schema + """.ficha c
-                        ON d.rut_cliente = c.rut_ficha
-                        join """ + config.schema + """.ficha cc
-                        on d.rut_transportista = cc.rut_ficha
-                        INNER JOIN """ + config.schema + """.tipo_documento t
-                        ON d.codigo_tipo_documento = t.codigo_tipo_documento
-                        ORDER BY d.codigo_despacho"""
-                        
-                        
-strSelectTipoDespacho = """SELECT d.%s,
-                                m.%s,
-                                d.cantidad
-                                FROM %s d
-                                JOIN %s e
-                                ON e.%s = d.%s
-                                JOIN %s m
-                                on d.%s = m.%s
-                                where %s = %s"""
-                                
-                                
-
-strSelectMovimientoEstanque = """select fecha, porcentaje, volumen, movimiento, desce_a, desce_b
-                            from """ + config.schema + """.vw_movimiento_estanque_fecha order by fecha"""

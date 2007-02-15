@@ -61,15 +61,7 @@ class CompletionCuartel(GenericCompletion):
         s = """SELECT c.descripcion_cuartel,
                         c.codigo_cuartel
                         FROM riego.cuartel c                            
-                        ORDER BY c.descripcion_cuartel""" 
-#                             s.descripcion_sector,
-#                             v.descripcion_variedad
-#                      FROM """ + schema + """.cuartel c
-#                      INNER JOIN """ + schema + """.sector s
-#                      ON c.codigo_sector = s.codigo_sector
-#                      INNER JOIN """ + schema + """.variedad v
-#                      ON v.codigo_variedad = c.codigo_variedad
-#                      ORDER BY c.descripcion_cuartel""" 
+                        ORDER BY c.descripcion_cuartel"""
         GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
         
 class CompletionTipoControl(GenericCompletion):
@@ -161,7 +153,13 @@ class CompletionTipoDocumento(GenericCompletion):
                         riego.tipo_documento
                 ORDER BY
                         codigo_tipo_documento"""
-        GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)                        
+        GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
+        
+class CompletionRut(GenericCompletion):
+
+    def __init__(self, entry = gtk.Entry(), f = None, c = None, e = None):
+        s = """SELECT rut FROM riego.ficha ORDER BY codigo_tipo_ficha"""
+        GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
 
 class CompletionInsumo(CompletionCodigoDescripcion):
 
@@ -192,6 +190,11 @@ class CompletionProducto(CompletionCodigoDescripcion):
 
     def __init__(self, entry = gtk.Entry(), f = None, c = None):
         CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='producto')
+        
+class CompletionHilera(CompletionCodigoDescripcion):
+
+    def __init__(self, entry = gtk.Entry(), f = None, c = None):
+        CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='hilera')
 
 if __name__ == "__main__":
     w = gtk.Window()

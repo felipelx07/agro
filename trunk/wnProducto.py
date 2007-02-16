@@ -19,7 +19,9 @@ import config
  DESCRIPCION,
  CODIGO_UNIDAD,
  DESCRIPCION_UNIDAD,
- DOSIS_PROPUESTA) = range(5)
+ DOSIS_PROPUESTA,
+ CODIGO_UNIDAD_DOSIS,
+ DESCRIPCION_UNIDAD_DOSIS) = range(7)
 
 schema = config.schema
 table = "producto"
@@ -45,8 +47,9 @@ class wnProducto (GladeConnect):
         columnas.append ([DESCRIPCION, "Descripcion", "str"])
         columnas.append ([DESCRIPCION_UNIDAD, "Unidad","str"])
         columnas.append ([DOSIS_PROPUESTA, "Dosis","str"])
+        columnas.append ([DESCRIPCION_UNIDAD_DOSIS, "Unidad Dosis","str"])
         
-        self.modelo = gtk.ListStore(*(4*[str]))
+        self.modelo = gtk.ListStore(*(5*[str]))
         SimpleTree.GenColsByModel(self.modelo, columnas, self.treeProducto)
         self.col_data = [x[0] for x in columnas]
         
@@ -97,6 +100,10 @@ class wnProducto (GladeConnect):
         dlg.entDescripcion.set_text(model.get_value(it, DESCRIPCION))
         dlg.entCodigo.set_text(model.get_value(it, CODIGO_PRODUCTO))
         dlg.entDosis.set_text(model.get_value(it, DOSIS_PROPUESTA))
+        dlg.entUnidadDosis.set_text(model.get_value(it, DESCRIPCION_UNIDAD_DOSIS))
+        dlg.codigo_unidad_dosis = model.get_value(it, CODIGO_UNIDAD_DOSIS)
+        dlg.pecUnidadDosis.set_selected(True)
+        #dlg.unidad_dosis = dlg.pecUnidadDosis.select(model.get_value(it, DESCRIPCION_UNIDAD_DOSIS), 1)
         dlg.editando = (True)
         response = dlg.dlgProducto.run()
         if response == gtk.RESPONSE_OK:
@@ -120,16 +127,23 @@ class dlgProducto(GladeConnect):
         self.cursor = self.cnx.cursor()
         self.editando=editando
         self.codigo_unidad = None
+        self.codigo_unidad_dosis = None
         if self.editando:
             self.entCodigo.set_sensitive(False)
         
         self.pecUnidad = completion.CompletionUnidad(self.entUnidad,
                 self.sel_unidad,
                 self.cnx)
+        self.pecUnidadDosis = completion.CompletionUnidadDosis(self.entUnidadDosis,
+                self.sel_unidad_dosis,
+                self.cnx)
         self.dlgProducto.show()
 
     def sel_unidad(self, completion, model, iter):
         self.codigo_unidad = model.get_value(iter, 1)
+    
+    def sel_unidad_dosis(self, completion, model, iter):
+        self.codigo_unidad_dosis = model.get_value(iter, 1)
         
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         
@@ -138,10 +152,14 @@ class dlgProducto(GladeConnect):
             return
         
         if self.entDosis.get_text() == "":
-            dialogos.error("")
+            dialogos.error("Especifique la Dosis Propuesta.")
         
         if self.codigo_unidad is None:
-            dialogos.error("Debe escoger un <b>Producto</b>")
+            dialogos.error("Debe escoger una <b>Unidad</b>")
+            return
+        
+        if self.codigo_unidad_dosis is None:
+            dialogos.error("Debe escoger una <b>Unidad Dosis</b>")
             return
         
         campos = {}
@@ -149,6 +167,7 @@ class dlgProducto(GladeConnect):
         campos['dosis_propuesta']  = self.entDosis.get_text().upper()
         campos['descripcion_producto']  = self.entDescripcion.get_text().upper()
         campos['codigo_unidad'] = self.codigo_unidad
+        campos['codigo_unidad_dosis'] = self.codigo_unidad_dosis
         
         
         if not self.editando:
@@ -160,6 +179,8 @@ class dlgProducto(GladeConnect):
         try:   
             self.cursor.execute(sql, campos)
             self.dlgProducto.hide()
+            print sql
+            print campos
         except:
             print sys.exc_info()[1]
             print sql

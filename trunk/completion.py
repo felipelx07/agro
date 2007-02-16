@@ -185,6 +185,11 @@ class CompletionUnidad(CompletionCodigoDescripcion):
 
     def __init__(self, entry = gtk.Entry(), f = None, c = None):
         CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='unidad')
+        
+class CompletionUnidadDosis(CompletionCodigoDescripcion):
+
+    def __init__(self, entry = gtk.Entry(), f = None, c = None):
+        CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='unidad_dosis')
 
 class CompletionProducto(CompletionCodigoDescripcion):
 

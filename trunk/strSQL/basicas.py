@@ -54,10 +54,14 @@ strSelectProducto = """SELECT
                             f.descripcion_producto,
                             f.codigo_unidad,
                             t.descripcion_unidad,                            
-                            f.dosis_propuesta
+                            f.dosis_propuesta,
+                            f.codigo_unidad_dosis,
+                            d.descripcion_unidad_dosis
                         FROM """ + config.schema + """.producto f
                         INNER JOIN """ + config.schema + """.unidad t
-                        ON f.codigo_unidad = t.codigo_unidad
+                        ON f.codigo_unidad = t.codigo_unidad  
+                        INNER JOIN """ + config.schema + """.unidad_dosis d
+                        ON f.codigo_unidad_dosis = d.codigo_unidad_dosis
                         ORDER BY f.descripcion_producto"""
                         
 strSelectHilera = """SELECT

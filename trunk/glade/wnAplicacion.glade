@@ -5,7 +5,7 @@
 
 <widget class="GtkWindow" id="wnAplicacion">
   <property name="visible">True</property>
-  <property name="title" translatable="yes">Hilera</property>
+  <property name="title" translatable="yes">Aplicación</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
@@ -151,7 +151,7 @@
 
 <widget class="GtkDialog" id="dlgAplicacion">
   <property name="visible">True</property>
-  <property name="title" translatable="yes">Aplicacion</property>
+  <property name="title" translatable="yes">Aplicación</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>

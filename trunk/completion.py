@@ -158,7 +158,7 @@ class CompletionTipoDocumento(GenericCompletion):
 class CompletionRut(GenericCompletion):
 
     def __init__(self, entry = gtk.Entry(), f = None, c = None, e = None):
-        s = """SELECT rut FROM riego.ficha ORDER BY codigo_tipo_ficha"""
+        s = """SELECT rut, descripcion_ficha FROM riego.ficha ORDER BY codigo_tipo_ficha"""
         GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
 
 class CompletionInsumo(CompletionCodigoDescripcion):

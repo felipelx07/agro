@@ -92,6 +92,8 @@ strSelectLabor = """SELECT * FROM """ + config.schema + """.labor ORDER BY codig
 
 strSelectMaquinaria = """SELECT * FROM """ + config.schema + """.maquinaria ORDER BY codigo_maquinaria"""
 
+strSelectImplemento = """SELECT * FROM """ + config.schema + """.implemento ORDER BY codigo_implemento"""
+
 strSelectVariedad = """SELECT * FROM """ + config.schema + """.variedad ORDER BY codigo_variedad"""
 
 strSelectCultivo = """SELECT * FROM """ + config.schema + """.cultivo ORDER BY codigo_cultivo"""

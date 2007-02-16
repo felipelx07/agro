@@ -196,6 +196,16 @@ class CompletionProducto(CompletionCodigoDescripcion):
     def __init__(self, entry = gtk.Entry(), f = None, c = None):
         CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='producto')
         
+class CompletionMaquinaria(CompletionCodigoDescripcion):
+
+    def __init__(self, entry = gtk.Entry(), f = None, c = None):
+        CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='maquinaria')
+
+class CompletionImplemento(CompletionCodigoDescripcion):
+
+    def __init__(self, entry = gtk.Entry(), f = None, c = None):
+        CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='implemento')
+        
 class CompletionHilera(CompletionCodigoDescripcion):
 
     def __init__(self, entry = gtk.Entry(), f = None, c = None):

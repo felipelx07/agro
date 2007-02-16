@@ -179,8 +179,6 @@ class dlgProducto(GladeConnect):
         try:   
             self.cursor.execute(sql, campos)
             self.dlgProducto.hide()
-            print sql
-            print campos
         except:
             print sys.exc_info()[1]
             print sql

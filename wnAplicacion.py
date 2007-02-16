@@ -5,6 +5,7 @@ from GladeConnect import GladeConnect
 import gtk
 import sys
 import time
+import datetime
 import dialogos
 import debugwindow
 import SimpleTree
@@ -117,7 +118,7 @@ class wnAplicacion (GladeConnect):
         dlg.entRut.set_text(model.get_value(it, DESCRIPCION_FICHA))
         dlg.rut = model.get_value(it, RUT)
         dlg.pecRut.set_selected(True)
-        dlg.entFecha.set_date(comunes.GetDateFromModel(model.get_value(it, FECHA_RECEPCION).split()[0]))        
+        dlg.entFecha.set_date(comunes.GetDateFromModel(model.get_value(it, FECHA).split()[0]))        
         dlg.entCodigo.set_text(model.get_value(it, CODIGO_APLICACION))
         dlg.entDosis.set_text(model.get_value(it, DOSIS))
         dlg.entMaquinaria.set_text(model.get_value(it, DESCRIPCION_MAQUINARIA))
@@ -148,7 +149,11 @@ class dlgAplicacion(GladeConnect):
         self.cnx = conexion
         self.cursor = self.cnx.cursor()
         self.editando=editando
-        self.codigo_cuartel = None
+        self.codigo_hilera = None
+        self.codigo_producto = None
+        self.codigo_maquinaria = None
+        self.codigo_implemento = None
+        self.rut = None
         if self.editando:
             self.entCodigo.set_sensitive(False)
         
@@ -188,16 +193,10 @@ class dlgAplicacion(GladeConnect):
         
         fecha = self.entFecha.get_date()
         
-        if self.entDescripcion.get_text() == "":
-            dialogos.error("El campo <b>Descripción Aplicacion</b> no puede estar vacío")
-            return
+        #poner if para hilera, producto, maquinaria e implemento
         
         if self.entDosis.get_text() == "":
-            dialogos.error("Dosis no puede ser vacia.")
-        
-        if self.codigo_cuartel is None:
-            dialogos.error("Debe escoger una <b>Aplicacion</b>")
-            return
+            dialogos.error("La dosis no puede ser vacia.")
         
         campos = {}
         llaves = {}

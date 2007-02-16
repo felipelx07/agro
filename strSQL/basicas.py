@@ -100,4 +100,6 @@ strSelectDetalleRelacion = """SELECT %s FROM %s WHERE %s = %s"""
 
 strSelectUnidad = """SELECT * FROM """ + config.schema + """.unidad ORDER BY descripcion_unidad"""
 
+strSelectUnidadDosis = """SELECT * FROM """ + config.schema + """.unidad_dosis ORDER BY descripcion_unidad_dosis"""
+
 strSelectTipoDocumento = """SELECT * FROM """ + config.schema + """.tipo_documento ORDER BY codigo_tipo_documento"""

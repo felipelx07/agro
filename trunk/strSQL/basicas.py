@@ -5,9 +5,6 @@ import config
 strSelectTipoFicha = """SELECT * FROM """ + config.schema + """.tipo_ficha 
                         ORDER BY codigo_tipo_ficha"""
 
-strSelectAplicacion = """SELECT * FROM """ + config.schema + """.aplicacion 
-                            ORDER BY codigo_aplicacion"""
-
 strSelectTipoControl = """ SELECT
                             s.codigo_tipo_control,
                             s.descripcion_tipo_control,
@@ -63,6 +60,33 @@ strSelectProducto = """SELECT
                         INNER JOIN """ + config.schema + """.unidad_dosis d
                         ON f.codigo_unidad_dosis = d.codigo_unidad_dosis
                         ORDER BY f.descripcion_producto"""
+                       
+strSelectAplicacion = """SELECT
+                            a.codigo_aplicacion,
+                            a.codigo_hilera,
+                            a.codigo_producto,
+                            h.descripcion_hilera,
+                            p.descripcion_producto,                            
+                            a.dosis,
+                            a.fecha,
+                            a.rut,
+                            f.descripcion_ficha,
+                            a.codigo_maquinaria,
+                            a.codigo_implemento,
+                            m.descripcion_maquinaria,
+                            i.descripcion_implemento
+                        FROM """ + config.schema + """.aplicacion a
+                        INNER JOIN """ + config.schema + """.hilera h
+                        ON a.codigo_hilera = h.codigo_hilera  
+                        INNER JOIN """ + config.schema + """.producto p
+                        ON a.codigo_producto = p.codigo_producto 
+                        INNER JOIN """ + config.schema + """.ficha f
+                        ON a.rut = f.rut 
+                        INNER JOIN """ + config.schema + """.maquinaria m
+                        ON a.codigo_maquinaria = m.codigo_maquinaria 
+                        INNER JOIN """ + config.schema + """.implemento i
+                        ON a.codigo_implemento = i.codigo_implemento 
+                        ORDER BY a.codigo_aplicacion"""
                         
 strSelectHilera = """SELECT
                             f.codigo_hilera,

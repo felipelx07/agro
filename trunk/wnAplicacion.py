@@ -4,6 +4,7 @@
 from GladeConnect import GladeConnect
 import gtk
 import sys
+import time
 import dialogos
 import debugwindow
 import SimpleTree
@@ -22,7 +23,12 @@ import config
  DESCRIPCION_PRODUCTO,
  DOSIS,
  FECHA,
- RUT) = range(8)
+ RUT,
+ DESCRIPCION_FICHA,
+ CODIGO_MAQUINARIA,
+ CODIGO_IMPLEMENTO,
+ DESCRIPCION_MAQUINARIA,
+ DESCRIPCION_IMPLEMENTO) = range(13)
 
 schema = config.schema
 table = "aplicacion"
@@ -50,8 +56,11 @@ class wnAplicacion (GladeConnect):
         columnas.append ([DOSIS, "Dosis","str"])
         columnas.append ([FECHA, "Fecha","str"])
         columnas.append ([RUT, "Rut","str"])
+        columnas.append ([DESCRIPCION_MAQUINARIA, "Maquinaria","str"])
+        columnas.append ([DESCRIPCION_IMPLEMENTO, "Implemento","str"])
         
-        self.modelo = gtk.ListStore(*(6*[str]))
+        
+        self.modelo = gtk.ListStore(*(8*[str]))
         SimpleTree.GenColsByModel(self.modelo, columnas, self.treeAplicacion)
         self.col_data = [x[0] for x in columnas]
         
@@ -105,14 +114,18 @@ class wnAplicacion (GladeConnect):
         dlg.entProducto.set_text(model.get_value(it, DESCRIPCION_PRODUCTO))
         dlg.codigo_producto = model.get_value(it, CODIGO_PRODUCTO)
         dlg.pecProducto.set_selected(True)
-        dlg.entRut.set_text(model.get_value(it, DESCRIPCION_RUT))
-        dlg.codigo_rut = model.get_value(it, CODIGO_RUT)
+        dlg.entRut.set_text(model.get_value(it, DESCRIPCION_FICHA))
+        dlg.rut = model.get_value(it, RUT)
         dlg.pecRut.set_selected(True)
-        
-        dlg.entFecha.set_date(comunes.GetDateFromModel(model.get_value(it, FECHA_RECEPCION).split()[0]))
-        
+        dlg.entFecha.set_date(comunes.GetDateFromModel(model.get_value(it, FECHA_RECEPCION).split()[0]))        
         dlg.entCodigo.set_text(model.get_value(it, CODIGO_APLICACION))
         dlg.entDosis.set_text(model.get_value(it, DOSIS))
+        dlg.entMaquinaria.set_text(model.get_value(it, DESCRIPCION_MAQUINARIA))
+        dlg.codigo_maquinaria = model.get_value(it, CODIGO_MAQUINARIA)
+        dlg.pecMaquinaria.set_selected(True)
+        dlg.entImplemento.set_text(model.get_value(it, DESCRIPCION_IMPLEMENTO))
+        dlg.codigo_implemento = model.get_value(it, CODIGO_IMPLEMENTO)
+        dlg.pecImplemento.set_selected(True)
         dlg.editando = (True)
         response = dlg.dlgAplicacion.run()
         if response == gtk.RESPONSE_OK:
@@ -148,6 +161,12 @@ class dlgAplicacion(GladeConnect):
         self.pecRut = completion.CompletionRut(self.entRut,
                 self.sel_rut,
                 self.cnx)
+        self.pecMaquinaria = completion.CompletionMaquinaria(self.entMaquinaria,
+                self.sel_maquinaria,
+                self.cnx)
+        self.pecImplemento = completion.CompletionImplemento(self.entImplemento,
+                self.sel_implemento,
+                self.cnx)
         self.dlgAplicacion.show()
 
     def sel_hilera(self, completion, model, iter):
@@ -158,6 +177,12 @@ class dlgAplicacion(GladeConnect):
     
     def sel_rut(self, completion, model, iter):
         self.rut = model.get_value(iter, 1)
+    
+    def sel_maquinaria(self, completion, model, iter):
+        self.codigo_maquinaria = model.get_value(iter, 1)
+        
+    def sel_implemento(self, completion, model, iter):
+        self.codigo_implemento = model.get_value(iter, 1)
         
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         
@@ -176,12 +201,14 @@ class dlgAplicacion(GladeConnect):
         
         campos = {}
         llaves = {}
-        campos['rut']  = self.entRut.get_text().upper()
-        campos['fecha'] = fecha.strftime("%Y/%m/%d")
-        campos['dosis']  = self.entDosis.get_text().upper()
-        campos['codigo_producto'] = self.codigo_producto
-        campos['codigo_hilera'] = self.codigo_hilera
         
+        campos['codigo_hilera'] = self.codigo_hilera
+        campos['codigo_producto'] = self.codigo_producto
+        campos['dosis']  = self.entDosis.get_text().upper()
+        campos['fecha'] = fecha.strftime("%Y/%m/%d")
+        campos['rut']  = self.entRut.get_text().upper()
+        campos['codigo_maquinaria'] = self.codigo_maquinaria
+        campos['codigo_implemento'] = self.codigo_implemento
         
         if not self.editando:
             sql = ifd.insertFromDict(schema + "." + table, campos)        
@@ -192,6 +219,8 @@ class dlgAplicacion(GladeConnect):
         try:   
             self.cursor.execute(sql, campos)
             self.dlgAplicacion.hide()
+            print sql
+            print campos
         except:
             print sys.exc_info()[1]
             print sql

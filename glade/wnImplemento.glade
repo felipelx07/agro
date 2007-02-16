@@ -3,9 +3,9 @@
 
 <glade-interface>
 
-<widget class="GtkWindow" id="wnUnidadDosis">
+<widget class="GtkWindow" id="wnImplemento">
   <property name="visible">True</property>
-  <property name="title" translatable="yes">Unidad Dosis</property>
+  <property name="title" translatable="yes">Implemento</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
@@ -21,7 +21,7 @@
   <signal name="destroy_event" handler="on_quit" last_modification_time="Mon, 23 Oct 2006 10:22:33 GMT"/>
 
   <child>
-    <widget class="GtkVBox" id="vboxUnidadDosis">
+    <widget class="GtkVBox" id="vboxImplemento">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">0</property>
@@ -126,7 +126,7 @@
 	  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 	  <child>
-	    <widget class="GtkTreeView" id="treeUnidadDosis">
+	    <widget class="GtkTreeView" id="treeImplemento">
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="headers_visible">True</property>
@@ -150,9 +150,9 @@
   </child>
 </widget>
 
-<widget class="GtkDialog" id="dlgUnidadDosis">
+<widget class="GtkDialog" id="dlgImplemento">
   <property name="visible">True</property>
-  <property name="title" translatable="yes">Unidad Dosis</property>
+  <property name="title" translatable="yes">Implemento</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
@@ -226,7 +226,7 @@
 	  <child>
 	    <widget class="GtkLabel" id="label1">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">Codigo Unidad Dosis:</property>
+	      <property name="label" translatable="yes">Codigo Implemento:</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">False</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -254,7 +254,7 @@
 	  <child>
 	    <widget class="GtkLabel" id="label2">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">Descripción Unidad Dosis:</property>
+	      <property name="label" translatable="yes">Descripción Implemento:</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">False</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>

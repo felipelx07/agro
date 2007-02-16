@@ -91,9 +91,8 @@ class wnAplicacion (GladeConnect):
             return
         
         codigo_aplicacion = model.get_value(it, CODIGO_APLICACION)
-        descripcion = model.get_value(it, DESCRIPCION)
         
-        if dialogos.yesno("¿Desea eliminar la Aplicacion <b>%s</b>?\nEsta acción no se puede deshacer\n" % descripcion, self.frm_padre) == gtk.RESPONSE_YES:
+        if dialogos.yesno("¿Desea eliminar la Aplicacion <b>%s</b>?\nEsta acción no se puede deshacer\n" % codigo_aplicacion, self.frm_padre) == gtk.RESPONSE_YES:
             try:
                 
                 llaves = {'codigo_aplicacion':codigo_aplicacion}
@@ -112,21 +111,27 @@ class wnAplicacion (GladeConnect):
         dlg.entHilera.set_text(model.get_value(it, DESCRIPCION_HILERA))
         dlg.codigo_hilera = model.get_value(it, CODIGO_HILERA)
         dlg.pecHilera.set_selected(True)
+        
         dlg.entProducto.set_text(model.get_value(it, DESCRIPCION_PRODUCTO))
         dlg.codigo_producto = model.get_value(it, CODIGO_PRODUCTO)
         dlg.pecProducto.set_selected(True)
-        dlg.entRut.set_text(model.get_value(it, DESCRIPCION_FICHA))
+        
+        dlg.entRut.set_text(model.get_value(it, RUT))
         dlg.rut = model.get_value(it, RUT)
         dlg.pecRut.set_selected(True)
-        dlg.entFecha.set_date(comunes.GetDateFromModel(model.get_value(it, FECHA).split()[0]))        
+        dlg.entFecha.set_date(comunes.GetDateFromModel(model.get_value(it, FECHA).split()[0]))
+        
         dlg.entCodigo.set_text(model.get_value(it, CODIGO_APLICACION))
         dlg.entDosis.set_text(model.get_value(it, DOSIS))
+        
         dlg.entMaquinaria.set_text(model.get_value(it, DESCRIPCION_MAQUINARIA))
         dlg.codigo_maquinaria = model.get_value(it, CODIGO_MAQUINARIA)
         dlg.pecMaquinaria.set_selected(True)
+        
         dlg.entImplemento.set_text(model.get_value(it, DESCRIPCION_IMPLEMENTO))
         dlg.codigo_implemento = model.get_value(it, CODIGO_IMPLEMENTO)
         dlg.pecImplemento.set_selected(True)
+        
         dlg.editando = (True)
         response = dlg.dlgAplicacion.run()
         if response == gtk.RESPONSE_OK:
@@ -172,7 +177,7 @@ class dlgAplicacion(GladeConnect):
         self.pecImplemento = completion.CompletionImplemento(self.entImplemento,
                 self.sel_implemento,
                 self.cnx)
-        self.dlgAplicacion.show()
+        self.dlgAplicacion.show_all()
 
     def sel_hilera(self, completion, model, iter):
         self.codigo_hilera = model.get_value(iter, 1)
@@ -218,8 +223,6 @@ class dlgAplicacion(GladeConnect):
         try:   
             self.cursor.execute(sql, campos)
             self.dlgAplicacion.hide()
-            print sql
-            print campos
         except:
             print sys.exc_info()[1]
             print sql

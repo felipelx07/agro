@@ -92,16 +92,14 @@ class CompletionCodigoDescripcion(GenericCompletion):
 
 class CompletionFicha(GenericCompletion):
 
-    def __init__(self, entry = gtk.Entry(), f = None, c = None, tipo_ficha=None):
-        s = """SELECT
+    def __init__(self, entry = gtk.Entry(), f = None, c = None):
+        s = """SELECT                       
                         descripcion_ficha,
                         rut
                 FROM
-                        riego.ficha
-                WHERE
-                        codigo_tipo_ficha = %s
+                        """ + schema + """.ficha
                 ORDER BY
-                        descripcion_ficha""" % (tipo_ficha)
+                        descripcion_ficha"""
         GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
 
 class CompletionPropietario(CompletionFicha):

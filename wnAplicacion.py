@@ -56,10 +56,9 @@ class wnAplicacion (GladeConnect):
         columnas.append ([DESCRIPCION_PRODUCTO, "Producto","str"])
         columnas.append ([DOSIS, "Dosis","str"])
         columnas.append ([FECHA, "Fecha","str"])
-        columnas.append ([RUT, "Rut","str"])
+        columnas.append ([DESCRIPCION_FICHA, "Ficha","str"])
         columnas.append ([DESCRIPCION_MAQUINARIA, "Maquinaria","str"])
         columnas.append ([DESCRIPCION_IMPLEMENTO, "Implemento","str"])
-        
         
         self.modelo = gtk.ListStore(*(8*[str]))
         SimpleTree.GenColsByModel(self.modelo, columnas, self.treeAplicacion)
@@ -116,9 +115,10 @@ class wnAplicacion (GladeConnect):
         dlg.codigo_producto = model.get_value(it, CODIGO_PRODUCTO)
         dlg.pecProducto.set_selected(True)
         
-        dlg.entRut.set_text(model.get_value(it, RUT))
+        dlg.entFicha.set_text(model.get_value(it, DESCRIPCION_FICHA))
         dlg.rut = model.get_value(it, RUT)
-        dlg.pecRut.set_selected(True)
+        dlg.pecFicha.set_selected(True)
+        
         dlg.entFecha.set_date(comunes.GetDateFromModel(model.get_value(it, FECHA).split()[0]))
         
         dlg.entCodigo.set_text(model.get_value(it, CODIGO_APLICACION))
@@ -168,8 +168,8 @@ class dlgAplicacion(GladeConnect):
         self.pecProducto = completion.CompletionProducto(self.entProducto,
                 self.sel_producto,
                 self.cnx)
-        self.pecRut = completion.CompletionRut(self.entRut,
-                self.sel_rut,
+        self.pecFicha = completion.CompletionFicha(self.entFicha,
+                self.sel_ficha,
                 self.cnx)
         self.pecMaquinaria = completion.CompletionMaquinaria(self.entMaquinaria,
                 self.sel_maquinaria,
@@ -185,7 +185,7 @@ class dlgAplicacion(GladeConnect):
     def sel_producto(self, completion, model, iter):
         self.codigo_producto = model.get_value(iter, 1)
     
-    def sel_rut(self, completion, model, iter):
+    def sel_ficha(self, completion, model, iter):
         self.rut = model.get_value(iter, 1)
     
     def sel_maquinaria(self, completion, model, iter):
@@ -210,7 +210,7 @@ class dlgAplicacion(GladeConnect):
         campos['codigo_producto'] = self.codigo_producto
         campos['dosis']  = self.entDosis.get_text().upper()
         campos['fecha'] = fecha.strftime("%Y/%m/%d")
-        campos['rut']  = self.entRut.get_text().upper()
+        campos['rut']  = self.rut
         campos['codigo_maquinaria'] = self.codigo_maquinaria
         campos['codigo_implemento'] = self.codigo_implemento
         

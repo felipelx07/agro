@@ -18,8 +18,8 @@ from wnLabor import wnLabor
 from wnMaquinaria import wnMaquinaria
 from wnHilera import wnHilera
 from wnCultivo import wnCultivo
-#from wnAplicacion import wnAplicacion
-#from wnLaborHilera import wnLaborHilera
+from wnAplicacion import wnAplicacion
+from wnLaborHilera import wnLaborHilera
 import config
 
 class Agro(GladeConnect):
@@ -133,9 +133,8 @@ class Agro(GladeConnect):
         return
     
     def on_mnuLaborHilera_activate(self, widget, *args):
-        #revisar una vez creado wnLaborHilera y su glade...
         labor_hilera = wnLaborHilera(self.cnx, self, "vboxLaborHilera")
-        self.add_tab(LaborHilera.vboxLaborHilera, "LaborHilera")
+        self.add_tab(labor_hilera.vboxLaborHilera, "Labor Hilera")
         return
         
 if __name__ == "__main__":

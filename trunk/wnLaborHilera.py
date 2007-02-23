@@ -10,39 +10,33 @@ import dialogos
 import debugwindow
 import SimpleTree
 import ifd
-from strSQL.basicas import strSelectAplicacion
+from strSQL.basicas import strSelectLaborHilera
 from psycopg import connect
 import completion
 import comunes
 import treetohtml
 import config
 
-(CODIGO_APLICACION,
- CODIGO_HILERA,
- CODIGO_PRODUCTO,
+(CODIGO_HILERA,
  DESCRIPCION_HILERA,
- DESCRIPCION_PRODUCTO,
- DOSIS,
+ CODIGO_LABOR,
+ DESCRIPCION_LABOR,
  FECHA,
  RUT,
- DESCRIPCION_FICHA,
- CODIGO_MAQUINARIA,
- CODIGO_IMPLEMENTO,
- DESCRIPCION_MAQUINARIA,
- DESCRIPCION_IMPLEMENTO) = range(13)
+ DESCRIPCION_FICHA) = range(7)
 
 schema = config.schema
-table = "aplicacion"
+table = "labor_hilera"
 
-class wnAplicacion (GladeConnect):
-    def __init__(self, conexion=None, padre=None, root="wnAplicacion"):
-        GladeConnect.__init__(self, "glade/wnAplicacion.glade", root)
+class wnLaborHilera (GladeConnect):
+    def __init__(self, conexion=None, padre=None, root="wnLaborHilera"):
+        GladeConnect.__init__(self, "glade/wnLaborHilera.glade", root)
         self.cnx = conexion
         self.cursor = self.cnx.cursor()
         self.padre = padre
         if padre is None :
-            self.wnAplicacion.maximize()
-            self.frm_padre = self.wnAplicacion
+            self.wnLaborHilera.maximize()
+            self.frm_padre = self.wnLaborHilera
         else:
             self.frm_padre = padre.frm_padre
             
@@ -51,50 +45,47 @@ class wnAplicacion (GladeConnect):
 
     def crea_columnas(self):
         columnas = []
-        columnas.append ([CODIGO_APLICACION, "Aplicacion", "str"])
+        columnas.append ([DESCRIPCION_LABOR, "Labor", "str"])
         columnas.append ([DESCRIPCION_HILERA, "Hilera","str"])
-        columnas.append ([DESCRIPCION_PRODUCTO, "Producto","str"])
-        columnas.append ([DOSIS, "Dosis","str"])
         columnas.append ([FECHA, "Fecha","str"])
         columnas.append ([DESCRIPCION_FICHA, "Ficha","str"])
-        columnas.append ([DESCRIPCION_MAQUINARIA, "Maquinaria","str"])
-        columnas.append ([DESCRIPCION_IMPLEMENTO, "Implemento","str"])
         
-        self.modelo = gtk.ListStore(*(8*[str]))
-        SimpleTree.GenColsByModel(self.modelo, columnas, self.treeAplicacion)
+        self.modelo = gtk.ListStore(*(4*[str]))
+        SimpleTree.GenColsByModel(self.modelo, columnas, self.treeLaborHilera)
         self.col_data = [x[0] for x in columnas]
         
     def on_btnImprimir_clicked(self, btn=None):
-        t = treetohtml.TreeToHTML(self.treeAplicacion,"Aplicacion", self.col_data)
+        t = treetohtml.TreeToHTML(self.treeLaborHilera,"Labor Hilera", self.col_data)
         t.show()        
     def carga_datos(self):
         
-        self.modelo = ifd.ListStoreFromSQL(self.cnx, strSelectAplicacion)
-        self.treeAplicacion.set_model(self.modelo)
+        self.modelo = ifd.ListStoreFromSQL(self.cnx, strSelectLaborHilera)
+        self.treeLaborHilera.set_model(self.modelo)
 
     def on_btnAnadir_clicked(self, btn=None, data=None):
-        dlg = dlgAplicacion(self.cnx, self.frm_padre, False)
+        dlg = dlgLaborHilera(self.cnx, self.frm_padre, False)
         dlg.editando=False
         
         dlg.entFecha.set_date(datetime.date.today())
         
-        response = dlg.dlgAplicacion.run()
+        response = dlg.dlgLaborHilera.run()
         if response == gtk.RESPONSE_OK:
             self.carga_datos()
     
     def on_btnQuitar_clicked(self, btn=None):
         
-        selection = self.treeAplicacion.get_selection()
+        selection = self.treeLaborHilera.get_selection()
         model, it = selection.get_selected()
         if model is None or it is None:
             return
         
-        codigo_aplicacion = model.get_value(it, CODIGO_APLICACION)
+        codigo_labor = model.get_value(it, CODIGO_LABOR)
+        descripcion = codigo_labor
         
-        if dialogos.yesno("¿Desea eliminar la Aplicacion <b>%s</b>?\nEsta acción no se puede deshacer\n" % codigo_aplicacion, self.frm_padre) == gtk.RESPONSE_YES:
+        if dialogos.yesno("¿Desea eliminar la Labor Hilera <b>%s</b>?\nEsta acción no se puede deshacer\n" % descripcion, self.frm_padre) == gtk.RESPONSE_YES:
             try:
                 
-                llaves = {'codigo_aplicacion':codigo_aplicacion}
+                llaves = {'codigo_labor':codigo_labor}
                 sql = ifd.deleteFromDict(config.schema + '.' + table, llaves)
                 self.cursor.execute(sql, llaves)
                 model.remove(it)
@@ -103,17 +94,17 @@ class wnAplicacion (GladeConnect):
                  dialogos.error("<b>NO SE PUEDE ELIMINAR</b>\nExisten datos relacionados con:\n<b>%s</b>"%descripcion)
         
     def on_btnPropiedades_clicked(self, btn=None):
-        model, it = self.treeAplicacion.get_selection().get_selected()
+        model, it = self.treeLaborHilera.get_selection().get_selected()
         if model is None or it is None:
             return
-        dlg = dlgAplicacion(self.cnx, self.frm_padre, False)
+        dlg = dlgLaborHilera(self.cnx, self.frm_padre, False)
         dlg.entHilera.set_text(model.get_value(it, DESCRIPCION_HILERA))
         dlg.codigo_hilera = model.get_value(it, CODIGO_HILERA)
         dlg.pecHilera.set_selected(True)
         
-        dlg.entProducto.set_text(model.get_value(it, DESCRIPCION_PRODUCTO))
-        dlg.codigo_producto = model.get_value(it, CODIGO_PRODUCTO)
-        dlg.pecProducto.set_selected(True)
+        dlg.entLabor.set_text(model.get_value(it, DESCRIPCION_LABOR))
+        dlg.codigo_labor = model.get_value(it, CODIGO_LABOR)
+        dlg.pecLabor.set_selected(True)
         
         dlg.entFicha.set_text(model.get_value(it, DESCRIPCION_FICHA))
         dlg.rut = model.get_value(it, RUT)
@@ -121,19 +112,8 @@ class wnAplicacion (GladeConnect):
         
         dlg.entFecha.set_date(comunes.GetDateFromModel(model.get_value(it, FECHA).split()[0]))
         
-        dlg.entCodigo.set_text(model.get_value(it, CODIGO_APLICACION))
-        dlg.entDosis.set_text(model.get_value(it, DOSIS))
-        
-        dlg.entMaquinaria.set_text(model.get_value(it, DESCRIPCION_MAQUINARIA))
-        dlg.codigo_maquinaria = model.get_value(it, CODIGO_MAQUINARIA)
-        dlg.pecMaquinaria.set_selected(True)
-        
-        dlg.entImplemento.set_text(model.get_value(it, DESCRIPCION_IMPLEMENTO))
-        dlg.codigo_implemento = model.get_value(it, CODIGO_IMPLEMENTO)
-        dlg.pecImplemento.set_selected(True)
-        
         dlg.editando = (True)
-        response = dlg.dlgAplicacion.run()
+        response = dlg.dlgLaborHilera.run()
         if response == gtk.RESPONSE_OK:
             self.modelo.clear()
             self.carga_datos()
@@ -142,22 +122,19 @@ class wnAplicacion (GladeConnect):
         if self.padre is None:
             self.on_exit()
         else:
-            self.padre.remove_tab("Aplicacion")
+            self.padre.remove_tab("Labor Hilera")
             
-    def on_treeAplicacion_row_activated(self, tree=None, path=None, col=None):
+    def on_treeLaborHilera_row_activated(self, tree=None, path=None, col=None):
         self.on_btnPropiedades_clicked()
 
 
-class dlgAplicacion(GladeConnect):
+class dlgLaborHilera(GladeConnect):
     def __init__(self, conexion=None, padre=None, editando=None):
-        GladeConnect.__init__(self, "glade/wnAplicacion.glade", "dlgAplicacion")
+        GladeConnect.__init__(self, "glade/wnLaborHilera.glade", "dlgLaborHilera")
         self.cnx = conexion
         self.cursor = self.cnx.cursor()
         self.editando=editando
         self.codigo_hilera = None
-        self.codigo_producto = None
-        self.codigo_maquinaria = None
-        self.codigo_implemento = None
         self.rut = None
         if self.editando:
             self.entCodigo.set_sensitive(False)
@@ -165,34 +142,23 @@ class dlgAplicacion(GladeConnect):
         self.pecHilera = completion.CompletionHilera(self.entHilera,
                 self.sel_hilera,
                 self.cnx)
-        self.pecProducto = completion.CompletionProducto(self.entProducto,
-                self.sel_producto,
+        self.pecLabor = completion.CompletionLabor(self.entLabor,
+                self.sel_labor,
                 self.cnx)
         self.pecFicha = completion.CompletionFicha(self.entFicha,
                 self.sel_ficha,
                 self.cnx)
-        self.pecMaquinaria = completion.CompletionMaquinaria(self.entMaquinaria,
-                self.sel_maquinaria,
-                self.cnx)
-        self.pecImplemento = completion.CompletionImplemento(self.entImplemento,
-                self.sel_implemento,
-                self.cnx)
-        self.dlgAplicacion.show_all()
+        
+        self.dlgLaborHilera.show_all()
 
     def sel_hilera(self, completion, model, iter):
         self.codigo_hilera = model.get_value(iter, 1)
         
-    def sel_producto(self, completion, model, iter):
-        self.codigo_producto = model.get_value(iter, 1)
+    def sel_labor(self, completion, model, iter):
+        self.codigo_labor = model.get_value(iter, 1)
     
     def sel_ficha(self, completion, model, iter):
         self.rut = model.get_value(iter, 1)
-    
-    def sel_maquinaria(self, completion, model, iter):
-        self.codigo_maquinaria = model.get_value(iter, 1)
-        
-    def sel_implemento(self, completion, model, iter):
-        self.codigo_implemento = model.get_value(iter, 1)
         
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         
@@ -201,22 +167,6 @@ class dlgAplicacion(GladeConnect):
         if self.entHilera.get_text() == "":
             dialogos.error("La hilera no puede ser vacia.")
             return
-                
-        if self.entProducto.get_text() == "":
-            dialogos.error("El producto no puede ser vacio.")
-            return
-                
-        if self.entMaquinaria.get_text() == "":
-            dialogos.error("La maquinaria no puede ser vacia.")
-            return
-               
-        if self.entImplemento.get_text() == "":
-            dialogos.error("El implemento no puede ser vacio.")
-            return
-                
-        if self.entDosis.get_text() == "":
-            dialogos.error("La dosis no puede ser vacia.")
-            return
         
         if self.entFicha.get_text() == "":
             dialogos.error("La ficha no puede ser vacia.")
@@ -224,31 +174,28 @@ class dlgAplicacion(GladeConnect):
         
         campos = {}
         llaves = {}
-        
         campos['codigo_hilera'] = self.codigo_hilera
-        campos['codigo_producto'] = self.codigo_producto
-        campos['dosis']  = self.entDosis.get_text().upper()
+        campos['codigo_labor'] = self.codigo_labor
         campos['fecha'] = fecha.strftime("%Y/%m/%d")
         campos['rut']  = self.rut
-        campos['codigo_maquinaria'] = self.codigo_maquinaria
-        campos['codigo_implemento'] = self.codigo_implemento
         
         if not self.editando:
             sql = ifd.insertFromDict(schema + "." + table, campos)        
         else:
-            llaves['codigo_aplicacion'] = self.entCodigo.get_text()
+            llaves['codigo_labor'] = self.codigo_labor
+            llaves['codigo_hilera'] = self.codigo_hilera
             sql, campos=ifd.updateFromDict(schema + "." + table, campos, llaves)
         
         try:   
             self.cursor.execute(sql, campos)
-            self.dlgAplicacion.hide()
+            self.dlgLaborHilera.hide()
         except:
             print sys.exc_info()[1]
             print sql
             
         
     def on_btnCancelar_clicked(self, btn=None):
-        self.dlgAplicacion.hide()
+        self.dlgLaborHilera.hide()
         
 if __name__ == '__main__':
     DB = config.DB
@@ -259,6 +206,6 @@ if __name__ == '__main__':
     cnx = connect(DB + " " + user + " " + password + " " + host )
     cnx.autocommit()
     sys.excepthook = debugwindow.show
-    d = wnAplicacion(cnx)
+    d = wnLaborHilera(cnx)
     
     gtk.main()

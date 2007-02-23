@@ -86,6 +86,7 @@
 		      <property name="label" translatable="yes">_Unidad</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuUnidad_activate" last_modification_time="Sat, 28 Oct 2006 15:20:35 GMT"/>
+		      <accelerator key="u" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -95,6 +96,7 @@
 		      <property name="label" translatable="yes">_Variedad</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuVariedad_activate" last_modification_time="Wed, 25 Oct 2006 18:18:08 GMT"/>
+		      <accelerator key="d" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -104,6 +106,7 @@
 		      <property name="label" translatable="yes">_Sector</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuSector_activate" last_modification_time="Tue, 17 Oct 2006 02:33:18 GMT"/>
+		      <accelerator key="s" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -113,6 +116,7 @@
 		      <property name="label" translatable="yes">_Cuartel</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuCuartel_activate" last_modification_time="Tue, 17 Oct 2006 02:33:18 GMT"/>
+		      <accelerator key="r" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -122,6 +126,7 @@
 		      <property name="label" translatable="yes">_Labor</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuLabor_activate" last_modification_time="Thu, 01 Feb 2007 01:44:42 GMT"/>
+		      <accelerator key="l" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -131,6 +136,7 @@
 		      <property name="label" translatable="yes">_Producto</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuProducto_activate" last_modification_time="Sat, 28 Oct 2006 15:50:44 GMT"/>
+		      <accelerator key="p" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -140,6 +146,7 @@
 		      <property name="label" translatable="yes">_Ficha</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuFicha_activate" last_modification_time="Tue, 17 Oct 2006 02:33:18 GMT"/>
+		      <accelerator key="i" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -149,6 +156,7 @@
 		      <property name="label" translatable="yes">_Maquinaria</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuMaquinaria_activate" last_modification_time="Thu, 01 Feb 2007 01:05:56 GMT"/>
+		      <accelerator key="n" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -158,6 +166,7 @@
 		      <property name="label" translatable="yes">_Hilera</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuHilera_activate" last_modification_time="Thu, 01 Feb 2007 01:09:22 GMT"/>
+		      <accelerator key="h" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -167,6 +176,7 @@
 		      <property name="label" translatable="yes">_Tipo de Ficha</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuTipoFicha_activate" last_modification_time="Tue, 17 Oct 2006 02:33:18 GMT"/>
+		      <accelerator key="t" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -176,6 +186,27 @@
 		      <property name="label" translatable="yes">_Cultivo</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuCultivo_activate" last_modification_time="Thu, 01 Feb 2007 01:44:42 GMT"/>
+		      <accelerator key="o" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="mnuAplicacion">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_Aplicacion</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_mnuAplicacion_activate" last_modification_time="Fri, 23 Feb 2007 19:27:45 GMT"/>
+		      <accelerator key="a" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="mnuLaborHilera">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">L_aborHilera</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_mnuLaborHilera_activate" last_modification_time="Fri, 23 Feb 2007 19:27:45 GMT"/>
+		      <accelerator key="b" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 		</widget>
@@ -198,6 +229,7 @@
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">A_yuda</property>
 		      <property name="use_underline">True</property>
+		      <accelerator key="h" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 		</widget>

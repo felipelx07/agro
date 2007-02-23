@@ -209,6 +209,11 @@ class CompletionHilera(CompletionCodigoDescripcion):
     def __init__(self, entry = gtk.Entry(), f = None, c = None):
         CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='hilera')
 
+class CompletionLabor(CompletionCodigoDescripcion):
+
+    def __init__(self, entry = gtk.Entry(), f = None, c = None):
+        CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='labor')
+
 if __name__ == "__main__":
     w = gtk.Window()
     e = gtk.Entry()

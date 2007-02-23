@@ -102,6 +102,23 @@ strSelectHilera = """SELECT
                         INNER JOIN """ + config.schema + """.variedad v 
                         ON f.codigo_variedad = v.codigo_variedad  
                         ORDER BY f.descripcion_hilera"""
+                        
+strSelectLaborHilera = """SELECT
+                            lh.codigo_hilera,
+                            h.descripcion_hilera,
+                            lh.codigo_labor,
+                            l.descripcion_labor,
+                            lh.fecha,
+                            lh.rut,
+                            f.descripcion_ficha 
+                        FROM """ + config.schema + """.labor_hilera lh 
+                        INNER JOIN """ + config.schema + """.hilera h 
+                        ON lh.codigo_hilera = h.codigo_hilera 
+                        INNER JOIN """ + config.schema + """.labor l 
+                        ON lh.codigo_labor = l.codigo_labor 
+                        INNER JOIN """ + config.schema + """.ficha f 
+                        ON lh.rut = f.rut 
+                        ORDER BY h.descripcion_hilera"""
                     
 strSelectCosecha = """SELECT c.*,
                             f.descripcion_ficha,

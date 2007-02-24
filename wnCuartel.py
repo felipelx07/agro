@@ -113,8 +113,6 @@ class dlgCuartel(GladeConnect):
         GladeConnect.__init__(self, "glade/wnCuartel.glade", "dlgCuartel")
         self.cnx = conexion
         self.cursor = self.cnx.cursor()
-        #self.entRUT.grab_focus()        
-        #self.entRUT.show()
         self.editando=editando
         self.codigo_sector = None
         if self.editando:
@@ -130,10 +128,6 @@ class dlgCuartel(GladeConnect):
         
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         
-        
-#        if not comunes.es_rut(self.entRUT.get_text()):
-#            dialogos.error("<b>El R.U.T. no corresponde</b>")
-#            return
         if self.entDescripcion.get_text() == "":
             dialogos.error("El campo <b>Descripción Cuartel</b> no puede estar vacío")
             return

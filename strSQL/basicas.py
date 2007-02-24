@@ -144,3 +144,8 @@ strSelectUnidad = """SELECT * FROM """ + config.schema + """.unidad ORDER BY des
 strSelectUnidadDosis = """SELECT * FROM """ + config.schema + """.unidad_dosis ORDER BY descripcion_unidad_dosis"""
 
 strSelectTipoDocumento = """SELECT * FROM """ + config.schema + """.tipo_documento ORDER BY codigo_tipo_documento"""
+
+strSelectTemporada = """SELECT *,
+                        'Temporada ' || date_part('year', fecha_inicio) || '-' || date_part('year', fecha_termino) as descripcion
+                        FROM """ + config.schema + """.temporada
+                        ORDER BY codigo_temporada desc"""

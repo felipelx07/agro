@@ -70,7 +70,9 @@ strSelectAplicacion = """SELECT
                             m.descripcion_maquinaria,
                             i.descripcion_implemento,
                             a.codigo_temporada,
-                            'Temporada ' || date_part('year', t.fecha_inicio) || '-' || date_part('year', t.fecha_termino) as descripcion
+                            'Temporada ' || date_part('year', t.fecha_inicio) 
+                            || '-' || date_part('year', t.fecha_termino) 
+                            as descripcion
                         FROM """ + config.schema + """.aplicacion a
                         INNER JOIN """ + config.schema + """.hilera h
                         ON a.codigo_hilera = h.codigo_hilera  

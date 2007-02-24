@@ -214,6 +214,15 @@ class CompletionLabor(CompletionCodigoDescripcion):
     def __init__(self, entry = gtk.Entry(), f = None, c = None):
         CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='labor')
 
+class CompletionTemporada(GenericCompletion):
+
+    def __init__(self, entry = gtk.Entry(), f = None, c = None, e = None):
+        s = """SELECT 'Temporada ' || date_part('year', fecha_inicio) || '-' 
+                    || date_part('year', fecha_termino) as descripcion_temporada,
+                    codigo_temporada 
+         FROM riego.temporada ORDER BY codigo_temporada"""
+        GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
+
 if __name__ == "__main__":
     w = gtk.Window()
     e = gtk.Entry()

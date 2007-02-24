@@ -30,7 +30,9 @@ import datetime
  CODIGO_MAQUINARIA,
  CODIGO_IMPLEMENTO,
  DESCRIPCION_MAQUINARIA,
- DESCRIPCION_IMPLEMENTO) = range(13)
+ DESCRIPCION_IMPLEMENTO,
+ CODIGO_TEMPORADA,
+ DESCRIPCION_TEMPORADA) = range(15)
 
 schema = config.schema
 table = "aplicacion"
@@ -56,12 +58,13 @@ class wnAplicacion (GladeConnect):
         columnas.append ([DESCRIPCION_HILERA, "Hilera","str"])
         columnas.append ([DESCRIPCION_PRODUCTO, "Producto","str"])
         columnas.append ([DOSIS, "Dosis","str"])
-        columnas.append ([FECHA, "Fecha","str"])
+        columnas.append ([FECHA, "Fecha","dte"])
         columnas.append ([DESCRIPCION_FICHA, "Ficha","str"])
         columnas.append ([DESCRIPCION_MAQUINARIA, "Maquinaria","str"])
         columnas.append ([DESCRIPCION_IMPLEMENTO, "Implemento","str"])
+        columnas.append ([DESCRIPCION_TEMPORADA, "Temporada","str"])
         
-        self.modelo = gtk.ListStore(*(8*[str]))
+        self.modelo = gtk.ListStore(*(9*[str]))
         SimpleTree.GenColsByModel(self.modelo, columnas, self.treeAplicacion)
         self.col_data = [x[0] for x in columnas]
         
@@ -133,6 +136,10 @@ class wnAplicacion (GladeConnect):
         dlg.codigo_implemento = model.get_value(it, CODIGO_IMPLEMENTO)
         dlg.pecImplemento.set_selected(True)
         
+        dlg.entTemporada.set_text(model.get_value(it, DESCRIPCION_TEMPORADA))
+        dlg.codigo_temporada = model.get_value(it, CODIGO_TEMPORADA)
+        dlg.pecTemporada.set_selected(True)
+        
         dlg.editando = (True)
         response = dlg.dlgAplicacion.run()
         if response == gtk.RESPONSE_OK:
@@ -160,6 +167,7 @@ class dlgAplicacion(GladeConnect):
         self.codigo_maquinaria = None
         self.codigo_implemento = None
         self.rut = None
+        self.codigo_temporada = None
         if self.editando:
             self.entCodigo.set_sensitive(False)
         
@@ -178,6 +186,9 @@ class dlgAplicacion(GladeConnect):
         self.pecImplemento = completion.CompletionImplemento(self.entImplemento,
                 self.sel_implemento,
                 self.cnx)
+        self.pecTemporada = completion.CompletionTemporada(self.entTemporada,
+                self.sel_temporada,
+                self.cnx)
         self.dlgAplicacion.show_all()
 
     def sel_hilera(self, completion, model, iter):
@@ -194,6 +205,9 @@ class dlgAplicacion(GladeConnect):
         
     def sel_implemento(self, completion, model, iter):
         self.codigo_implemento = model.get_value(iter, 1)
+        
+    def sel_temporada(self, completion, model, iter):
+        self.codigo_temporada = model.get_value(iter, 1)
         
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         
@@ -223,6 +237,10 @@ class dlgAplicacion(GladeConnect):
             dialogos.error("La ficha no puede ser vacia.")
             return
         
+        if self.entTemporada.get_text() == "":
+            dialogos.error("La temporada no puede ser vacia.")
+            return
+        
         campos = {}
         llaves = {}
         
@@ -233,6 +251,7 @@ class dlgAplicacion(GladeConnect):
         campos['rut']  = self.rut
         campos['codigo_maquinaria'] = self.codigo_maquinaria
         campos['codigo_implemento'] = self.codigo_implemento
+        campos['codigo_temporada'] = self.codigo_temporada
         
         if not self.editando:
             sql = ifd.insertFromDict(schema + "." + table, campos)        

@@ -80,7 +80,6 @@ class wnHilera (GladeConnect):
         
         if dialogos.yesno("¿Desea eliminar la Hilera <b>%s</b>?\nEsta acción no se puede deshacer\n" % descripcion, self.frm_padre) == gtk.RESPONSE_YES:
             try:
-                
                 llaves = {'codigo_hilera':codigo_hilera}
                 sql = ifd.deleteFromDict(config.schema + '.' + table, llaves)
                 self.cursor.execute(sql, llaves)

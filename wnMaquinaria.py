@@ -65,10 +65,11 @@ class wnMaquinaria (GladeConnect):
         model, it = self.treeMaquinaria.get_selection().get_selected()
         if model is None or it is None:
             return
+        codigo = model.get_value(it, CODIGO)
         descripcion = model.get_value(it, DESCRIPCION)
         
         if dialogos.yesno("¿Desea eliminar la Maquinaria <b>%s</b>?\nEsta acción no se puede deshacer\n" % descripcion, self.frm_padre) == gtk.RESPONSE_YES:
-            llaves={'descripcion_maquinaria':descripcion}
+            llaves={'codigo_maquinaria':codigo}
             sql = ifd.deleteFromDict(schema + "." + table, llaves)
             try:
                 self.cursor.execute(sql, llaves)

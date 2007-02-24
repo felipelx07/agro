@@ -52,7 +52,6 @@ class wnFicha (GladeConnect):
         t = treetohtml.TreeToHTML(self.treeFicha,"Ficha", self.col_data)
         t.show()        
     def carga_datos(self):
-        #sql = strSelectFicha
         self.modelo = ifd.ListStoreFromSQL(self.cnx, strSelectFicha)
         self.treeFicha.set_model(self.modelo)
 
@@ -64,7 +63,6 @@ class wnFicha (GladeConnect):
             self.carga_datos()
     
     def on_btnQuitar_clicked(self, btn=None):
-        
         selection = self.treeFicha.get_selection()
         model, it = selection.get_selected()
         if model is None or it is None:

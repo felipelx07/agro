@@ -26,15 +26,9 @@ strSelectFicha = """SELECT
                         ON f.codigo_tipo_ficha = t.codigo_tipo_ficha
                         ORDER BY f.descripcion_ficha"""
                         
-strSelectSector = """SELECT
-                            f.codigo_cultivo,
-                            t.descripcion_cultivo,
-                            f.descripcion_sector,
-                            f.codigo_sector
-                        FROM """ + config.schema + """.sector f
-                        INNER JOIN """ + config.schema + """.cultivo t
-                        ON f.codigo_cultivo = t.codigo_cultivo
-                        ORDER BY f.descripcion_sector"""
+strSelectSector = """SELECT *
+                        FROM """ + config.schema + """.sector
+                        ORDER BY descripcion_sector"""
                         
 strSelectCuartel = """SELECT
                             f.codigo_sector,

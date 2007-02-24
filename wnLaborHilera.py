@@ -84,7 +84,6 @@ class wnLaborHilera (GladeConnect):
         
         if dialogos.yesno("¿Desea eliminar la Labor Hilera <b>%s</b>?\nEsta acción no se puede deshacer\n" % descripcion, self.frm_padre) == gtk.RESPONSE_YES:
             try:
-                
                 llaves = {'codigo_labor':codigo_labor}
                 sql = ifd.deleteFromDict(config.schema + '.' + table, llaves)
                 self.cursor.execute(sql, llaves)

@@ -16,6 +16,7 @@ import completion
 import comunes
 import treetohtml
 import config
+import datetime
 
 (CODIGO_APLICACION,
  CODIGO_HILERA,

@@ -52,7 +52,6 @@ class wnCuartel (GladeConnect):
         t = treetohtml.TreeToHTML(self.treeCuartel,"Cuartel", self.col_data)
         t.show()        
     def carga_datos(self):
-        #sql = strSelectCuartel
         self.modelo = ifd.ListStoreFromSQL(self.cnx, strSelectCuartel)
         self.treeCuartel.set_model(self.modelo)
 
@@ -75,7 +74,6 @@ class wnCuartel (GladeConnect):
         
         if dialogos.yesno("¿Desea eliminar el Cuartel <b>%s</b>?\nEsta acción no se puede deshacer\n" % descripcion, self.frm_padre) == gtk.RESPONSE_YES:
             try:
-                
                 llaves = {'codigo_cuartel':codigo_cuartel}
                 sql = ifd.deleteFromDict(config.schema + '.' + table, llaves)
                 self.cursor.execute(sql, llaves)

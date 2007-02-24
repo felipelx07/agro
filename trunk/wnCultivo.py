@@ -68,10 +68,11 @@ class wnCultivo (GladeConnect):
         model, it = self.treeCultivo.get_selection().get_selected()
         if model is None or it is None:
             return
+        codigo = model.get_value(it, CODIGO)
         descripcion = model.get_value(it, DESCRIPCION)
         
         if dialogos.yesno("¿Desea eliminar el Cultivo <b>%s</b>?\nEsta acción no se puede deshacer\n" % descripcion, self.frm_padre) == gtk.RESPONSE_YES:
-            llaves={'descripcion_cultivo':descripcion}
+            llaves={'codigo_cultivo':codigo}
             sql = ifd.deleteFromDict(schema + "." + table, llaves)
             try:
                 self.cursor.execute(sql, llaves)

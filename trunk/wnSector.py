@@ -15,10 +15,8 @@ import comunes
 import treetohtml
 import config
 
-(CODIGO_CULTIVO,
- DESCRIPCION_CULTIVO,
- DESCRIPCION,
- CODIGO_SECTOR) = range(4)
+(CODIGO_SECTOR,
+ DESCRIPCION) = range(2)
 
 schema = config.schema
 table = "sector"
@@ -42,9 +40,8 @@ class wnSector (GladeConnect):
         columnas = []
         columnas.append ([CODIGO_SECTOR, "Sector", "str"])
         columnas.append ([DESCRIPCION, "Descripcion", "str"])
-        columnas.append ([DESCRIPCION_CULTIVO, "Cultivo","str"])
         
-        self.modelo = gtk.ListStore(*(3*[str]))
+        self.modelo = gtk.ListStore(*(2*[str]))
         SimpleTree.GenColsByModel(self.modelo, columnas, self.treeSector)
         self.col_data = [x[0] for x in columnas]
         
@@ -52,7 +49,6 @@ class wnSector (GladeConnect):
         t = treetohtml.TreeToHTML(self.treeSector,"Sector", self.col_data)
         t.show()        
     def carga_datos(self):
-        #sql = strSelectSector
         self.modelo = ifd.ListStoreFromSQL(self.cnx, strSelectSector)
         self.treeSector.set_model(self.modelo)
 
@@ -63,8 +59,7 @@ class wnSector (GladeConnect):
         if response == gtk.RESPONSE_OK:
             self.carga_datos()
     
-    def on_btnQuitar_clicked(self, btn=None):
-        
+    def on_btnQuitar_clicked(self, btn=None):        
         selection = self.treeSector.get_selection()
         model, it = selection.get_selected()
         if model is None or it is None:
@@ -88,9 +83,6 @@ class wnSector (GladeConnect):
         if model is None or it is None:
             return
         dlg = dlgSector(self.cnx, self.frm_padre, False)
-        dlg.entCultivo.set_text(model.get_value(it, DESCRIPCION_CULTIVO))
-        dlg.codigo_cultivo = model.get_value(it, CODIGO_CULTIVO)
-        dlg.pecCultivo.set_selected(True)
         dlg.entDescripcion.set_text(model.get_value(it, DESCRIPCION))
         dlg.entCodigo.set_text(model.get_value(it, CODIGO_SECTOR))
         dlg.editando = (True)
@@ -115,13 +107,9 @@ class dlgSector(GladeConnect):
         self.cnx = conexion
         self.cursor = self.cnx.cursor()
         self.editando=editando
-        self.codigo_cultivo = None
         if self.editando:
             self.entCodigo.set_sensitive(False)
         
-        self.pecCultivo = completion.CompletionCultivo(self.entCultivo,
-                self.sel_cultivo,
-                self.cnx)
         self.dlgSector.show()
 
     def sel_cultivo(self, completion, model, iter):
@@ -129,22 +117,13 @@ class dlgSector(GladeConnect):
         
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         
-        
-#        if not comunes.es_rut(self.entRUT.get_text()):
-#            dialogos.error("<b>El R.U.T. no corresponde</b>")
-#            return
         if self.entDescripcion.get_text() == "":
             dialogos.error("El campo <b>Descripción Sector</b> no puede estar vacío")
             return
-        
-        if self.codigo_cultivo is None:
-            dialogos.error("Debe escoger un <b>Tipo Sector</b>")
-            return
-        
+          
         campos = {}
         llaves = {}
         campos['descripcion_sector']  = self.entDescripcion.get_text().upper()
-        campos['codigo_cultivo'] = self.codigo_cultivo
         
         if not self.editando:
             sql = ifd.insertFromDict(schema + "." + table, campos)        

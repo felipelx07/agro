@@ -69,7 +69,6 @@ class wnProducto (GladeConnect):
             self.carga_datos()
     
     def on_btnQuitar_clicked(self, btn=None):
-        
         selection = self.treeProducto.get_selection()
         model, it = selection.get_selected()
         if model is None or it is None:
@@ -80,7 +79,6 @@ class wnProducto (GladeConnect):
         
         if dialogos.yesno("¿Desea eliminar el Producto <b>%s</b>?\nEsta acción no se puede deshacer\n" % descripcion, self.frm_padre) == gtk.RESPONSE_YES:
             try:
-                
                 llaves = {'codigo_producto':codigo_producto}
                 sql = ifd.deleteFromDict(config.schema + '.' + table, llaves)
                 self.cursor.execute(sql, llaves)

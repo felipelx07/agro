@@ -47,7 +47,7 @@ class wnLaborHilera (GladeConnect):
         columnas = []
         columnas.append ([DESCRIPCION_LABOR, "Labor", "str"])
         columnas.append ([DESCRIPCION_HILERA, "Hilera","str"])
-        columnas.append ([FECHA, "Fecha","str"])
+        columnas.append ([FECHA, "Fecha","dte"])
         columnas.append ([DESCRIPCION_FICHA, "Ficha","str"])
         
         self.modelo = gtk.ListStore(*(4*[str]))

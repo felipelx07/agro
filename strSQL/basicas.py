@@ -149,6 +149,8 @@ strSelectUnidad = """SELECT * FROM """ + config.schema + """.unidad ORDER BY des
 
 strSelectUnidadDosis = """SELECT * FROM """ + config.schema + """.unidad_dosis ORDER BY descripcion_unidad_dosis"""
 
+strSelectEstadoFenologico = """SELECT * FROM """ + config.schema + """.estado_fenologico ORDER BY descripcion_estado_fenologico"""
+
 strSelectTipoDocumento = """SELECT * FROM """ + config.schema + """.tipo_documento ORDER BY codigo_tipo_documento"""
 
 strSelectTemporada = """SELECT *,

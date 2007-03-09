@@ -100,7 +100,7 @@ class wnUnidadDosis (GladeConnect):
         if self.padre is None:
             self.on_exit()
         else:
-            self.padre.remove_tab("UnidadDosis")
+            self.padre.remove_tab("Unidad de Dosis")
             
     def on_treeUnidadDosis_row_activated(self, tree=None, path=None, col=None):
         self.on_btnPropiedades_clicked()

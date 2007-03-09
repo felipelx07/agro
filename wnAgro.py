@@ -22,7 +22,7 @@ from wnAplicacion import wnAplicacion
 from wnLaborHilera import wnLaborHilera
 from wnUnidadDosis import wnUnidadDosis
 from wnImplemento import wnImplemento
-#from wnEstadoFenologico import wnEstadoFenologico
+from wnEstadoFenologico import wnEstadoFenologico
 #from wnRegistroEstadoFenologico import wnRegistroEstadoFenologico
 import config
 
@@ -98,7 +98,7 @@ class Agro(GladeConnect):
     
     def on_mnuTipoFicha_activate(self, widget, *args):
         tipo_ficha = wnTipoFicha(self.cnx, self, "vboxTipoFicha")
-        self.add_tab(tipo_ficha.vboxTipoFicha, "TipoFicha")
+        self.add_tab(tipo_ficha.vboxTipoFicha, "Tipo de Ficha")
         return
     
     def on_mnuCuartel_activate(self, widget, *args):
@@ -143,7 +143,7 @@ class Agro(GladeConnect):
     
     def on_mnuUnidadDosis_activate(self, widget, *args):
         unidad_dosis = wnUnidadDosis(self.cnx, self, "vboxUnidadDosis")
-        self.add_tab(unidad_dosis.vboxUnidadDosis, "Unidad de dosis")
+        self.add_tab(unidad_dosis.vboxUnidadDosis, "Unidad de Dosis")
         return
     
     def on_mnuImplemento_activate(self, widget, *args):
@@ -153,12 +153,12 @@ class Agro(GladeConnect):
     
     def on_mnuEstadoFenologico_activate(self, widget, *args):
         estado_fenologico = wnEstadoFenologico(self.cnx, self, "vboxEstadoFenologico")
-        self.add_tab(estado_fenologico.vboxLaborHilera, "Estado Fenologico")
+        self.add_tab(estado_fenologico.vboxEstadoFenologico, "Estado Fenologico")
         return
     
     def on_mnuRegistroEstadoFenologico_activate(self, widget, *args):
         registro_estado_fenologico = wnRegistroEstadoFenologico(self.cnx, self, "vboxRegistroEstadoFenologico")
-        self.add_tab(registro_estado_fenologico.vboxLaborHilera, "Registro de Estado Fenologico")
+        self.add_tab(registro_estado_fenologico.vboxRegistroEstadoFenologico, "Registro de Estado Fenologico")
         return
         
 if __name__ == "__main__":

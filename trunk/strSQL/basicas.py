@@ -119,6 +119,26 @@ strSelectLaborHilera = """SELECT
                         INNER JOIN """ + config.schema + """.ficha f 
                         ON lh.rut = f.rut 
                         ORDER BY h.descripcion_hilera"""
+                        
+strSelectRegistroEstadoFenologico = """SELECT
+                            r.codigo_registro_estado_fenologico,
+                            r.codigo_cultivo,
+                            c.descripcion_cultivo,
+                            r.codigo_estado_fenologico,
+                            e.descripcion_estado_fenologico,
+                            r.codigo_temporada,
+                            'Temporada ' || date_part('year', t.fecha_inicio) 
+                            || '-' || date_part('year', t.fecha_termino) 
+                            as descripcion_temporada,
+                            r.fecha  
+                        FROM """ + config.schema + """.registro_estado_fenologico r 
+                        INNER JOIN """ + config.schema + """.cultivo c 
+                        ON r.codigo_cultivo = c.codigo_cultivo 
+                        INNER JOIN """ + config.schema + """.estado_fenologico e 
+                        ON r.codigo_estado_fenologico = e.codigo_estado_fenologico 
+                        INNER JOIN """ + config.schema + """.temporada t 
+                        ON r.codigo_temporada = t.codigo_temporada 
+                        ORDER BY r.codigo_registro_estado_fenologico"""
                     
 strSelectCosecha = """SELECT c.*,
                             f.descripcion_ficha,

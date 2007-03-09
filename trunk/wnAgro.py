@@ -23,7 +23,7 @@ from wnLaborHilera import wnLaborHilera
 from wnUnidadDosis import wnUnidadDosis
 from wnImplemento import wnImplemento
 from wnEstadoFenologico import wnEstadoFenologico
-#from wnRegistroEstadoFenologico import wnRegistroEstadoFenologico
+from wnRegistroEstadoFenologico import wnRegistroEstadoFenologico
 import config
 
 class Agro(GladeConnect):

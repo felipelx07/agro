@@ -91,6 +91,15 @@
 		  </child>
 
 		  <child>
+		    <widget class="GtkMenuItem" id="mnuUnidadDosis">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">U_nidad de dosis</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_mnuUnidadDosis_activate" last_modification_time="Fri, 09 Mar 2007 18:18:45 GMT"/>
+		    </widget>
+		  </child>
+
+		  <child>
 		    <widget class="GtkMenuItem" id="mnuVariedad">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">_Variedad</property>
@@ -116,7 +125,6 @@
 		      <property name="label" translatable="yes">_Cuartel</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuCuartel_activate" last_modification_time="Tue, 17 Oct 2006 02:33:18 GMT"/>
-		      <accelerator key="r" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -146,7 +154,7 @@
 		      <property name="label" translatable="yes">_Ficha</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuFicha_activate" last_modification_time="Tue, 17 Oct 2006 02:33:18 GMT"/>
-		      <accelerator key="i" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+		      <accelerator key="f" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -157,6 +165,16 @@
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuMaquinaria_activate" last_modification_time="Thu, 01 Feb 2007 01:05:56 GMT"/>
 		      <accelerator key="n" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="mnuImplemento">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_Implemento</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_mnuImplemento_activate" last_modification_time="Fri, 09 Mar 2007 18:18:45 GMT"/>
+		      <accelerator key="i" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 
@@ -207,6 +225,40 @@
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_mnuLaborHilera_activate" last_modification_time="Fri, 23 Feb 2007 19:27:45 GMT"/>
 		      <accelerator key="b" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	  </child>
+
+	  <child>
+	    <widget class="GtkMenuItem" id="mnuEstadosFenologicos">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">_Estados fenologicos</property>
+	      <property name="use_underline">True</property>
+	      <signal name="activate" handler="on_mnuEstadosFenologicos_activate" last_modification_time="Fri, 09 Mar 2007 18:18:45 GMT"/>
+
+	      <child>
+		<widget class="GtkMenu" id="mnuEstadosFenologicos_menu">
+
+		  <child>
+		    <widget class="GtkMenuItem" id="mnuEstadoFenologico">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_Estado fenologico</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_mnuEstadoFenologico_activate" last_modification_time="Fri, 09 Mar 2007 18:18:45 GMT"/>
+		      <accelerator key="e" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="mnuRegistroEstadoFenologico">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_Registro estado fenologico</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_mnuRegistroEstadoFenologico_activate" last_modification_time="Fri, 09 Mar 2007 18:18:45 GMT"/>
+		      <accelerator key="r" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
 		</widget>

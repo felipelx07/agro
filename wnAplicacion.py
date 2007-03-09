@@ -196,6 +196,8 @@ class dlgAplicacion(GladeConnect):
         
     def sel_producto(self, completion, model, iter):
         self.codigo_producto = model.get_value(iter, 1)
+        if not self.editando:
+            self.entDosis.set_text(model.get_value(iter, 2))
     
     def sel_ficha(self, completion, model, iter):
         self.rut = model.get_value(iter, 1)

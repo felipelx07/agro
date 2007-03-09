@@ -1,15 +1,9 @@
-ECHO:
-
-Variedad
-Cultivo
-Labor
-Maquinaria
-Unidad
-TipoFicha
-Ficha
-Sector
-Cuartel
-
 TODO:
 
-Producto
+CultivoTemporada?
+EstadoFenologico
+RegistroEstadoFenologico
+
+en Aplicación:
+
+usar en dosis, la dosis propuesta

@@ -189,10 +189,14 @@ class CompletionUnidadDosis(CompletionCodigoDescripcion):
     def __init__(self, entry = gtk.Entry(), f = None, c = None):
         CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='unidad_dosis')
 
-class CompletionProducto(CompletionCodigoDescripcion):
+class CompletionProducto(GenericCompletion):
 
-    def __init__(self, entry = gtk.Entry(), f = None, c = None):
-        CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='producto')
+    def __init__(self, entry = gtk.Entry(), f = None, c = None, e = None):
+        s = """SELECT descripcion_producto, 
+                codigo_producto, 
+                dosis_propuesta FROM riego.producto 
+                ORDER BY codigo_producto"""
+        GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
         
 class CompletionMaquinaria(CompletionCodigoDescripcion):
 

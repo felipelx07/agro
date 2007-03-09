@@ -93,6 +93,9 @@ class wnHilera (GladeConnect):
         if model is None or it is None:
             return
         dlg = dlgHilera(self.cnx, self.frm_padre, False)
+        dlg.entVariedad.set_text(model.get_value(it, DESCRIPCION_VARIEDAD))
+        dlg.codigo_variedad = model.get_value(it, CODIGO_VARIEDAD)
+        dlg.pecVariedad.set_selected(True)
         dlg.entCuartel.set_text(model.get_value(it, DESCRIPCION_CUARTEL))
         dlg.codigo_cuartel = model.get_value(it, CODIGO_CUARTEL)
         dlg.pecCuartel.set_selected(True)

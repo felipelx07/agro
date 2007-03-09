@@ -21,7 +21,7 @@
   <signal name="destroy_event" handler="on_quit" last_modification_time="Mon, 23 Oct 2006 10:22:33 GMT"/>
 
   <child>
-    <widget class="GtkVBox" id="vboxCultivo">
+    <widget class="GtkVBox" id="vboxTemporada">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">0</property>

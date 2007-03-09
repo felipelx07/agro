@@ -47,7 +47,7 @@ class wnTemporada (GladeConnect):
         columnas.append ([TERMINO, "Fecha de termino", "dte"])
         columnas.append ([DESCRIPCION, "Descripción", "str"])
         
-        self.modelo = gtk.ListStore(int, str)
+        self.modelo = gtk.ListStore(*(4*[str]))
         SimpleTree.GenColsByModel(self.modelo, columnas, self.treeTemporada)
         self.col_data = [x[0] for x in columnas]
         

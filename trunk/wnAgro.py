@@ -24,6 +24,8 @@ from wnUnidadDosis import wnUnidadDosis
 from wnImplemento import wnImplemento
 from wnEstadoFenologico import wnEstadoFenologico
 from wnRegistroEstadoFenologico import wnRegistroEstadoFenologico
+from wnTemporada import wnTemporada
+
 import config
 
 class Agro(GladeConnect):
@@ -159,6 +161,11 @@ class Agro(GladeConnect):
     def on_mnuRegistroEstadoFenologico_activate(self, widget, *args):
         registro_estado_fenologico = wnRegistroEstadoFenologico(self.cnx, self, "vboxRegistroEstadoFenologico")
         self.add_tab(registro_estado_fenologico.vboxRegistroEstadoFenologico, "Registro de Estado Fenologico")
+        return
+    
+    def on_mnuTemporada_activate(self, widget, *args):
+        temporada = wnTemporada(self.cnx, self, "vboxTemporada")
+        self.add_tab(temporada.vboxTemporada, "Temporada")
         return
         
 if __name__ == "__main__":

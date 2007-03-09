@@ -100,7 +100,7 @@ class wnTipoFicha (GladeConnect):
         if self.padre is None:
             self.on_exit()
         else:
-            self.padre.remove_tab("TipoFicha")
+            self.padre.remove_tab("Tipo de Ficha")
             
     def on_treeTipoFicha_row_activated(self, tree=None, path=None, col=None):
         self.on_btnPropiedades_clicked()

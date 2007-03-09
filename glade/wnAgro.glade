@@ -227,6 +227,16 @@
 		      <accelerator key="b" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 		    </widget>
 		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="mnuTemporada">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Temp_orada</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_mnuTemporada_activate" last_modification_time="Fri, 09 Mar 2007 20:24:46 GMT"/>
+		      <accelerator key="m" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+		    </widget>
+		  </child>
 		</widget>
 	      </child>
 	    </widget>

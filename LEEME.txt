@@ -4,6 +4,6 @@ CultivoTemporada?
 EstadoFenologico
 RegistroEstadoFenologico
 
-en Aplicación:
+en agro:
 
-usar en dosis, la dosis propuesta
+Temporada, Registro estado fenologico

@@ -141,6 +141,11 @@ class CompletionCultivo(CompletionCodigoDescripcion):
     def __init__(self, entry = gtk.Entry(), f = None, c = None):
         CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='cultivo') 
 
+class CompletionEstadoFenologico(CompletionCodigoDescripcion):
+
+    def __init__(self, entry = gtk.Entry(), f = None, c = None):
+        CompletionCodigoDescripcion.__init__(self, entry, f, c, tabla='estado_fenologico') 
+
 class CompletionTipoDocumento(GenericCompletion):
 
     def __init__(self, entry = gtk.Entry(), f = None, c = None, e = None):

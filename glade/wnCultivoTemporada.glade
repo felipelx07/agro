@@ -3,9 +3,9 @@
 
 <glade-interface>
 
-<widget class="GtkWindow" id="wnEstadoFenologico">
+<widget class="GtkWindow" id="wnCultivoTemporada">
   <property name="visible">True</property>
-  <property name="title" translatable="yes">Estado Fenologico</property>
+  <property name="title" translatable="yes">Registro Estado Fenologico</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
@@ -18,10 +18,9 @@
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
-  <signal name="destroy_event" handler="on_quit" last_modification_time="Mon, 23 Oct 2006 10:22:33 GMT"/>
 
   <child>
-    <widget class="GtkVBox" id="vboxEstadoFenologico">
+    <widget class="GtkVBox" id="vboxCultivoTemporada">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">0</property>
@@ -41,7 +40,7 @@
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_btnAnadir_clicked" last_modification_time="Mon, 23 Oct 2006 10:24:36 GMT"/>
+	      <signal name="clicked" handler="on_btnAnadir_clicked" last_modification_time="Sat, 14 Oct 2006 22:51:05 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
@@ -56,7 +55,7 @@
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_btnQuitar_clicked" last_modification_time="Mon, 23 Oct 2006 10:24:31 GMT"/>
+	      <signal name="clicked" handler="on_btnQuitar_clicked" last_modification_time="Sat, 14 Oct 2006 22:51:14 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
@@ -71,7 +70,7 @@
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_btnPropiedades_clicked" last_modification_time="Mon, 23 Oct 2006 10:24:27 GMT"/>
+	      <signal name="clicked" handler="on_btnPropiedades_clicked" last_modification_time="Sat, 14 Oct 2006 22:51:21 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
@@ -86,7 +85,7 @@
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_btnImprimir_clicked" last_modification_time="Fri, 05 Jan 2007 02:10:46 GMT"/>
+	      <signal name="clicked" handler="on_btnImprimir_clicked" last_modification_time="Fri, 05 Jan 2007 02:13:37 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
@@ -101,7 +100,7 @@
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_btnCerrar_clicked" last_modification_time="Mon, 23 Oct 2006 10:24:22 GMT"/>
+	      <signal name="clicked" handler="on_btnCerrar_clicked" last_modification_time="Sat, 14 Oct 2006 22:51:26 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
@@ -126,7 +125,7 @@
 	  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 	  <child>
-	    <widget class="GtkTreeView" id="treeEstadoFenologico">
+	    <widget class="GtkTreeView" id="treeCultivoTemporada">
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="headers_visible">True</property>
@@ -136,7 +135,7 @@
 	      <property name="fixed_height_mode">False</property>
 	      <property name="hover_selection">False</property>
 	      <property name="hover_expand">False</property>
-	      <signal name="row_activated" handler="on_treeVariedad_row_activated" last_modification_time="Mon, 23 Oct 2006 10:23:02 GMT"/>
+	      <signal name="row_activated" handler="on_treeSector_row_activated" last_modification_time="Sat, 14 Oct 2006 22:59:54 GMT"/>
 	    </widget>
 	  </child>
 	</widget>
@@ -150,9 +149,9 @@
   </child>
 </widget>
 
-<widget class="GtkDialog" id="dlgEstadoFenologico">
+<widget class="GtkDialog" id="dlgCultivoTemporada">
   <property name="visible">True</property>
-  <property name="title" translatable="yes">Unidad Dosis</property>
+  <property name="title" translatable="yes">Registro Estado Fenologico</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
@@ -188,7 +187,7 @@
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-6</property>
-	      <signal name="clicked" handler="on_btnCancelar_clicked" last_modification_time="Mon, 23 Oct 2006 10:30:03 GMT"/>
+	      <signal name="clicked" handler="on_btnCancelar_clicked" last_modification_time="Sun, 15 Oct 2006 20:33:11 GMT"/>
 	    </widget>
 	  </child>
 
@@ -202,7 +201,7 @@
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-5</property>
-	      <signal name="clicked" handler="on_btnAceptar_clicked" last_modification_time="Mon, 23 Oct 2006 10:30:08 GMT"/>
+	      <signal name="clicked" handler="on_btnAceptar_clicked" last_modification_time="Sun, 15 Oct 2006 20:33:25 GMT"/>
 	    </widget>
 	  </child>
 	</widget>
@@ -217,16 +216,51 @@
       <child>
 	<widget class="GtkTable" id="table1">
 	  <property name="visible">True</property>
-	  <property name="n_rows">2</property>
+	  <property name="n_rows">3</property>
 	  <property name="n_columns">2</property>
-	  <property name="homogeneous">True</property>
-	  <property name="row_spacing">0</property>
-	  <property name="column_spacing">0</property>
+	  <property name="homogeneous">False</property>
+	  <property name="row_spacing">6</property>
+	  <property name="column_spacing">6</property>
 
 	  <child>
-	    <widget class="GtkLabel" id="label1">
+	    <widget class="GtkHBox" id="hbox8">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">Codigo Estado Fenologico:</property>
+	      <property name="homogeneous">False</property>
+	      <property name="spacing">0</property>
+
+	      <child>
+		<widget class="GtkEntry" id="entCultivo">
+		  <property name="visible">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="editable">True</property>
+		  <property name="visibility">True</property>
+		  <property name="max_length">0</property>
+		  <property name="text" translatable="yes"></property>
+		  <property name="has_frame">True</property>
+		  <property name="invisible_char">*</property>
+		  <property name="activates_default">False</property>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">True</property>
+		  <property name="fill">True</property>
+		</packing>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="left_attach">1</property>
+	      <property name="right_attach">2</property>
+	      <property name="top_attach">0</property>
+	      <property name="bottom_attach">1</property>
+	      <property name="x_options">fill</property>
+	      <property name="y_options">fill</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkLabel" id="label5">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">Cultivo:</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">False</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -252,9 +286,9 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label2">
+	    <widget class="GtkLabel" id="label6">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">Descripción Estado Fenologico:</property>
+	      <property name="label" translatable="yes">Cuartel:</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">False</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -280,45 +314,99 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkEntry" id="entCodigo">
+	    <widget class="GtkHBox" id="hbox9">
 	      <property name="visible">True</property>
-	      <property name="sensitive">False</property>
-	      <property name="can_focus">True</property>
-	      <property name="editable">False</property>
-	      <property name="visibility">True</property>
-	      <property name="max_length">0</property>
-	      <property name="text" translatable="yes"></property>
-	      <property name="has_frame">True</property>
-	      <property name="invisible_char">●</property>
-	      <property name="activates_default">False</property>
-	    </widget>
-	    <packing>
-	      <property name="left_attach">1</property>
-	      <property name="right_attach">2</property>
-	      <property name="top_attach">0</property>
-	      <property name="bottom_attach">1</property>
-	      <property name="y_options"></property>
-	    </packing>
-	  </child>
+	      <property name="homogeneous">False</property>
+	      <property name="spacing">0</property>
 
-	  <child>
-	    <widget class="GtkEntry" id="entDescripcion">
-	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="editable">True</property>
-	      <property name="visibility">True</property>
-	      <property name="max_length">0</property>
-	      <property name="text" translatable="yes"></property>
-	      <property name="has_frame">True</property>
-	      <property name="invisible_char">●</property>
-	      <property name="activates_default">False</property>
+	      <child>
+		<widget class="GtkEntry" id="entCuartel">
+		  <property name="visible">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="editable">True</property>
+		  <property name="visibility">True</property>
+		  <property name="max_length">0</property>
+		  <property name="text" translatable="yes"></property>
+		  <property name="has_frame">True</property>
+		  <property name="invisible_char">*</property>
+		  <property name="activates_default">False</property>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">True</property>
+		  <property name="fill">True</property>
+		</packing>
+	      </child>
 	    </widget>
 	    <packing>
 	      <property name="left_attach">1</property>
 	      <property name="right_attach">2</property>
 	      <property name="top_attach">1</property>
 	      <property name="bottom_attach">2</property>
+	      <property name="x_options">fill</property>
+	      <property name="y_options">fill</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkLabel" id="label4">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">Temporada:</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">False</property>
+	      <property name="justify">GTK_JUSTIFY_LEFT</property>
+	      <property name="wrap">False</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
+	    </widget>
+	    <packing>
+	      <property name="left_attach">0</property>
+	      <property name="right_attach">1</property>
+	      <property name="top_attach">2</property>
+	      <property name="bottom_attach">3</property>
+	      <property name="x_options">fill</property>
 	      <property name="y_options"></property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkHBox" id="hbox3">
+	      <property name="visible">True</property>
+	      <property name="homogeneous">True</property>
+	      <property name="spacing">0</property>
+
+	      <child>
+		<widget class="GtkEntry" id="entTemporada">
+		  <property name="visible">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="editable">True</property>
+		  <property name="visibility">True</property>
+		  <property name="max_length">0</property>
+		  <property name="text" translatable="yes"></property>
+		  <property name="has_frame">True</property>
+		  <property name="invisible_char">*</property>
+		  <property name="activates_default">False</property>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">True</property>
+		  <property name="fill">True</property>
+		</packing>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="left_attach">1</property>
+	      <property name="right_attach">2</property>
+	      <property name="top_attach">2</property>
+	      <property name="bottom_attach">3</property>
+	      <property name="y_options">fill</property>
 	    </packing>
 	  </child>
 	</widget>

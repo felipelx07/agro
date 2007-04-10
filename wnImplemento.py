@@ -98,7 +98,7 @@ class wnImplemento (GladeConnect):
         if self.padre is None:
             self.on_exit()
         else:
-            self.padre.remove_tab("Implemento")
+            self.padre.remove_tab("Implementos")
             
     def on_treeImplemento_row_activated(self, tree=None, path=None, col=None):
         self.on_btnPropiedades_clicked()

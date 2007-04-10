@@ -1,0 +1,4 @@
+TODO:
+
+Revisar coneccion.rc
+Expandir en X

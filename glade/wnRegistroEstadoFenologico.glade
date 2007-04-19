@@ -262,7 +262,7 @@
 	      <property name="spacing">0</property>
 
 	      <child>
-		<widget class="GtkEntry" id="entCultivo">
+		<widget class="GtkEntry" id="entCultivoTemporada">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
 		  <property name="editable">True</property>
@@ -293,7 +293,7 @@
 	  <child>
 	    <widget class="GtkLabel" id="label5">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">Cultivo:</property>
+	      <property name="label" translatable="yes">Cultivo Temporada:</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">False</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>

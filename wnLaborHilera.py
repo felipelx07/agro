@@ -138,8 +138,8 @@ class dlgLaborHilera(GladeConnect):
         if self.editando:
             self.entCodigo.set_sensitive(False)
         
-        self.pecHilera = completion.CompletionHilera(self.entHilera,
-                self.sel_hilera,
+        self.pecCuartel = completion.CompletionCuartel(self.entCuartel,
+                self.sel_cuartel,
                 self.cnx)
         self.pecLabor = completion.CompletionLabor(self.entLabor,
                 self.sel_labor,
@@ -150,8 +150,12 @@ class dlgLaborHilera(GladeConnect):
         
         self.dlgLaborHilera.show_all()
 
-    def sel_hilera(self, completion, model, iter):
-        self.codigo_hilera = model.get_value(iter, 1)
+    def sel_cuartel(self, completion, model, iter):
+        self.codigo_cuartel = model.get_value(iter, 1)
+        #poner aqui el llenado de las hileras
+        #cargar en algun modelo y luego llenar la tabla tabHilera
+        #añadir a la primera columna un checkbutton sin nombre
+        #  (puede ser copiando el existente)
         
     def sel_labor(self, completion, model, iter):
         self.codigo_labor = model.get_value(iter, 1)

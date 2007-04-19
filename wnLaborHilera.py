@@ -25,6 +25,10 @@ import config
  RUT,
  DESCRIPCION_FICHA) = range(7)
 
+(SELECCIONADO,
+ D_HILERA,
+ C_HILERA) = range(3)
+
 schema = config.schema
 table = "labor_hilera"
 
@@ -97,9 +101,6 @@ class wnLaborHilera (GladeConnect):
         if model is None or it is None:
             return
         dlg = dlgLaborHilera(self.cnx, self.frm_padre, False)
-        dlg.entHilera.set_text(model.get_value(it, DESCRIPCION_HILERA))
-        dlg.codigo_hilera = model.get_value(it, CODIGO_HILERA)
-        dlg.pecHilera.set_selected(True)
         
         dlg.entLabor.set_text(model.get_value(it, DESCRIPCION_LABOR))
         dlg.codigo_labor = model.get_value(it, CODIGO_LABOR)
@@ -153,9 +154,27 @@ class dlgLaborHilera(GladeConnect):
     def sel_cuartel(self, completion, model, iter):
         self.codigo_cuartel = model.get_value(iter, 1)
         #poner aqui el llenado de las hileras
-        #cargar en algun modelo y luego llenar la tabla tabHilera
-        #añadir a la primera columna un checkbutton sin nombre
-        #  (puede ser copiando el existente)
+        
+        strSelectHilera = """SELECT
+                            false as bool,
+                            f.descripcion_hilera,
+                            f.codigo_hilera 
+                            FROM """ + config.schema + """
+                            .hilera f WHERE 
+                            f.codigo_cuartel = """ + self.codigo_cuartel + """ 
+                            ORDER BY f.codigo_hilera"""
+                        
+        columnas = []
+        columnas.append ([SELECCIONADO, "Sel", "bool"])
+        columnas.append ([D_HILERA, "Hilera","str"])
+        
+        self.modelo_hilera = gtk.ListStore(*(2*[str]))
+        SimpleTree.GenColsByModel(self.modelo_hilera, columnas, self.treeHilera)
+        self.col_data = [x[0] for x in columnas]
+        
+        self.modelo_hilera = ifd.ListStoreFromSQL(self.cnx, strSelectHilera)
+        self.treeHilera.set_model(self.modelo_hilera)
+        
         
     def sel_labor(self, completion, model, iter):
         self.codigo_labor = model.get_value(iter, 1)

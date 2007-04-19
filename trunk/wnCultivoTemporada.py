@@ -27,6 +27,9 @@ import config
 
 schema = config.schema
 table = "cultivo_temporada"
+cultivo = None
+cuartel = None
+temporada = None
 
 class wnCultivoTemporada (GladeConnect):
     def __init__(self, conexion=None, padre=None, root="wnCultivoTemporada"):
@@ -101,6 +104,13 @@ class wnCultivoTemporada (GladeConnect):
         if model is None or it is None:
             return
         dlg = dlgCultivoTemporada(self.cnx, self.frm_padre, False)
+        
+        global cultivo
+        cultivo = model.get_value(it, CODIGO_CULTIVO)
+        global cuartel
+        cuartel = model.get_value(it, CODIGO_CUARTEL)
+        global temporada
+        temporada = model.get_value(it, CODIGO_TEMPORADA)
            
         dlg.entCultivo.set_text(model.get_value(it, DESCRIPCION_CULTIVO))
         dlg.codigo_cultivo = model.get_value(it, CODIGO_CULTIVO)
@@ -119,10 +129,6 @@ class wnCultivoTemporada (GladeConnect):
         if response == gtk.RESPONSE_OK:
             self.modelo.clear()
             self.carga_datos()
-            
-        #dlg.cultivo = dlg.codigo_cultivo
-        #dlg.cuartel = dlg.codigo_cuartel
-        #dlg.temporada = dlg.codigo_temporada
             
     def on_btnCerrar_clicked(self, btn=None):
         if self.padre is None:
@@ -165,7 +171,6 @@ class dlgCultivoTemporada(GladeConnect):
         self.codigo_temporada = model.get_value(iter, 1)
         
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
-        
         if self.entCultivo.get_text() == "":
             dialogos.error("El cultivo no puede ser vacio.")
             return
@@ -187,19 +192,17 @@ class dlgCultivoTemporada(GladeConnect):
         if not self.editando:
             sql = ifd.insertFromDict(schema + "." + table, campos)        
         else:
-            #borrar el cultivo y añadir el nuevo???
-            
             try:
-                llaves['codigo_cultivo'] = self.cultivo
-                llaves['codigo_cuartel'] = self.cuartel
-                llaves['codigo_temporada'] = self.temporada
+                llaves['codigo_cultivo'] = cultivo
+                llaves['codigo_cuartel'] = cuartel
+                llaves['codigo_temporada'] = temporada
                 sql = ifd.deleteFromDict(config.schema + '.' + table, llaves)
                 self.cursor.execute(sql, llaves)
             except:
                  print sys.exc_info()[1]
                  dialogos.error("<b>NO SE PUEDE ELIMINAR</b>\nExisten datos"+ 
                 "relacionados con:\n<b>%s/%s/%s</b>" % 
-                (self.cultivo,self.cuartel,self.temporada))
+                (cultivo,cuartel,temporada))
             
             sql = ifd.insertFromDict(schema + "." + table, campos)
         

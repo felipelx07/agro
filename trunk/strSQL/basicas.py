@@ -123,25 +123,25 @@ strSelectLaborHilera = """SELECT
 strSelectRegistroEstadoFenologico = """SELECT
                             r.codigo_registro_estado_fenologico,
                             r.codigo_cultivo,
-                            c.descripcion_cultivo,
                             r.codigo_cuartel,
-                            cl.descripcion_cuartel,
+                            r.codigo_temporada,
+                            c.descripcion_cultivo || '-' || 
+                            cl.descripcion_cuartel || '-' ||
+                            'Temporada ' || date_part('year', t.fecha_inicio) 
+                            || '-' || date_part('year', t.fecha_termino)
+                            as descripcion_cultivo_temporada,
                             r.codigo_estado_fenologico,
                             e.descripcion_estado_fenologico,
-                            r.codigo_temporada,
-                            'Temporada ' || date_part('year', t.fecha_inicio) 
-                            || '-' || date_part('year', t.fecha_termino) 
-                            as descripcion_temporada,
                             r.fecha  
                         FROM """ + config.schema + """.registro_estado_fenologico r 
                         INNER JOIN """ + config.schema + """.cultivo c 
                         ON r.codigo_cultivo = c.codigo_cultivo 
                         INNER JOIN """ + config.schema + """.cuartel cl 
                         ON r.codigo_cuartel = cl.codigo_cuartel  
-                        INNER JOIN """ + config.schema + """.estado_fenologico e 
-                        ON r.codigo_estado_fenologico = e.codigo_estado_fenologico 
                         INNER JOIN """ + config.schema + """.temporada t 
                         ON r.codigo_temporada = t.codigo_temporada 
+                        INNER JOIN """ + config.schema + """.estado_fenologico e 
+                        ON r.codigo_estado_fenologico = e.codigo_estado_fenologico                         
                         ORDER BY r.codigo_registro_estado_fenologico"""
                     
 strSelectCultivoTemporada = """SELECT

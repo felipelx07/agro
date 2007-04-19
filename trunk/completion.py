@@ -9,7 +9,6 @@ from constantes import MESES
 from constantes import SUCURSAL_MATRIZ
 import ifd
 import config
-#from psycopg import connect
 
 schema = config.schema
 
@@ -156,6 +155,28 @@ class CompletionTipoDocumento(GenericCompletion):
                         riego.tipo_documento
                 ORDER BY
                         codigo_tipo_documento"""
+        GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
+        
+class CompletionCultivoTemporada(GenericCompletion):
+
+    def __init__(self, entry = gtk.Entry(), f = None, c = None, e = None):
+        s = """SELECT       
+                            c.descripcion_cultivo || '-' || 
+                            cl.descripcion_cuartel || '-' ||
+                            'Temporada ' || date_part('year', t.fecha_inicio) 
+                            || '-' || date_part('year', t.fecha_termino)
+                            as descripcion_cultivo_temporada,
+                            ct.codigo_cultivo,
+                            ct.codigo_cuartel,
+                            ct.codigo_temporada  
+                        FROM """ + config.schema + """.cultivo_temporada ct 
+                        INNER JOIN """ + config.schema + """.cultivo c 
+                        ON ct.codigo_cultivo = c.codigo_cultivo 
+                        INNER JOIN """ + config.schema + """.cuartel cl 
+                        ON ct.codigo_cuartel = cl.codigo_cuartel  
+                        INNER JOIN """ + config.schema + """.temporada t 
+                        ON ct.codigo_temporada = t.codigo_temporada                         
+                        ORDER BY ct.codigo_temporada"""
         GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
         
 class CompletionRut(GenericCompletion):

@@ -149,6 +149,8 @@ class dlgLaborHilera(GladeConnect):
                 self.sel_ficha,
                 self.cnx)
         
+        self.modelo_hilera = None
+        
         self.dlgLaborHilera.show_all()
 
     def sel_cuartel(self, completion, model, iter):
@@ -177,7 +179,6 @@ class dlgLaborHilera(GladeConnect):
         
         self.treeHilera.set_model(self.modelo_hilera)
         
-        
     def sel_labor(self, completion, model, iter):
         self.codigo_labor = model.get_value(iter, 1)
     
@@ -187,9 +188,10 @@ class dlgLaborHilera(GladeConnect):
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         
         fecha = self.entFecha.get_date()
+        hilera_true = None
         
-        if self.entHilera.get_text() == "":
-            dialogos.error("La hilera no puede ser vacia.")
+        if self.modelo_hilera == None:
+            dialogos.error("Seleccione un cuartel y una Hilera.")
             return
         
         if self.entFicha.get_text() == "":
@@ -198,25 +200,32 @@ class dlgLaborHilera(GladeConnect):
         
         campos = {}
         llaves = {}
-        campos['codigo_hilera'] = self.codigo_hilera
         campos['codigo_labor'] = self.codigo_labor
         campos['fecha'] = fecha.strftime("%Y/%m/%d")
         campos['rut']  = self.rut
         
-        if not self.editando:
-            sql = ifd.insertFromDict(schema + "." + table, campos)        
-        else:
-            llaves['codigo_labor'] = self.codigo_labor
-            llaves['codigo_hilera'] = self.codigo_hilera
-            sql, campos=ifd.updateFromDict(schema + "." + table, campos, llaves)
-        
-        try:   
-            self.cursor.execute(sql, campos)
-            self.dlgLaborHilera.hide()
-        except:
-            print sys.exc_info()[1]
-            print sql
-            
+        for i in self.modelo_hilera:
+            if i[0] == True:
+                hilera_true = 1
+                campos['codigo_hilera'] = i[2]
+                
+                if not self.editando:
+                    sql = ifd.insertFromDict(schema + "." + table, campos)        
+                else:
+                    llaves['codigo_labor'] = self.codigo_labor
+                    llaves['codigo_hilera'] = self.codigo_hilera
+                    sql, campos=ifd.updateFromDict(schema + "." + table, campos, llaves)
+                    
+                try:   
+                    self.cursor.execute(sql, campos)
+                    self.dlgLaborHilera.hide()
+                except:
+                    print sys.exc_info()[1]
+                    print sql
+                
+        if hilera_true == None:
+            dialogos.error("Seleccione una hilera.")
+            return
         
     def on_btnCancelar_clicked(self, btn=None):
         self.dlgLaborHilera.hide()

@@ -156,7 +156,6 @@ class dlgLaborHilera(GladeConnect):
         #poner aqui el llenado de las hileras
         
         strSelectHilera = """SELECT
-                            'False' as bool,
                             f.descripcion_hilera,
                             f.codigo_hilera 
                             FROM """ + config.schema + """
@@ -168,11 +167,14 @@ class dlgLaborHilera(GladeConnect):
         columnas.append ([SELECCIONADO, "Sel", "bool"])
         columnas.append ([D_HILERA, "Hilera","str"])
         
-        self.modelo_hilera = gtk.ListStore(*(2*[str]))
+        m = ifd.ListStoreFromSQL(self.cnx, strSelectHilera)
+        self.modelo_hilera = gtk.ListStore(bool, str, str)
+        for x in m:
+            self.modelo_hilera.append((False, x[0], x[1]))
+            
         SimpleTree.GenColsByModel(self.modelo_hilera, columnas, self.treeHilera)
         self.col_data = [x[0] for x in columnas]
         
-        self.modelo_hilera = ifd.ListStoreFromSQL(self.cnx, strSelectHilera)
         self.treeHilera.set_model(self.modelo_hilera)
         
         

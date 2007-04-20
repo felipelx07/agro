@@ -156,7 +156,7 @@ class dlgLaborHilera(GladeConnect):
         #poner aqui el llenado de las hileras
         
         strSelectHilera = """SELECT
-                            false as bool,
+                            'False' as bool,
                             f.descripcion_hilera,
                             f.codigo_hilera 
                             FROM """ + config.schema + """

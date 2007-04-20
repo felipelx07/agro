@@ -22,7 +22,9 @@ import datetime
  CODIGO_HILERA,
  CODIGO_PRODUCTO,
  DESCRIPCION_HILERA,
- DESCRIPCION_PRODUCTO,
+ CODIGO_CUARTEL,
+ DESCRIPCION_CUARTEL,
+ DESCRIPCION_PRODUCTO, 
  DOSIS,
  FECHA,
  RUT,
@@ -32,7 +34,11 @@ import datetime
  DESCRIPCION_MAQUINARIA,
  DESCRIPCION_IMPLEMENTO,
  CODIGO_TEMPORADA,
- DESCRIPCION_TEMPORADA) = range(15)
+ DESCRIPCION_TEMPORADA) = range(17)
+
+(SELECCIONADO,
+ D_HILERA,
+ C_HILERA) = range(3)
 
 schema = config.schema
 table = "aplicacion"
@@ -111,9 +117,12 @@ class wnAplicacion (GladeConnect):
         if model is None or it is None:
             return
         dlg = dlgAplicacion(self.cnx, self.frm_padre, False)
-        dlg.entHilera.set_text(model.get_value(it, DESCRIPCION_HILERA))
+        
+        dlg.entCuartel.set_text(model.get_value(it, DESCRIPCION_CUARTEL))
+        dlg.codigo_cuartel = model.get_value(it, CODIGO_CUARTEL)
+        dlg.pecCuartel.set_selected(True)
         dlg.codigo_hilera = model.get_value(it, CODIGO_HILERA)
-        dlg.pecHilera.set_selected(True)
+        dlg.sel_cuartel(None, self.modelo, None)
         
         dlg.entProducto.set_text(model.get_value(it, DESCRIPCION_PRODUCTO))
         dlg.codigo_producto = model.get_value(it, CODIGO_PRODUCTO)
@@ -171,8 +180,8 @@ class dlgAplicacion(GladeConnect):
         if self.editando:
             self.entCodigo.set_sensitive(False)
         
-        self.pecHilera = completion.CompletionHilera(self.entHilera,
-                self.sel_hilera,
+        self.pecCuartel = completion.CompletionCuartel(self.entCuartel,
+                self.sel_cuartel,
                 self.cnx)
         self.pecProducto = completion.CompletionProducto(self.entProducto,
                 self.sel_producto,
@@ -189,10 +198,43 @@ class dlgAplicacion(GladeConnect):
         self.pecTemporada = completion.CompletionTemporada(self.entTemporada,
                 self.sel_temporada,
                 self.cnx)
+                
+        self.modelo_hilera = None
+        
         self.dlgAplicacion.show_all()
 
-    def sel_hilera(self, completion, model, iter):
-        self.codigo_hilera = model.get_value(iter, 1)
+    def sel_cuartel(self, completion, model, iter):
+        if completion is not None:
+            self.codigo_cuartel = model.get_value(iter, 1)        
+            
+        strSelectHilera = """SELECT
+                            f.descripcion_hilera,
+                            f.codigo_hilera 
+                            FROM """ + config.schema + """.hilera f WHERE """
+        if completion is None:
+            strSelectHilera = strSelectHilera + """f.codigo_hilera = """ + self.codigo_hilera +""" AND """
+        
+        strSelectHilera = strSelectHilera +""" f.codigo_cuartel = """ + self.codigo_cuartel + """ 
+                            ORDER BY f.codigo_hilera"""
+        
+        print strSelectHilera
+        
+        columnas = []
+        columnas.append ([SELECCIONADO, "Sel", "bool"])
+        columnas.append ([D_HILERA, "Hilera","str"])
+        
+        m = ifd.ListStoreFromSQL(self.cnx, strSelectHilera)
+        self.modelo_hilera = gtk.ListStore(bool, str, str)
+        for x in m:
+            if completion is not None:
+                self.modelo_hilera.append((False, x[0], x[1]))
+            else:
+                self.modelo_hilera.append((True, x[0], x[1]))
+            
+        SimpleTree.GenColsByModel(self.modelo_hilera, columnas, self.treeHilera)
+        self.col_data = [x[0] for x in columnas]
+        
+        self.treeHilera.set_model(self.modelo_hilera)
         
     def sel_producto(self, completion, model, iter):
         self.codigo_producto = model.get_value(iter, 1)
@@ -214,9 +256,10 @@ class dlgAplicacion(GladeConnect):
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         
         fecha = self.entFecha.get_date()
+        hilera_true = None
         
-        if self.entHilera.get_text() == "":
-            dialogos.error("La hilera no puede ser vacia.")
+        if self.modelo_hilera == None:
+            dialogos.error("Seleccione un cuartel y una Hilera.")
             return
                 
         if self.entProducto.get_text() == "":
@@ -246,7 +289,6 @@ class dlgAplicacion(GladeConnect):
         campos = {}
         llaves = {}
         
-        campos['codigo_hilera'] = self.codigo_hilera
         campos['codigo_producto'] = self.codigo_producto
         campos['dosis']  = self.entDosis.get_text().upper()
         campos['fecha'] = fecha.strftime("%Y/%m/%d")
@@ -255,19 +297,27 @@ class dlgAplicacion(GladeConnect):
         campos['codigo_implemento'] = self.codigo_implemento
         campos['codigo_temporada'] = self.codigo_temporada
         
-        if not self.editando:
-            sql = ifd.insertFromDict(schema + "." + table, campos)        
-        else:
-            llaves['codigo_aplicacion'] = self.entCodigo.get_text()
-            sql, campos=ifd.updateFromDict(schema + "." + table, campos, llaves)
+        for i in self.modelo_hilera:
+            if i[0] == True:
+                hilera_true = 1
+                campos['codigo_hilera'] = i[2]
         
-        try:   
-            self.cursor.execute(sql, campos)
-            self.dlgAplicacion.hide()
-        except:
-            print sys.exc_info()[1]
-            print sql
-            
+                if not self.editando:
+                    sql = ifd.insertFromDict(schema + "." + table, campos)        
+                else:
+                    llaves['codigo_aplicacion'] = self.entCodigo.get_text()
+                    sql, campos=ifd.updateFromDict(schema + "." + table, campos, llaves)
+        
+                try:   
+                    self.cursor.execute(sql, campos)
+                    self.dlgAplicacion.hide()
+                except:
+                    print sys.exc_info()[1]
+                    print sql
+        
+        if hilera_true == None:
+            dialogos.error("Seleccione una hilera.")
+            return    
         
     def on_btnCancelar_clicked(self, btn=None):
         self.dlgAplicacion.hide()

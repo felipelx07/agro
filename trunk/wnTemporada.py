@@ -72,6 +72,7 @@ class wnTemporada (GladeConnect):
             return
         codigo = model.get_value(it, CODIGO)
         descripcion = model.get_value(it, DESCRIPCION)
+        
         if dialogos.yesno("¿Desea eliminar la Temporada <b>%s</b>?\nEsta acción no se puede deshacer\n" % descripcion, self.frm_padre) == gtk.RESPONSE_YES:
             llaves = {'codigo_temporada':codigo}
             sql = ifd.deleteFromDict(schema + "." + table, llaves)
@@ -80,7 +81,7 @@ class wnTemporada (GladeConnect):
                 model.remove(it)
             except:
                 print sys.exc_info()[1]
-                dialogos.error("<b>NO SE PUEDE ELIMINAR</b>\nEl Temporada <b>%s</b>, esta relacionada con un producto"%descripcion)
+                dialogos.error("<b>NO SE PUEDE ELIMINAR</b>\nEl Temporada <b>%s</b>, esta relacionada con "%descripcion)
         
     def on_btnPropiedades_clicked(self, btn=None):
 

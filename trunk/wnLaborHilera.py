@@ -19,11 +19,13 @@ import config
 
 (CODIGO_HILERA,
  DESCRIPCION_HILERA,
+ CODIGO_CUARTEL,
+ DESCRIPCION_CUARTEL,
  CODIGO_LABOR,
  DESCRIPCION_LABOR,
  FECHA,
  RUT,
- DESCRIPCION_FICHA) = range(7)
+ DESCRIPCION_FICHA) = range(9)
 
 (SELECCIONADO,
  D_HILERA,
@@ -99,12 +101,19 @@ class wnLaborHilera (GladeConnect):
     def on_btnPropiedades_clicked(self, btn=None):
         model, it = self.treeLaborHilera.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione una Labor Hilera para editar.") #TODO: HACERLO PARA TODOS!!!!
             return
         dlg = dlgLaborHilera(self.cnx, self.frm_padre, False)
         
         dlg.entLabor.set_text(model.get_value(it, DESCRIPCION_LABOR))
         dlg.codigo_labor = model.get_value(it, CODIGO_LABOR)
         dlg.pecLabor.set_selected(True)
+        
+        dlg.entCuartel.set_text(model.get_value(it, DESCRIPCION_CUARTEL))
+        dlg.codigo_cuartel = model.get_value(it, CODIGO_CUARTEL)
+        dlg.pecCuartel.set_selected(True)
+        dlg.codigo_hilera = model.get_value(it, CODIGO_HILERA)
+        dlg.sel_cuartel(None, self.modelo, None)
         
         dlg.entFicha.set_text(model.get_value(it, DESCRIPCION_FICHA))
         dlg.rut = model.get_value(it, RUT)
@@ -154,15 +163,17 @@ class dlgLaborHilera(GladeConnect):
         self.dlgLaborHilera.show_all()
 
     def sel_cuartel(self, completion, model, iter):
-        self.codigo_cuartel = model.get_value(iter, 1)
-        #poner aqui el llenado de las hileras
+        if completion is not None:
+            self.codigo_cuartel = model.get_value(iter, 1)
         
         strSelectHilera = """SELECT
                             f.descripcion_hilera,
                             f.codigo_hilera 
-                            FROM """ + config.schema + """
-                            .hilera f WHERE 
-                            f.codigo_cuartel = """ + self.codigo_cuartel + """ 
+                            FROM """ + config.schema + """.hilera f WHERE """
+        if completion is None:
+            strSelectHilera = strSelectHilera + """f.codigo_hilera = """ + self.codigo_hilera +""" AND """
+        
+        strSelectHilera = strSelectHilera +""" f.codigo_cuartel = """ + self.codigo_cuartel + """ 
                             ORDER BY f.codigo_hilera"""
                         
         columnas = []
@@ -172,7 +183,10 @@ class dlgLaborHilera(GladeConnect):
         m = ifd.ListStoreFromSQL(self.cnx, strSelectHilera)
         self.modelo_hilera = gtk.ListStore(bool, str, str)
         for x in m:
-            self.modelo_hilera.append((False, x[0], x[1]))
+            if completion is not None:
+                self.modelo_hilera.append((False, x[0], x[1]))
+            else:
+                self.modelo_hilera.append((True, x[0], x[1]))
             
         SimpleTree.GenColsByModel(self.modelo_hilera, columnas, self.treeHilera)
         self.col_data = [x[0] for x in columnas]

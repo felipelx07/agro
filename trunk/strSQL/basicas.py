@@ -60,6 +60,8 @@ strSelectAplicacion = """SELECT
                             a.codigo_hilera,
                             a.codigo_producto,
                             h.descripcion_hilera,
+                            h.codigo_cuartel,
+                            c.descripcion_cuartel,
                             p.descripcion_producto,                            
                             a.dosis,
                             a.fecha,
@@ -74,8 +76,10 @@ strSelectAplicacion = """SELECT
                             || '-' || date_part('year', t.fecha_termino) 
                             as descripcion
                         FROM """ + config.schema + """.aplicacion a
-                        INNER JOIN """ + config.schema + """.hilera h
-                        ON a.codigo_hilera = h.codigo_hilera  
+                        INNER JOIN """ + config.schema + """.hilera h 
+                        ON a.codigo_hilera = h.codigo_hilera 
+                        INNER JOIN """ + config.schema + """.cuartel c 
+                        ON h.codigo_cuartel = c.codigo_cuartel  
                         INNER JOIN """ + config.schema + """.producto p
                         ON a.codigo_producto = p.codigo_producto 
                         INNER JOIN """ + config.schema + """.ficha f
@@ -106,6 +110,8 @@ strSelectHilera = """SELECT
 strSelectLaborHilera = """SELECT
                             lh.codigo_hilera,
                             h.descripcion_hilera,
+                            h.codigo_cuartel,
+                            c.descripcion_cuartel,
                             lh.codigo_labor,
                             l.descripcion_labor,
                             lh.fecha,
@@ -114,6 +120,8 @@ strSelectLaborHilera = """SELECT
                         FROM """ + config.schema + """.labor_hilera lh 
                         INNER JOIN """ + config.schema + """.hilera h 
                         ON lh.codigo_hilera = h.codigo_hilera 
+                        INNER JOIN """ + config.schema + """.cuartel c 
+                        ON h.codigo_cuartel = c.codigo_cuartel  
                         INNER JOIN """ + config.schema + """.labor l 
                         ON lh.codigo_labor = l.codigo_labor 
                         INNER JOIN """ + config.schema + """.ficha f 

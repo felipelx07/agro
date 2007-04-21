@@ -18,13 +18,19 @@ import treetohtml
 import config
 
 (CODIGO_REGISTRO_ESTADO_FENOLOGICO,
- CODIGO_CULTIVO, 
+ CODIGO_CULTIVO,
+ DESCRIPCION_CULTIVO, 
  CODIGO_CUARTEL,
+ DESCRIPCION_CUARTEL,
  CODIGO_TEMPORADA,
- DESCRIPCION_CULTIVO_TEMPORADA,
+ DESCRIPCION_TEMPORADA,
  CODIGO_ESTADO_FENOLOGICO,
  DESCRIPCION_ESTADO_FENOLOGICO,
- FECHA) = range(8)
+ FECHA) = range(10)
+
+(SELECCIONADO,
+ D_CUARTEL,
+ C_CUARTEL) = range(3)
 
 schema = config.schema
 table = "registro_estado_fenologico"
@@ -47,7 +53,10 @@ class wnRegistroEstadoFenologico (GladeConnect):
     def crea_columnas(self):
         columnas = []
         columnas.append ([CODIGO_REGISTRO_ESTADO_FENOLOGICO, "Codigo", "str"])
-        columnas.append ([DESCRIPCION_CULTIVO_TEMPORADA, "Cultivo Temporada", "str"])
+        #columnas.append ([DESCRIPCION_CULTIVO_TEMPORADA, "Cultivo Temporada", "str"])
+        columnas.append ([DESCRIPCION_TEMPORADA, "Temporada", "str"])
+        columnas.append ([DESCRIPCION_CULTIVO, "Cultivo", "str"])
+        columnas.append ([DESCRIPCION_CUARTEL, "Cuartel", "str"])
         columnas.append ([DESCRIPCION_ESTADO_FENOLOGICO, "Estado Fenologico","str"])
         columnas.append ([FECHA, "Fecha","dte"])
         
@@ -99,12 +108,16 @@ class wnRegistroEstadoFenologico (GladeConnect):
         dlg = dlgRegistroEstadoFenologico(self.cnx, self.frm_padre, False)
         
         dlg.codigo_registro_estado_fenologico = model.get_value(it, CODIGO_REGISTRO_ESTADO_FENOLOGICO)
-           
-        dlg.entCultivoTemporada.set_text(model.get_value(it, DESCRIPCION_CULTIVO_TEMPORADA))
+        
+        dlg.entCultivo.set_text(model.get_value(it, DESCRIPCION_CULTIVO))
         dlg.codigo_cultivo = model.get_value(it, CODIGO_CULTIVO)
+        dlg.pecCultivo.set_selected(True)
         dlg.codigo_cuartel = model.get_value(it, CODIGO_CUARTEL)
+        dlg.sel_cultivo(None, self.modelo, None)
+        
+        dlg.entTemporada.set_text(model.get_value(it, DESCRIPCION_TEMPORADA))
         dlg.codigo_temporada = model.get_value(it, CODIGO_TEMPORADA)
-        dlg.pecCultivoTemporada.set_selected(True)
+        dlg.pecTemporada.set_selected(True)
         
         dlg.entEstadoFenologico.set_text(model.get_value(it, DESCRIPCION_ESTADO_FENOLOGICO))
         dlg.codigo_estado_fenologico = model.get_value(it, CODIGO_ESTADO_FENOLOGICO)
@@ -137,20 +150,59 @@ class dlgRegistroEstadoFenologico(GladeConnect):
         if self.editando:
             self.entCodigo.set_sensitive(False)
         
-        self.pecCultivoTemporada = completion.CompletionCultivoTemporada(self.entCultivoTemporada,
-                self.sel_cultivo_temporada,
+        self.pecCultivo = completion.CompletionCultivo(self.entCultivo,
+                self.sel_cultivo,
+                self.cnx)
+                
+        self.pecTemporada = completion.CompletionTemporada(self.entTemporada,
+                self.sel_temporada,
                 self.cnx)
         
         self.pecEstadoFenologico = completion.CompletionEstadoFenologico(self.entEstadoFenologico,
                 self.sel_estado_fenologico,
                 self.cnx)
+                
+        self.modelo_cuartel = None
         
         self.dlgRegistroEstadoFenologico.show_all()
     
-    def sel_cultivo_temporada(self, completion, model, iter):
-        self.codigo_cultivo = model.get_value(iter, 1)
-        self.codigo_cuartel = model.get_value(iter, 2)
-        self.codigo_temporada = model.get_value(iter, 3)
+    def sel_cultivo(self, completion, model, iter):
+        if completion is not None:
+            self.codigo_cultivo = model.get_value(iter, 1)
+        
+        strSelectCuartel = """SELECT 
+                            c.descripcion_cuartel,
+                            ct.codigo_cuartel 
+                            FROM """ + config.schema + """.cultivo_temporada ct 
+                            INNER JOIN """ + config.schema + """.cuartel c 
+                            ON c.codigo_cuartel = ct.codigo_cuartel WHERE """
+        if completion is None:
+            strSelectCuartel = strSelectCuartel + """ct.codigo_cuartel = """ + self.codigo_cuartel +""" AND """
+        
+        strSelectCuartel = strSelectCuartel +""" ct.codigo_cultivo = """ + self.codigo_cultivo + """ 
+                            ORDER BY ct.codigo_cuartel"""
+        
+        
+        print strSelectCuartel                
+        columnas = []
+        columnas.append ([SELECCIONADO, "Sel", "bool"])
+        columnas.append ([D_CUARTEL, "Cuartel","str"])
+        
+        m = ifd.ListStoreFromSQL(self.cnx, strSelectCuartel)
+        self.modelo_cuartel = gtk.ListStore(bool, str, str)
+        for x in m:
+            if completion is not None:
+                self.modelo_cuartel.append((False, x[0], x[1]))
+            else:
+                self.modelo_cuartel.append((True, x[0], x[1]))
+            
+        SimpleTree.GenColsByModel(self.modelo_cuartel, columnas, self.treeCuartel)
+        self.col_data = [x[0] for x in columnas]
+        
+        self.treeCuartel.set_model(self.modelo_cuartel)
+        
+    def sel_temporada(self, completion, model, iter):
+        self.codigo_temporada = model.get_value(iter, 1)
     
     def sel_estado_fenologico(self, completion, model, iter):
         self.codigo_estado_fenologico = model.get_value(iter, 1)
@@ -158,9 +210,10 @@ class dlgRegistroEstadoFenologico(GladeConnect):
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         
         fecha = self.entFecha.get_date()
+        cuartel_true = None
         
-        if self.entCultivoTemporada.get_text() == "":
-            dialogos.error("El Cultivo Temporada no puede ser vacio.")
+        if self.modelo_cuartel == None:
+            dialogos.error("Seleccione un cultivo y un cuartel.")
             return
         
         if self.entEstadoFenologico.get_text() == "":
@@ -169,25 +222,32 @@ class dlgRegistroEstadoFenologico(GladeConnect):
         
         campos = {}
         llaves = {}
-        campos['codigo_cultivo'] = self.codigo_cultivo
-        campos['codigo_cuartel'] = self.codigo_cuartel
         campos['fecha'] = fecha.strftime("%Y/%m/%d")
         campos['codigo_temporada'] = self.codigo_temporada
         campos['codigo_estado_fenologico'] = self.codigo_estado_fenologico
-        
-        if not self.editando:
-            sql = ifd.insertFromDict(schema + "." + table, campos)        
-        else:
-            llaves['codigo_registro_estado_fenologico'] = self.codigo_registro_estado_fenologico
-            sql, campos=ifd.updateFromDict(schema + "." + table, campos, llaves)
-        
-        try:   
-            self.cursor.execute(sql, campos)
-            self.dlgRegistroEstadoFenologico.hide()
-        except:
-            print sys.exc_info()[1]
-            print sql
+        campos['codigo_cultivo'] = self.codigo_cultivo
             
+        for i in self.modelo_cuartel:
+            if i[0] == True:
+                cuartel_true = 1
+                campos['codigo_cuartel'] = i[2]
+                
+                if not self.editando:
+                    sql = ifd.insertFromDict(schema + "." + table, campos)        
+                else:
+                    llaves['codigo_registro_estado_fenologico'] = self.codigo_registro_estado_fenologico
+                    sql, campos=ifd.updateFromDict(schema + "." + table, campos, llaves)
+                    
+                try:   
+                    self.cursor.execute(sql, campos)
+                    self.dlgLaborHilera.hide()
+                except:
+                    print sys.exc_info()[1]
+                    print sql
+                
+        if cuartel_true == None:
+            dialogos.error("Seleccione un cuartel.")
+            return
         
     def on_btnCancelar_clicked(self, btn=None):
         self.dlgRegistroEstadoFenologico.hide()

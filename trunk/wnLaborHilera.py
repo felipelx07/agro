@@ -52,6 +52,7 @@ class wnLaborHilera (GladeConnect):
     def crea_columnas(self):
         columnas = []
         columnas.append ([DESCRIPCION_LABOR, "Labor", "str"])
+        columnas.append ([DESCRIPCION_CUARTEL, "Cuartel","str"])
         columnas.append ([DESCRIPCION_HILERA, "Hilera","str"])
         columnas.append ([FECHA, "Fecha","dte"])
         columnas.append ([DESCRIPCION_FICHA, "Ficha","str"])
@@ -217,6 +218,7 @@ class dlgLaborHilera(GladeConnect):
         campos['codigo_labor'] = self.codigo_labor
         campos['fecha'] = fecha.strftime("%Y/%m/%d")
         campos['rut']  = self.rut
+        campos['codigo_cuartel'] = self.codigo_cuartel
         
         for i in self.modelo_hilera:
             if i[0] == True:

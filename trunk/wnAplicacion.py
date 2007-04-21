@@ -61,6 +61,8 @@ class wnAplicacion (GladeConnect):
     def crea_columnas(self):
         columnas = []
         columnas.append ([CODIGO_APLICACION, "Aplicacion", "str"])
+        columnas.append ([DESCRIPCION_TEMPORADA, "Temporada","str"])
+        columnas.append ([DESCRIPCION_CUARTEL, "Cuartel","str"])
         columnas.append ([DESCRIPCION_HILERA, "Hilera","str"])
         columnas.append ([DESCRIPCION_PRODUCTO, "Producto","str"])
         columnas.append ([DOSIS, "Dosis","str"])
@@ -68,7 +70,7 @@ class wnAplicacion (GladeConnect):
         columnas.append ([DESCRIPCION_FICHA, "Ficha","str"])
         columnas.append ([DESCRIPCION_MAQUINARIA, "Maquinaria","str"])
         columnas.append ([DESCRIPCION_IMPLEMENTO, "Implemento","str"])
-        columnas.append ([DESCRIPCION_TEMPORADA, "Temporada","str"])
+        
         
         self.modelo = gtk.ListStore(*(9*[str]))
         SimpleTree.GenColsByModel(self.modelo, columnas, self.treeAplicacion)
@@ -296,6 +298,7 @@ class dlgAplicacion(GladeConnect):
         campos['codigo_maquinaria'] = self.codigo_maquinaria
         campos['codigo_implemento'] = self.codigo_implemento
         campos['codigo_temporada'] = self.codigo_temporada
+        campos['codigo_cuartel'] = self.codigo_cuartel
         
         for i in self.modelo_hilera:
             if i[0] == True:

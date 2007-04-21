@@ -131,13 +131,13 @@ strSelectLaborHilera = """SELECT
 strSelectRegistroEstadoFenologico = """SELECT
                             r.codigo_registro_estado_fenologico,
                             r.codigo_cultivo,
+                            c.descripcion_cultivo,
                             r.codigo_cuartel,
+                            cl.descripcion_cuartel,
                             r.codigo_temporada,
-                            c.descripcion_cultivo || '-' || 
-                            cl.descripcion_cuartel || '-' ||
                             'Temporada ' || date_part('year', t.fecha_inicio) 
                             || '-' || date_part('year', t.fecha_termino)
-                            as descripcion_cultivo_temporada,
+                            as descripcion_temporada,
                             r.codigo_estado_fenologico,
                             e.descripcion_estado_fenologico,
                             r.fecha  

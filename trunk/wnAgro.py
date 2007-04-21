@@ -25,6 +25,7 @@ from wnImplemento import wnImplemento
 from wnEstadoFenologico import wnEstadoFenologico
 from wnRegistroEstadoFenologico import wnRegistroEstadoFenologico
 from wnTemporada import wnTemporada
+from wnCultivoTemporada import wnCultivoTemporada
 
 import config
 
@@ -166,6 +167,11 @@ class Agro(GladeConnect):
     def on_mnuTemporada_activate(self, widget, *args):
         temporada = wnTemporada(self.cnx, self, "vboxTemporada")
         self.add_tab(temporada.vboxTemporada, "Temporada")
+        return
+    
+    def on_mnuCultivoTemporada_activate(self, widget, *args):
+        cultivo_temporada = wnCultivoTemporada(self.cnx, self, "vboxCultivoTemporada")
+        self.add_tab(cultivo_temporada.vboxCultivoTemporada, "Cultivo Temporada")
         return
         
 if __name__ == "__main__":

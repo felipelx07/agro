@@ -219,11 +219,21 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="mnuEstadosFenologicos">
+		    <widget class="GtkMenuItem" id="mnuEstadoFenologico">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">_Estados fenologicos</property>
 		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_mnuEstadosFenologicos_activate" last_modification_time="Fri, 09 Mar 2007 18:18:45 GMT"/>
+		      <signal name="activate" handler="on_mnuEstadoFenologico_activate" last_modification_time="Fri, 20 Apr 2007 22:29:33 GMT"/>
+		      <accelerator key="e" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="mnuCultivoTemporada">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Cultivo Temporada</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_mnuCultivoTemporada_activate" last_modification_time="Sat, 21 Apr 2007 19:25:03 GMT"/>
 		    </widget>
 		  </child>
 		</widget>
@@ -232,15 +242,14 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkMenuItem" id="mnuEstadoFenologico">
+	    <widget class="GtkMenuItem" id="datos">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">_Datos</property>
 	      <property name="use_underline">True</property>
-	      <signal name="activate" handler="on_mnuEstadoFenologico_activate" last_modification_time="Fri, 09 Mar 2007 18:18:45 GMT"/>
 	      <accelerator key="e" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 	      <child>
-		<widget class="GtkMenu" id="mnuEstadoFenologico_menu">
+		<widget class="GtkMenu" id="datos_menu">
 
 		  <child>
 		    <widget class="GtkMenuItem" id="mnuRegistroEstadoFenologico">

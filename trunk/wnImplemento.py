@@ -82,6 +82,7 @@ class wnImplemento (GladeConnect):
 
         model, it = self.treeImplemento.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione un Implemento para editar.")
             return
         dlg = dlgImplemento(self.cnx, self.frm_padre, False)
         dlg.entCodigo.set_text(model.get_value(it, CODIGO))

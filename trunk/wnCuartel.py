@@ -85,6 +85,7 @@ class wnCuartel (GladeConnect):
     def on_btnPropiedades_clicked(self, btn=None):
         model, it = self.treeCuartel.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione un Cuartel para editar.")
             return
         dlg = dlgCuartel(self.cnx, self.frm_padre, False)
         dlg.entSector.set_text(model.get_value(it, DESCRIPCION_SECTOR))

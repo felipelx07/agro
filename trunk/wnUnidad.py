@@ -84,6 +84,7 @@ class wnUnidad (GladeConnect):
 
         model, it = self.treeUnidad.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione una Unidad para editar.")
             return
         dlg = dlgUnidad(self.cnx, self.frm_padre, False)
         dlg.entCodigo.set_text(model.get_value(it, CODIGO))

@@ -84,6 +84,7 @@ class wnUnidadDosis (GladeConnect):
 
         model, it = self.treeUnidadDosis.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione una Unidad de dosis para editar.")
             return
         dlg = dlgUnidadDosis(self.cnx, self.frm_padre, False)
         dlg.entCodigo.set_text(model.get_value(it, CODIGO))

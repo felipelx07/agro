@@ -85,6 +85,7 @@ class wnLabor (GladeConnect):
 
         model, it = self.treeLabor.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione una Labor para editar.")
             return
         dlg = dlgLabor(self.cnx, self.frm_padre, False)
         dlg.entCodigo.set_text(model.get_value(it, CODIGO))

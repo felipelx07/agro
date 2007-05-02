@@ -203,7 +203,11 @@ strSelectEstadoFenologico = """SELECT * FROM """ + config.schema + """.estado_fe
 
 strSelectTipoDocumento = """SELECT * FROM """ + config.schema + """.tipo_documento ORDER BY codigo_tipo_documento"""
 
-strSelectTemporada = """SELECT *,
-                        'Temporada ' || date_part('year', fecha_inicio) || '-' || date_part('year', fecha_termino) as descripcion
+strSelectTemporada = """SELECT codigo_temporada,
+                        fecha_inicio,
+                        fecha_termino,
+                        'Temporada ' || date_part('year', fecha_inicio) || '-' 
+                        || date_part('year', fecha_termino) as descripcion,
+                        abierta 
                         FROM """ + config.schema + """.temporada
                         ORDER BY codigo_temporada desc"""

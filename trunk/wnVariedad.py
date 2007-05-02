@@ -84,6 +84,7 @@ class wnVariedad (GladeConnect):
 
         model, it = self.treeVariedad.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione una Variedad para editar.")
             return
         dlg = dlgVariedad(self.cnx, self.frm_padre, False)
         dlg.entCodigo.set_text(model.get_value(it, CODIGO))

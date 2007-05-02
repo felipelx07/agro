@@ -90,6 +90,7 @@ class wnProducto (GladeConnect):
     def on_btnPropiedades_clicked(self, btn=None):
         model, it = self.treeProducto.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione un Producto para editar.")
             return
         dlg = dlgProducto(self.cnx, self.frm_padre, False)
         dlg.entUnidad.set_text(model.get_value(it, DESCRIPCION_UNIDAD))
@@ -101,7 +102,6 @@ class wnProducto (GladeConnect):
         dlg.entUnidadDosis.set_text(model.get_value(it, DESCRIPCION_UNIDAD_DOSIS))
         dlg.codigo_unidad_dosis = model.get_value(it, CODIGO_UNIDAD_DOSIS)
         dlg.pecUnidadDosis.set_selected(True)
-        #dlg.unidad_dosis = dlg.pecUnidadDosis.select(model.get_value(it, DESCRIPCION_UNIDAD_DOSIS), 1)
         dlg.editando = (True)
         response = dlg.dlgProducto.run()
         if response == gtk.RESPONSE_OK:

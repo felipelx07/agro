@@ -91,6 +91,7 @@ class wnHilera (GladeConnect):
     def on_btnPropiedades_clicked(self, btn=None):
         model, it = self.treeHilera.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione una Hilera para editar.")
             return
         dlg = dlgHilera(self.cnx, self.frm_padre, False)
         dlg.entVariedad.set_text(model.get_value(it, DESCRIPCION_VARIEDAD))

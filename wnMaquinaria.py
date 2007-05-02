@@ -82,6 +82,7 @@ class wnMaquinaria (GladeConnect):
 
         model, it = self.treeMaquinaria.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione una Maquinaria para editar.")
             return
         dlg = dlgMaquinaria(self.cnx, self.frm_padre, False)
         dlg.entCodigo.set_text(model.get_value(it, CODIGO))

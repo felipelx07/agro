@@ -13,12 +13,14 @@ from psycopg import connect
 import completion
 import comunes
 import treetohtml
+import datetime
 import config
 
 (CODIGO,
  INICIO,
  TERMINO,
- DESCRIPCION) = range(4)
+ DESCRIPCION,
+ ABIERTA) = range(5)
 
 schema = config.schema
 table = "temporada"
@@ -46,8 +48,10 @@ class wnTemporada (GladeConnect):
         columnas.append ([INICIO, "Fecha de inicio", "dte"])
         columnas.append ([TERMINO, "Fecha de termino", "dte"])
         columnas.append ([DESCRIPCION, "Descripción", "str"])
+        columnas.append ([ABIERTA, "Temporada Abierta", "bool"])
         
-        self.modelo = gtk.ListStore(*(4*[str]))
+        self.modelo = gtk.ListStore(str, str, str, str, bool)
+        
         SimpleTree.GenColsByModel(self.modelo, columnas, self.treeTemporada)
         self.col_data = [x[0] for x in columnas]
         
@@ -56,12 +60,23 @@ class wnTemporada (GladeConnect):
         t.show()        
 
     def carga_datos(self):
-        self.modelo = ifd.ListStoreFromSQL(self.cnx, strSelectTemporada)
+        m = ifd.ListStoreFromSQL(self.cnx, strSelectTemporada)
+        self.modelo.clear()
+        for x in m:
+            if x[4] == "1":
+                self.modelo.append((x[0], x[1], x[2], x[3], True))
+            else:
+                self.modelo.append((x[0], x[1], x[2], x[3], False))
+                
         self.treeTemporada.set_model(self.modelo)
 
     def on_btnAnadir_clicked(self, btn=None, data=None):
         dlg = dlgTemporada(self.cnx, self.frm_padre, False)
         dlg.editando=False
+        
+        dlg.entInicio.set_date(datetime.date.today())        
+        dlg.entTermino.set_date(datetime.datetime(datetime.date.today().year + 1, datetime.date.today().month, datetime.date.today().day))
+        
         response = dlg.dlgTemporada.run()
         if response == gtk.RESPONSE_OK:
             self.carga_datos()
@@ -87,6 +102,7 @@ class wnTemporada (GladeConnect):
 
         model, it = self.treeTemporada.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione una Temporada para editar.")
             return
         
         dlg = dlgTemporada(self.cnx, self.frm_padre, False)
@@ -134,6 +150,12 @@ class dlgTemporada(GladeConnect):
         campos['fecha_inicio']  = fecha.strftime("%Y/%m/%d")
         fecha = self.entTermino.get_date()
         campos['fecha_termino'] = fecha.strftime("%Y/%m/%d")
+        
+        if self.chkAbierta.get_active():
+            campos['abierta'] = "TRUE"
+        else:
+            campos['abierta'] = "FALSE"
+            
         if not self.editando:
             sql = ifd.insertFromDict(schema + "." + table, campos)
         else:

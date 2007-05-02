@@ -67,6 +67,7 @@ class wnTipoFicha (GladeConnect):
         
         model, it = self.treeTipoFicha.get_selection().get_selected()
         if model is None or it is None:
+            dialogos.error("Seleccione un Tipo de Ficha para editar.")
             return
         descripcion = model.get_value(it, DESCRIPCION)
         

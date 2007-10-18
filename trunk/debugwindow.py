@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: UTF8 	-*-
 # Copyright (C) 2005 by Async Open Source and Sicem S.L.
 #
 # This program is free software; you can redistribute it and/or

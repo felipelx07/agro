@@ -139,11 +139,6 @@ class dlgEstadoFenologico(GladeConnect):
         
     def on_btnCancelar_clicked(self, btn=None):
         self.dlgEstadoFenologico.hide()
-
-    def on_dlgUnidadDosis_key_press_event(self, dialogo=None, evento=None):
-        if str(evento.keyval) == "65293":
-            self.on_btnAceptar_clicked(self)
-            self.wnUnidadDosis.carga_datos()
         
 if __name__ == '__main__':
     DB = config.DB

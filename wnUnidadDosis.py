@@ -113,13 +113,14 @@ class dlgUnidadDosis(GladeConnect):
         self.cnx = conexion
         self.cursor = self.cnx.cursor()
         self.entDescripcion.grab_focus()
+	#self.dlgUnidadDosis.set_default_response(GTK_RESPONSE_OK)
         
         self.editando=editando
         self.codigo_tipo_ficha = None
         if self.editando:
             self.entCodigo.set_sensitive(False)
         self.dlgUnidadDosis.show()
-    
+
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         if self.entDescripcion.get_text() == "":
             dialogos.error("El campo <b>Descripción Unidad Dosis</b> no puede estar vacío")
@@ -140,7 +141,12 @@ class dlgUnidadDosis(GladeConnect):
         
     def on_btnCancelar_clicked(self, btn=None):
         self.dlgUnidadDosis.hide()
-        
+
+    def on_dlgUnidadDosis_key_press_event(self, dialogo=None, evento=None):
+        if str(evento.keyval) == "65293":
+            self.on_btnAceptar_clicked(self)
+            self.wnUnidadDosis.carga_datos()
+
 if __name__ == '__main__':
     DB = config.DB
     user = config.user

@@ -165,6 +165,7 @@
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
   <property name="has_separator">True</property>
+  <signal name="key_press_event" handler="on_key_press_event" last_modification_time="Mon, 03 Sep 2007 23:56:02 GMT"/>
 
   <child internal-child="vbox">
     <widget class="GtkVBox" id="dialog-vbox1">
@@ -195,13 +196,13 @@
 	    <widget class="GtkButton" id="btnAceptar">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
+	      <property name="has_default">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="label">gtk-ok</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-5</property>
-	      <signal name="clicked" handler="on_btnAceptar_clicked" last_modification_time="Sun, 15 Oct 2006 20:33:25 GMT"/>
 	    </widget>
 	  </child>
 	</widget>

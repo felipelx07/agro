@@ -204,7 +204,7 @@
 	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-5</property>
 	      <signal name="clicked" handler="on_btnAceptar_clicked"/>
-              <accelerator key="Return" modifiers="" signal="clicked"/>
+	      <accelerator key="Return" modifiers="0" signal="clicked"/>
 	    </widget>
 	  </child>
 	</widget>
@@ -390,7 +390,7 @@
 	  <child>
 	    <widget class="GtkLabel" id="label5">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">Ficha:</property>
+	      <property name="label" translatable="yes">Trabajador:</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">False</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>

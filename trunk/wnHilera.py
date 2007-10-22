@@ -62,11 +62,9 @@ class wnHilera (GladeConnect):
         self.treeHilera.set_model(self.modelo)
 
     def on_btnAnadir_clicked(self, btn=None, data=None):
-        dlg = dlgHilera(self.cnx, self.frm_padre, False)
+        dlg = dlgHilera(self.cnx, self, False)
         dlg.editando=False
-        response = dlg.dlgHilera.run()
-        if response == gtk.RESPONSE_OK:
-            self.carga_datos()
+        dlg.dlgHilera.show()
     
     def on_btnQuitar_clicked(self, btn=None):
         
@@ -126,6 +124,7 @@ class dlgHilera(GladeConnect):
         self.cursor = self.cnx.cursor()
         self.editando=editando
         self.codigo_cuartel = None
+        self.padre = padre
         if self.editando:
             self.entCodigo.set_sensitive(False)
         
@@ -173,6 +172,7 @@ class dlgHilera(GladeConnect):
         try:   
             self.cursor.execute(sql, campos)
             self.dlgHilera.hide()
+            self.padre.carga_datos()
         except:
             print sys.exc_info()[1]
             print sql
@@ -181,6 +181,41 @@ class dlgHilera(GladeConnect):
     def on_btnCancelar_clicked(self, btn=None):
         self.dlgHilera.hide()
         
+    def on_btnInsertar_clicked(self, btn=None, date=None, cnx=None):
+        if self.entDescripcion.get_text() == "":
+            dialogos.error("El campo <b>Descripción Hilera</b> no puede estar vacío")
+            return
+        
+        if self.entSuperficie.get_text() == "":
+            dialogos.error("")
+        
+        if self.codigo_cuartel is None:
+            dialogos.error("Debe escoger una <b>Hilera</b>")
+            return
+        
+        campos = {}
+        llaves = {}
+        campos['superficie']  = self.entSuperficie.get_text().upper()
+        campos['descripcion_hilera']  = self.entDescripcion.get_text().upper()
+        campos['codigo_cuartel'] = self.codigo_cuartel
+        campos['codigo_variedad'] = self.codigo_variedad
+        
+        
+        if not self.editando:
+            sql = ifd.insertFromDict(schema + "." + table, campos)        
+        else:
+            llaves['codigo_hilera'] = self.entCodigo.get_text()
+            sql, campos=ifd.updateFromDict(schema + "." + table, campos, llaves)
+        
+        try:   
+            self.cursor.execute(sql, campos)
+            self.entDescripcion.set_text("")
+            self.entDescripcion.grab_focus()
+            self.padre.carga_datos()
+        except:
+            print sys.exc_info()[1]
+            print sql
+            
 if __name__ == '__main__':
     DB = config.DB
     user = config.user

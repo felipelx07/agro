@@ -50,17 +50,16 @@ class wnCuartel (GladeConnect):
         
     def on_btnImprimir_clicked(self, btn=None):
         t = treetohtml.TreeToHTML(self.treeCuartel,"Cuartel", self.col_data)
-        t.show()        
+        t.show()
+        
     def carga_datos(self):
         self.modelo = ifd.ListStoreFromSQL(self.cnx, strSelectCuartel)
         self.treeCuartel.set_model(self.modelo)
 
     def on_btnAnadir_clicked(self, btn=None, data=None):
-        dlg = dlgCuartel(self.cnx, self.frm_padre, False)
+        dlg = dlgCuartel(self.cnx, self, False)
         dlg.editando=False
-        response = dlg.dlgCuartel.run()
-        if response == gtk.RESPONSE_OK:
-            self.carga_datos()
+        dlg.dlgCuartel.show()
     
     def on_btnQuitar_clicked(self, btn=None):
         
@@ -115,6 +114,7 @@ class dlgCuartel(GladeConnect):
         self.cnx = conexion
         self.cursor = self.cnx.cursor()
         self.editando=editando
+        self.padre = padre
         self.codigo_sector = None
         if self.editando:
             self.entCodigo.set_sensitive(False)
@@ -151,14 +151,45 @@ class dlgCuartel(GladeConnect):
         try:   
             self.cursor.execute(sql, campos)
             self.dlgCuartel.hide()
+            self.padre.carga_datos()
         except:
             print sys.exc_info()[1]
             print sql
             
-        
+    
     def on_btnCancelar_clicked(self, btn=None):
         self.dlgCuartel.hide()
+    
+    def on_btnInsertar_clicked(self, btn=None, date=None, cnx=None):
         
+        if self.entDescripcion.get_text() == "":
+            dialogos.error("El campo <b>Descripción Cuartel</b> no puede estar vacío")
+            return
+        
+        if self.codigo_sector is None:
+            dialogos.error("Debe escoger un <b>Cuartel</b>")
+            return
+        
+        campos = {}
+        llaves = {}
+        campos['descripcion_cuartel']  = self.entDescripcion.get_text().upper()
+        campos['codigo_sector'] = self.codigo_sector
+        
+        if not self.editando:
+            sql = ifd.insertFromDict(schema + "." + table, campos)        
+        else:
+            llaves['codigo_cuartel'] = self.entCodigo.get_text()
+            sql, campos=ifd.updateFromDict(schema + "." + table, campos, llaves)
+        
+        try:   
+            self.cursor.execute(sql, campos)
+            self.entDescripcion.set_text("")
+            self.entDescripcion.grab_focus()
+            self.padre.carga_datos()
+        except:
+            print sys.exc_info()[1]
+            print sql
+            
 if __name__ == '__main__':
     DB = config.DB
     user = config.user

@@ -58,8 +58,10 @@ class CompletionCuartel(GenericCompletion):
 
     def __init__(self, entry = gtk.Entry(), f = None, c = None, tabla=None):
         s = """SELECT c.descripcion_cuartel,
-                        c.codigo_cuartel
-                        FROM riego.cuartel c                            
+                        c.codigo_cuartel,
+                        s.descripcion_sector
+                        FROM riego.cuartel c INNER JOIN riego.sector s
+                        ON c.codigo_sector = s.codigo_sector
                         ORDER BY c.descripcion_cuartel"""
         GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
         

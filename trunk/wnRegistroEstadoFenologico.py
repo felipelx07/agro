@@ -53,7 +53,6 @@ class wnRegistroEstadoFenologico (GladeConnect):
     def crea_columnas(self):
         columnas = []
         columnas.append ([CODIGO_REGISTRO_ESTADO_FENOLOGICO, "Codigo", "str"])
-        #columnas.append ([DESCRIPCION_CULTIVO_TEMPORADA, "Cultivo Temporada", "str"])
         columnas.append ([DESCRIPCION_TEMPORADA, "Temporada", "str"])
         columnas.append ([DESCRIPCION_CULTIVO, "Cultivo", "str"])
         columnas.append ([DESCRIPCION_CUARTEL, "Cuartel", "str"])
@@ -181,9 +180,7 @@ class dlgRegistroEstadoFenologico(GladeConnect):
         
         strSelectCuartel = strSelectCuartel + """ ct.codigo_cultivo = """ + self.codigo_cultivo + """ 
                             ORDER BY ct.codigo_cuartel"""
-        
-        
-        print strSelectCuartel                
+                            
         columnas = []
         columnas.append ([SELECCIONADO, "Sel", "bool"])
         columnas.append ([D_CUARTEL, "Cuartel","str"])

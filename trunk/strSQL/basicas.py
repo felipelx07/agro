@@ -169,19 +169,6 @@ strSelectCultivoTemporada = """SELECT
                         INNER JOIN """ + config.schema + """.temporada t 
                         ON ct.codigo_temporada = t.codigo_temporada 
                         ORDER BY ct.codigo_temporada"""
-
-strSelectCosecha = """SELECT c.*,
-                            f.descripcion_ficha,
-                            s.descripcion_cuartel,
-                            v.descripcion_variedad
-                        FROM """ + config.schema + """.cosecha c
-                        INNER JOIN """ + config.schema + """.ficha f
-                        ON c.rut_ficha = f.rut_ficha
-                        INNER JOIN """ + config.schema + """.cuartel s
-                        ON c.codigo_cuartel = s.codigo_cuartel
-                        INNER JOIN """ + config.schema + """.variedad v
-                        ON c.codigo_variedad = v.codigo_variedad
-                        ORDER BY c.codigo_cosecha"""
                         
 strSelectLabor = """SELECT * FROM """ + config.schema + """.labor ORDER BY codigo_labor"""
 
@@ -193,15 +180,18 @@ strSelectVariedad = """SELECT * FROM """ + config.schema + """.variedad ORDER BY
 
 strSelectCultivo = """SELECT * FROM """ + config.schema + """.cultivo ORDER BY codigo_cultivo"""
 
-strSelectDetalleRelacion = """SELECT %s FROM %s WHERE %s = %s"""
-
 strSelectUnidad = """SELECT * FROM """ + config.schema + """.unidad ORDER BY descripcion_unidad"""
 
 strSelectUnidadDosis = """SELECT * FROM """ + config.schema + """.unidad_dosis ORDER BY descripcion_unidad_dosis"""
 
-strSelectEstadoFenologico = """SELECT * FROM """ + config.schema + """.estado_fenologico ORDER BY descripcion_estado_fenologico"""
-
-strSelectTipoDocumento = """SELECT * FROM """ + config.schema + """.tipo_documento ORDER BY codigo_tipo_documento"""
+strSelectEstadoFenologico = """SELECT e.codigo_estado_fenologico,
+                                      e.descripcion_estado_fenologico,
+                                      c.descripcion_cultivo,
+                                      c.codigo_cultivo 
+                                      FROM """ + config.schema + """.estado_fenologico e
+                                      INNER JOIN """ + config.schema + """.cultivo c
+                                      ON e.codigo_cultivo = c.codigo_cultivo
+                                      ORDER BY descripcion_estado_fenologico"""
 
 strSelectTemporada = """SELECT codigo_temporada,
                         fecha_inicio,

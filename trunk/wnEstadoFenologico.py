@@ -16,7 +16,9 @@ import treetohtml
 import config
 
 (CODIGO,
- DESCRIPCION) = range(2)
+ DESCRIPCION,
+ DESCRIPCION_CULTIVO,
+ CODIGO_CULTIVO) = range(4)
 
 schema = config.schema
 table = "estado_fenologico"
@@ -42,6 +44,7 @@ class wnEstadoFenologico (GladeConnect):
         columnas = []
         columnas.append ([CODIGO, "Codigo", int])
         columnas.append ([DESCRIPCION, "Descripcion", str])
+        columnas.append ([DESCRIPCION_CULTIVO, "Descripcion", str])
         
         self.modelo = gtk.ListStore(int, str)
         SimpleTree.GenColsByModel(self.modelo, columnas, self.treeEstadoFenologico)
@@ -49,9 +52,8 @@ class wnEstadoFenologico (GladeConnect):
         
     def on_btnImprimir_clicked(self, btn=None):
         t = treetohtml.TreeToHTML(self.treeEstadoFenologico,"EstadoFenologico", self.col_data)
-        t.show()        
+        t.show()
 
-        
     def carga_datos(self):
         self.modelo = ifd.ListStoreFromSQL(self.cnx, strSelectEstadoFenologico)
         self.treeEstadoFenologico.set_model(self.modelo)
@@ -90,6 +92,10 @@ class wnEstadoFenologico (GladeConnect):
         dlg.entCodigo.set_text(model.get_value(it, CODIGO))
         dlg.entDescripcion.set_text(model.get_value(it, DESCRIPCION))
         
+        dlg.entCultivo.set_text(model.get_value(it, DESCRIPCION_CULTIVO))
+        dlg.codigo_cultivo = model.get_value(it, CODIGO_CULTIVO)
+        dlg.pecCultivo.set_selected(True)
+        
         dlg.editando = True
         response = dlg.dlgEstadoFenologico.run()
         if response == gtk.RESPONSE_OK:
@@ -117,7 +123,15 @@ class dlgEstadoFenologico(GladeConnect):
         self.codigo_tipo_ficha = None
         if self.editando:
             self.entCodigo.set_sensitive(False)
+        
+        self.pecCultivo = completion.CompletionCultivo(self.entCultivo,
+                self.sel_cultivo,
+                self.cnx)
+        
         self.dlgEstadoFenologico.show()
+    
+    def sel_cultivo(self, completion, model, iter):
+        self.codigo_cultivo = model.get_value(iter, 1)
     
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         if self.entDescripcion.get_text() == "":
@@ -127,6 +141,7 @@ class dlgEstadoFenologico(GladeConnect):
         campos = {}
         llaves = {}
         campos['descripcion_estado_fenologico']  = self.entDescripcion.get_text().upper()
+        campos['codigo_cultivo'] = self.codigo_cultivo
         if not self.editando:
             sql = ifd.insertFromDict(schema + "." + table, campos)
             

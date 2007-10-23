@@ -179,7 +179,7 @@ class dlgRegistroEstadoFenologico(GladeConnect):
         if completion is None:
             strSelectCuartel = strSelectCuartel + """ct.codigo_cuartel = """ + self.codigo_cuartel +""" AND """
         
-        strSelectCuartel = strSelectCuartel +""" ct.codigo_cultivo = """ + self.codigo_cultivo + """ 
+        strSelectCuartel = strSelectCuartel + """ ct.codigo_cultivo = """ + self.codigo_cultivo + """ 
                             ORDER BY ct.codigo_cuartel"""
         
         

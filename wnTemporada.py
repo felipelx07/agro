@@ -62,11 +62,14 @@ class wnTemporada (GladeConnect):
     def carga_datos(self):
         m = ifd.ListStoreFromSQL(self.cnx, strSelectTemporada)
         self.modelo.clear()
-        for x in m:
-            if x[4] == "1":
-                self.modelo.append((x[0], x[1], x[2], x[3], True))
-            else:
-                self.modelo.append((x[0], x[1], x[2], x[3], False))
+        try:
+            for x in m:
+                if x[4] == "1":
+                    self.modelo.append((x[0], x[1], x[2], x[3], True))
+                else:
+                    self.modelo.append((x[0], x[1], x[2], x[3], False))
+        except:
+            None
                 
         self.treeTemporada.set_model(self.modelo)
 
@@ -112,7 +115,9 @@ class wnTemporada (GladeConnect):
         dlg.entInicio.set_date(fecha)
         fecha = comunes.GetDateFromModel(model.get_value(it, TERMINO).split()[0])
         dlg.entTermino.set_date(fecha)
-        dlg.entDescripcion.set_text(model.get_value(it, DESCRIPCION))
+        
+        if model.get_value(it, ABIERTA):
+            dlg.chkAbierta.set_active(True)
        
         dlg.editando = True
         response = dlg.dlgTemporada.run()

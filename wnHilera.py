@@ -215,7 +215,7 @@ class dlgHilera(GladeConnect):
         except:
             print sys.exc_info()[1]
             print sql
-            
+               
 if __name__ == '__main__':
     DB = config.DB
     user = config.user

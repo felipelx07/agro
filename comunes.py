@@ -164,6 +164,9 @@ def columna_vacia(tree, cell, model, iter, data = ''):
 
 def es_rut(rut=None):
     if not rut: return 0
+    
+    #para aceptar ruts con letras minusculas
+    rut = string.replace(rut, "k", 'K')
         
     es_rut = 0
     cadena = "234567234567"

@@ -31,6 +31,7 @@ def  GenColsByModel(modelo, indices,tree):
                                 Otros: SimpleTree.CellCompletion()
             indices[5]: funcio, se utiliza Solo si al momento de editar una celda se nececita lanzar una funcion
     """
+    modelo = gtk.TreeModelSort(modelo)
     nCols = 0
     for i in indices:
         if i[2] =="bool":
@@ -104,9 +105,12 @@ def column_click(treeColumn= None,modelo = None, tree = None,NColModelo= None,NC
     for i in tree.get_columns():
         i.set_sort_indicator(False)
 
-    modelo.set_sort_column_id(NColModelo,0)
+    modelo.set_sort_column_id(NColModelo, 0)
     tree.set_search_column(NColModelo)
     tree.get_column(NColTree).set_sort_indicator(True)
+    tree.get_model().set_sort_column_id(NColModelo, gtk.SORT_ASCENDING)
+    #todo, hacer en forma descendente :P 
+    
 
 def edited_cb(cell, path, new_text,modelo=None,col = None,colBand=None,Func=None):
 

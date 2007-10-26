@@ -12,6 +12,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+# Modificado por Enrique San Martin Woerner 2007. enriquesmw@gmail.com
+
 import gtk
 from comunes import *
 def  GenColsByModel(modelo, indices,tree):
@@ -102,15 +104,19 @@ def column_click_ok(treeColumn= None,modelo = None, tree = None,NColModelo= None
     for i in modelo:
         i[NColModelo] = not i[NColModelo]
 def column_click(treeColumn= None,modelo = None, tree = None,NColModelo= None,NColTree= None):
+    
     for i in tree.get_columns():
         i.set_sort_indicator(False)
 
     modelo.set_sort_column_id(NColModelo, 0)
     tree.set_search_column(NColModelo)
     tree.get_column(NColTree).set_sort_indicator(True)
-    tree.get_model().set_sort_column_id(NColModelo, gtk.SORT_ASCENDING)
-    #todo, hacer en forma descendente :P 
     
+    id, sort = tree.get_model().get_sort_column_id()
+    if sort == gtk.SORT_ASCENDING and id == NColModelo:
+        tree.get_model().set_sort_column_id(NColModelo, gtk.SORT_DESCENDING)
+    else:
+        tree.get_model().set_sort_column_id(NColModelo, gtk.SORT_ASCENDING)
 
 def edited_cb(cell, path, new_text,modelo=None,col = None,colBand=None,Func=None):
 

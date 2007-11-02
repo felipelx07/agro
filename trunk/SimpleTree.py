@@ -104,19 +104,22 @@ def column_click_ok(treeColumn= None,modelo = None, tree = None,NColModelo= None
     for i in modelo:
         i[NColModelo] = not i[NColModelo]
 def column_click(treeColumn= None,modelo = None, tree = None,NColModelo= None,NColTree= None):
-    
+
     for i in tree.get_columns():
         i.set_sort_indicator(False)
 
     modelo.set_sort_column_id(NColModelo, 0)
     tree.set_search_column(NColModelo)
     tree.get_column(NColTree).set_sort_indicator(True)
-    
+
     id, sort = tree.get_model().get_sort_column_id()
+
     if sort == gtk.SORT_ASCENDING and id == NColModelo:
         tree.get_model().set_sort_column_id(NColModelo, gtk.SORT_DESCENDING)
+        tree.get_columns()[NColTree].set_sort_order(gtk.SORT_DESCENDING)
     else:
         tree.get_model().set_sort_column_id(NColModelo, gtk.SORT_ASCENDING)
+        tree.get_columns()[NColTree].set_sort_order(gtk.SORT_ASCENDING)
 
 def edited_cb(cell, path, new_text,modelo=None,col = None,colBand=None,Func=None):
 

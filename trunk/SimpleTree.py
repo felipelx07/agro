@@ -33,7 +33,7 @@ def  GenColsByModel(modelo, indices,tree):
                                 Otros: SimpleTree.CellCompletion()
             indices[5]: funcio, se utiliza Solo si al momento de editar una celda se nececita lanzar una funcion
     """
-    modelo = gtk.TreeModelSort(modelo)
+    
     nCols = 0
     for i in indices:
         if i[2] =="bool":
@@ -105,6 +105,8 @@ def column_click_ok(treeColumn= None,modelo = None, tree = None,NColModelo= None
         i[NColModelo] = not i[NColModelo]
 def column_click(treeColumn= None,modelo = None, tree = None,NColModelo= None,NColTree= None):
 
+    modelo = gtk.TreeModelSort(modelo)
+    
     for i in tree.get_columns():
         i.set_sort_indicator(False)
 
@@ -116,7 +118,7 @@ def column_click(treeColumn= None,modelo = None, tree = None,NColModelo= None,NC
 
     if sort == gtk.SORT_ASCENDING and id == NColModelo:
         tree.get_model().set_sort_column_id(NColModelo, gtk.SORT_DESCENDING)
-        tree.get_columns()[NColTree].set_sort_order(gtk.SORT_DESCENDING)
+        tree.get_columns()[NColTree].set_sort_order(gtk.SORT_DESCENDING)        
     else:
         tree.get_model().set_sort_column_id(NColModelo, gtk.SORT_ASCENDING)
         tree.get_columns()[NColTree].set_sort_order(gtk.SORT_ASCENDING)

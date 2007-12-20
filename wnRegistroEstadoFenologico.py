@@ -187,12 +187,17 @@ class dlgRegistroEstadoFenologico(GladeConnect):
         
         m = ifd.ListStoreFromSQL(self.cnx, strSelectCuartel)
         self.modelo_cuartel = gtk.ListStore(bool, str, str)
-        for x in m:
-            if completion is not None:
-                self.modelo_cuartel.append((False, x[0], x[1]))
-            else:
-                self.modelo_cuartel.append((True, x[0], x[1]))
-            
+        try:
+            for x in m:
+                if completion is not None:
+                    self.modelo_cuartel.append((False, x[0], x[1]))
+                else:
+                    self.modelo_cuartel.append((True, x[0], x[1]))
+        except:
+            #TODO: COLOCAR UN MENSAJE MÁS CLARO.
+            dialogos.error("No existen cultivos para la temporada en los cuarteles.")
+            return
+        
         SimpleTree.GenColsByModel(self.modelo_cuartel, columnas, self.treeCuartel)
         self.col_data = [x[0] for x in columnas]
         

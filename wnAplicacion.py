@@ -227,11 +227,15 @@ class dlgAplicacion(GladeConnect):
         
         m = ifd.ListStoreFromSQL(self.cnx, strSelectHilera)
         self.modelo_hilera = gtk.ListStore(bool, str, str)
-        for x in m:
-            if completion is not None:
-                self.modelo_hilera.append((False, x[0], x[1]))
-            else:
-                self.modelo_hilera.append((True, x[0], x[1]))
+        try:
+            for x in m:
+                if completion is not None:
+                    self.modelo_hilera.append((False, x[0], x[1]))
+                else:
+                    self.modelo_hilera.append((True, x[0], x[1]))
+        except:
+            dialogos.error("No existen hileras para el cuartel.")
+            return
             
         SimpleTree.GenColsByModel(self.modelo_hilera, columnas, self.treeHilera)
         self.col_data = [x[0] for x in columnas]

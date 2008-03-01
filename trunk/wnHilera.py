@@ -47,7 +47,7 @@ class wnHilera (GladeConnect):
         columnas.append ([DESCRIPCION, "Descripcion", "str"])
         columnas.append ([DESCRIPCION_CUARTEL, "Cuartel","str"])
         columnas.append ([DESCRIPCION_VARIEDAD, "Variedad","str"])
-        columnas.append ([SUPERFICIE, "Superficie","str"])
+        columnas.append ([SUPERFICIE, "N° de Plantas","str"])
         
         self.modelo = gtk.ListStore(*(5*[str]))
         SimpleTree.GenColsByModel(self.modelo, columnas, self.treeHilera)

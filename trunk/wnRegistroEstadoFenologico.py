@@ -242,7 +242,7 @@ class dlgRegistroEstadoFenologico(GladeConnect):
                     
                 try:   
                     self.cursor.execute(sql, campos)
-                    self.dlgLaborHilera.hide()
+                    self.entEstadoFenologico.hide()
                 except:
                     print sys.exc_info()[1]
                     print sql

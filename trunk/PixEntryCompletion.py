@@ -92,6 +92,15 @@ class PixEntryCompletion:
         self.set_selected(True)
         return data[0][retcol]
 
+    def select_key(self, key=None, retcol=0, search_col=0, text_col=0):
+        if key is None:
+            return
+
+        data = [i for i in self.modelo if i[search_col] == key]
+        self.entry.set_text(data[0][text_col])
+        self.set_selected(True)
+        return data[0][retcol]
+
     def __match(self, completion, entrystr, iter, data=None):
         model = completion.get_model()
         modelstr = model[iter][self.selcol]

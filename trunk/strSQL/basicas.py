@@ -156,7 +156,9 @@ strSelectCultivoTemporada = """SELECT
                             ct.codigo_cultivo,
                             c.descripcion_cultivo,
                             ct.codigo_cuartel,
-                            cl.descripcion_cuartel,                            
+                            cl.descripcion_cuartel,
+                            cl.codigo_sector,
+                            se.descripcion_sector,
                             ct.codigo_temporada,
                             'Temporada ' || date_part('year', t.fecha_inicio) 
                             || '-' || date_part('year', t.fecha_termino) 
@@ -167,7 +169,9 @@ strSelectCultivoTemporada = """SELECT
                         INNER JOIN """ + config.schema + """.cuartel cl 
                         ON ct.codigo_cuartel = cl.codigo_cuartel  
                         INNER JOIN """ + config.schema + """.temporada t 
-                        ON ct.codigo_temporada = t.codigo_temporada 
+                        ON ct.codigo_temporada = t.codigo_temporada
+                        INNER JOIN """ + config.schema +  """.sector se
+                        ON cl.codigo_sector = se.codigo_sector
                         ORDER BY ct.codigo_temporada"""
                         
 strSelectLabor = """SELECT * FROM """ + config.schema + """.labor ORDER BY codigo_labor"""

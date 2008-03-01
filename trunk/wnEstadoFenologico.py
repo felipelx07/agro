@@ -120,7 +120,7 @@ class dlgEstadoFenologico(GladeConnect):
         self.entDescripcion.grab_focus()
         
         self.editando=editando
-        self.codigo_tipo_ficha = None
+        self.codigo_cultivo = None
         if self.editando:
             self.entCodigo.set_sensitive(False)
         
@@ -134,8 +134,13 @@ class dlgEstadoFenologico(GladeConnect):
         self.codigo_cultivo = model.get_value(iter, 1)
     
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
+        
         if self.entDescripcion.get_text() == "":
             dialogos.error("El campo <b>Descripción Estado Fenologico</b> no puede estar vacío")
+            return
+        
+        if self.codigo_cultivo is None:
+            dialogos.error("El campo <b>Cultivo</b> no puede estar vacío")
             return
         
         campos = {}

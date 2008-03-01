@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Db flnm="agro estado fenologico con cultivo" nm="agro" ver="1.3.4">
+<Db flnm="agro" nm="agro" ver="1.3.4">
   <VerLbl/>
   <VerNotes/>
   <DefTblOpts/>
-  <DocFolder>/home/enrique/desarrollo/xml</DocFolder>
+  <DocFolder>/home/casa/desarrollo/agro/sql</DocFolder>
   <Sch Cm="Standard public schema" nm="public"/>
   <Sch Cm="" nm="riego">
     <Tbl UsSo="1" nm="aplicacion">
@@ -431,7 +431,7 @@
     <Seq incr="1" nm="variedad_codigo_variedad_seq"/>
   </Sch>
   <Dgm nm="diagramA">
-    <RnCf FtSz="9" lkStgy="OffsetDirect" zm="0.7">
+    <RnCf FtSz="9" lkStgy="KeyToKeyStrategy" zm="1.0">
       <VbCfg>
         <Fg ky="Auto Number" vl="0"/>
         <Fg ky="Check" vl="0"/>
@@ -446,25 +446,25 @@
         <Fg ky="Signed" vl="0"/>
       </VbCfg>
     </RnCf>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="aplicacion" x="325" y="139"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="cuartel" x="903" y="169"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="cultivo" x="1137" y="7"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="cultivo_temporada" x="875" y="7"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="estado_fenologico" x="1186" y="75"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="ficha" x="724" y="355"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="hilera" x="651" y="169"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="implemento" x="18" y="195"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="labor" x="1298" y="372"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="labor_hilera" x="968" y="343"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="maquinaria" x="18" y="144"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="producto" x="380" y="348"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="registro_estado_fenologico" x="1152" y="169"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="sector" x="907" y="238"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="temporada" x="638" y="7"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="tipo_ficha" x="737" y="456"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="unidad" x="459" y="454"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="unidad_dosis" x="73" y="298"/>
-    <TbGl bkCl="ffffffe6" sch="riego" tbl="variedad" x="692" y="79"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="aplicacion" x="325" y="50"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="cuartel" x="901" y="50"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="cultivo" x="1148" y="547"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="cultivo_temporada" x="886" y="547"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="estado_fenologico" x="1503" y="50"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="ficha" x="649" y="390"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="hilera" x="649" y="50"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="implemento" x="50" y="101"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="labor" x="1208" y="441"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="labor_hilera" x="913" y="441"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="maquinaria" x="50" y="50"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="producto" x="649" y="273"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="registro_estado_fenologico" x="1150" y="50"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="sector" x="1150" y="141"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="temporada" x="649" y="547"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="tipo_ficha" x="913" y="390"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="unidad" x="918" y="273"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="unidad_dosis" x="918" y="324"/>
+    <TbGl bkCl="ffffffe6" sch="riego" tbl="variedad" x="901" y="207"/>
     <FkGl bkCl="ff000000" nm="riego.aplicacion.fk_aplicacion_ficha"/>
     <FkGl bkCl="ff000000" nm="riego.aplicacion.fk_aplicacion_hilera"/>
     <FkGl bkCl="ff000000" nm="riego.aplicacion.fk_aplicacion_implemento"/>

@@ -254,6 +254,12 @@ class CompletionTemporada(GenericCompletion):
                     codigo_temporada 
          FROM riego.temporada ORDER BY codigo_temporada"""
         GenericCompletion.__init__(self, entry, sel_func = f, cnx = c, sql = s)
+        
+        cursor = c.cursor()
+        cursor.execute("select max(codigo_temporada) from riego.temporada")
+        r = cursor.fetchone()[0]
+        self.select_key(str(r), search_col=1)
+        
 
 if __name__ == "__main__":
     w = gtk.Window()

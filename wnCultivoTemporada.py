@@ -21,9 +21,11 @@ import config
  DESCRIPCION_CULTIVO,
  CODIGO_CUARTEL,
  DESCRIPCION_CUARTEL,
+ CODIGO_SECTOR,
+ DESCRIPCION_SECTOR,
  CODIGO_TEMPORADA,
  DESCRIPCION_TEMPORADA,
-) = range(6)
+) = range(8)
 
 schema = config.schema
 table = "cultivo_temporada"
@@ -50,6 +52,7 @@ class wnCultivoTemporada (GladeConnect):
         columnas = []
         columnas.append ([DESCRIPCION_CULTIVO, "Cultivo","str"])
         columnas.append ([DESCRIPCION_CUARTEL, "Cuartel","str"])
+        columnas.append ([DESCRIPCION_SECTOR, "Sector","str"])
         columnas.append ([DESCRIPCION_TEMPORADA, "Temporada","str"])
         
         self.modelo = gtk.ListStore(*(3*[str]))
@@ -121,6 +124,8 @@ class wnCultivoTemporada (GladeConnect):
         dlg.codigo_cuartel = model.get_value(it, CODIGO_CUARTEL)
         dlg.pecCuartel.set_selected(True)
         
+        dlg.entSector.set_text(model.get_value(it, DESCRIPCION_SECTOR))
+        
         dlg.entTemporada.set_text(model.get_value(it, DESCRIPCION_TEMPORADA))
         dlg.codigo_temporada = model.get_value(it, CODIGO_TEMPORADA)
         dlg.pecTemporada.set_selected(True)
@@ -167,6 +172,7 @@ class dlgCultivoTemporada(GladeConnect):
         
     def sel_cuartel(self, completion, model, iter):
         self.codigo_cuartel = model.get_value(iter, 1)
+        self.entSector.set_text(model.get_value(iter, 2))
     
     def sel_temporada(self, completion, model, iter):
         self.codigo_temporada = model.get_value(iter, 1)

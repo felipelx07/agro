@@ -101,7 +101,7 @@ class wnProducto (GladeConnect):
         dlg.entDosis.set_text(model.get_value(it, DOSIS_PROPUESTA))
         dlg.entUnidadDosis.set_text(model.get_value(it, DESCRIPCION_UNIDAD_DOSIS))
         dlg.codigo_unidad_dosis = model.get_value(it, CODIGO_UNIDAD_DOSIS)
-        dlg.pecUnidadDosis.set_selected(True)
+        #dlg.pecUnidadDosis.set_selected(True)
         dlg.editando = (True)
         response = dlg.dlgProducto.run()
         if response == gtk.RESPONSE_OK:
@@ -132,17 +132,16 @@ class dlgProducto(GladeConnect):
         self.pecUnidad = completion.CompletionUnidad(self.entUnidad,
                 self.sel_unidad,
                 self.cnx)
-        self.pecUnidadDosis = completion.CompletionUnidadDosis(self.entUnidadDosis,
-                self.sel_unidad_dosis,
-                self.cnx)
+        #self.pecUnidadDosis = completion.CompletionUnidadDosis(self.entUnidadDosis,
+        #        self.sel_unidad_dosis,
+        #        self.cnx)
+        self.entUnidadDosis.set_sensitive(False)
         self.dlgProducto.show()
 
     def sel_unidad(self, completion, model, iter):
         self.codigo_unidad = model.get_value(iter, 1)
+        self.entUnidadDosis.set_text(model.get_value(iter, 0))
     
-    def sel_unidad_dosis(self, completion, model, iter):
-        self.codigo_unidad_dosis = model.get_value(iter, 1)
-        
     def on_btnAceptar_clicked(self, btn=None, date=None, cnx=None):
         
         if self.entDescripcion.get_text() == "":
@@ -156,16 +155,12 @@ class dlgProducto(GladeConnect):
             dialogos.error("Debe escoger una <b>Unidad</b>")
             return
         
-        if self.codigo_unidad_dosis is None:
-            dialogos.error("Debe escoger una <b>Unidad Dosis</b>")
-            return
-        
         campos = {}
         llaves = {}
         campos['dosis_propuesta']  = self.entDosis.get_text().upper()
         campos['descripcion_producto']  = self.entDescripcion.get_text().upper()
         campos['codigo_unidad'] = self.codigo_unidad
-        campos['codigo_unidad_dosis'] = self.codigo_unidad_dosis
+        campos['codigo_unidad_dosis'] = self.codigo_unidad
         
         
         if not self.editando:

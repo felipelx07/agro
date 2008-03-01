@@ -2,3 +2,67 @@ TODO:
 
 Revisar coneccion.rc
 Expandir en X
+
+Enrique:
+las observaciones:
+- En producto la unidad es comun al porducto y a la dosis propuesta 
+(elegir 1 sólo)
+
+* Preguntar relación entre los dos tipos de dosis.
+
+-Validador de rut no reconoce letras minusculas
+
+*hecho
+
+- En hileras ordenar de arriba a abajo por cuartel, variedad, hilera, 
+superficie.
+
+* hecho!
+
+- Error al ingresar estado fenologico sin cultivo.
+
+* se valida, falta por manejar el error despues de aceptar.
+
+Recordar como se maneja el .run del dialogo
+
+- Falta el sector en los casilleros del cutivo (aparece al hacer F1)
+
+no es claro donde falta????
+
+-No mostrar cod hilera ni cod cultivo
+
+donde?
+
+-Cambiar superficie por N° de Plantas en "hileras"
+
+Hecho!
+
+-Falta la temporada en labor hilera
+
+la labor debiera relacionarse con el cultivo en vez del cuartel?
+
+-Precargar la ultima temporada creada en todos los casilleros 
+"temporada"
+
+hecho!
+
+-No me cerro la ventana de registro de estado fenologico
+
+cierra
+
+- Mostrar sector en cultivo temporada
+
+hecho
+
+-ordenar cultivo temporada por temporada, cuartel, cultivo.
+
+hecho!
+
+- En general ordenar todas las ventanas de ingreso de mas grande a mas 
+chico.
+
+
+hecho!
+
+Saludos.
+AT
